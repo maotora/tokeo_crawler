@@ -1,0 +1,41 @@
+{
+  "name": "tokeo",
+  "version": "1.0.0",
+  "description": "tokeo app crawler",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon build/index.js",
+    "watch": "babel -w src -d build",
+    "test": "mocha --compilers js:babel-core/register --require 'babel-polyfill' --require ./test/pre_test.js --recursive ./test",
+    "test:watch": "npm run test -- --watch"
+  },
+  "keywords": [
+    "tokeo",
+    "crawler"
+  ],
+  "author": "ArchNoob",
+  "license": "MIT",
+  "dependencies": {
+    "asynquence": "^0.10.0",
+    "babel-cli": "^6.22.2",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-latest": "^6.22.0",
+    "dotenv": "^4.0.0",
+    "es6-promise": "^4.0.5",
+    "jquery": "^3.1.1",
+    "jsdom": "^9.9.1",
+    "json-query": "^2.2.0",
+    "koa": "^2.0.0-alpha.7",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.7.9",
+    "superagent": "^3.4.0",
+    "through": "^2.3.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-register": "^6.22.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "supertest": "^2.0.1"
+  }
+}
