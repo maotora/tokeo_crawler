@@ -12,11 +12,8 @@ try {
 }
 
 const app = new koa()
-const mainLink = 'http://www.maktaba.tetea.org/exam-results/CSEE2005/'
+const mainLink = 'http://www.maktaba.tetea.org/exam-results/CSEE2007/'
 
 crawler(mainLink)
-
-// console.log(results)
-
 
 export default app

@@ -1,6 +1,6 @@
 import Results from './results-model'
 
-export default function saveResults(results) {
+export function saveResults(results) {
     
     if(results[0]) {
         console.log(
@@ -12,4 +12,15 @@ export default function saveResults(results) {
             await resultsInstance.save()
         })
     }
+}
+
+export async function getSchools(queryParams) {
+    
+    const schools = await Results.find(queryParams).distinct('schoolNumber', (err, schoolsList) => {
+        if(err) { return err }
+
+        return schoolsList
+    })
+
+    return schools
 }

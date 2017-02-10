@@ -4,7 +4,7 @@ import jsdom from 'jsdom'
 import _ from 'lodash'
 import firstTable from './../lib/first-table'
 import { getResultsLinks } from './../lib/misc'
-import saveResults from './../db/'
+import { saveResults, getSchools } from './../db/'
 
 const jquery = fs.readFileSync(__dirname + '/jquery.js', 'utf-8')
 
@@ -23,7 +23,6 @@ function getSchoolsLink(mainLink, cb, fail) {
 
                     const jQuery = window.$
                     schoolLinks = getResultsLinks(jQuery)
-
                     schoolLinks = _.map(schoolLinks, (eachLink) => `${mainLink}${eachLink}`)
 
                     cb(schoolLinks)
@@ -66,26 +65,13 @@ function promisify(func, value) {
     return new Promise((resolve, reject) => func(value, resolve, reject))
 }
 
-function getResultsPromises(arrayLinks) {
-    return _.map(arrayLinks, link => promisify(getResults, link))
-}
-
-export default function runner(mainLink) {
-    rollerCoaster(getSchoolsLink, mainLink)
-}
-
-function rollerCoaster(func, mainLink) {
+function getResultsPromises(arrayLinks, cb, fail) {
     try{
-        promisify(func, mainLink)
-            .then(getResultsPromises)
-            .then(results => {
-                return _.reduce(results, (promiseChain, currPromise) => {
-                    return promiseChain.then(() => currPromise).then(saveResults)
-                }, Promise.resolve())
-            })
-            .catch(err => err)
+        const results = _.map(arrayLinks, link => promisify(getResults, link))
+        cb(results)
     }catch(err) {
-        console.log('some')
+        console.log('Something went wrong while getting results')
+        fail(err)
     }
 }
 
@@ -115,16 +101,98 @@ function mainLinksNetworkError(links) {
     debounced()
 }
 
-function getResultsNetworkErorr(link) {
-    console.log(
-        `Network Error while parsing`
-    )
+const isUpper = (str) => str == _.toUpper(str) && str != _.toLower(str)
 
+function compareLinks({dbSchools, urlLinks}, cb, fail) {
+    try {
+        const schoolsReturned = _.map(urlLinks, (link) => extractFromUrl(link, 'retry'))
+
+        if(isUpper(schoolsReturned[0])) {
+            const unSavedSchools = _.difference(schoolsReturned, dbSchools)
+            const schoolsUrls = _.map(unSavedSchools, (school) => _.replace(urlLinks[0], /[PS]{1}[0-9]{4}/, school))
+            cb(schoolsUrls)
+        } else {
+            const schoolsUpper = _.map(schoolsReturned, _.upperFirst) //- convert url strings to uppercase to match that of db.
+            const unSavedSchools = _.difference(schoolsUpper, dbSchools)
+            const schoolsLower = _.map(unSavedSchools, school => school.toLowerCase()) //- Urls are in lowerCase
+            const schoolsUrls = _.map(schoolsLower, school => _.replace(urlLinks[0], /[ps]{1}[0-9]{4}/, school))
+            cb(schoolsUrls)
+        }
+
+    }catch(err) {
+        console.log('Something Happened while recovering!')
+        fail(err)
+    }
+}
+
+function processPartialResults(linksArray) {
+    return promisify(compareLinks, linksArray)
+        .then(rollerCoaster)
+}
+
+async function getResultsNetworkErorr(link) {
     let mainLink = link.slice(0, 51)
+    console.log(`Network Error while parsing:\n${mainLink}`)
 
-    console.log(mainLink)
+    const links = await getLinks(mainLink)
     
-    //- find all distinct docs from db with schoolNumber as links.
+    processPartialResults(links)
+        .then(rollerCoaster)
+}
 
-    // process.nextTick(() => process.exit())
+const isHtm = (str) => str && str.slice(-4).indexOf('.') >= 0
+
+function extractFromUrl(link, type) {
+    if(type === 'main') {
+        const typeYear = link.slice(42).slice(0, -1)
+        const type = typeYear.slice(0, -4)
+        const year = typeYear.slice(type.length)
+
+        return {type, year}
+    } else if(type === 'retry') {
+        if(isHtm(link)) {
+            return link.slice(0, -4).slice(-5)
+        } else {
+            return link.slice(0, -5).slice(-5)
+        }
+    }
+}
+
+async function checkResultsExistance(mainLink) {
+    const obj = extractFromUrl(mainLink, 'main')
+    const examType = obj.type
+    const examYear = obj.year
+
+    return await getSchools({examYear, examType})
+}
+
+export default async function runner(mainLink) {
+    const links = await getLinks(mainLink)
+    const dbSchools = links.dbSchools
+    const urlLinks = links.urlLinks
+
+    if(_.isEmpty(dbSchools)) {
+        await rollerCoaster(urlLinks)
+    } else {
+        //- Process partials
+        console.log('No overwriting!')
+        processPartialResults(links)
+    }
+}
+
+function rollerCoaster(links) {
+    promisify(getResultsPromises, links)
+        .then(results => {
+            return _.reduce(results, (promiseChain, currPromise) => {
+                return promiseChain.then(() => currPromise).then(saveResults)
+            }, Promise.resolve())
+        })
+        .catch(err => err)
+}
+
+async function getLinks(mainLink) {
+    const dbSchools = await checkResultsExistance(mainLink)
+    const urlLinks = await promisify(getSchoolsLink, mainLink)
+
+    return {dbSchools, urlLinks}
 }
