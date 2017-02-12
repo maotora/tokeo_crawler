@@ -12,7 +12,7 @@ try {
 }
 
 const app = new koa()
-const mainLink = 'http://www.maktaba.tetea.org/exam-results/CSEE2007/'
+const mainLink = 'http://www.maktaba.tetea.org/exam-results/CSEE2016/'
 
 crawler(mainLink)
 

@@ -41,7 +41,7 @@ function withoutName(data, $, state) {
 
         switch(index) {
             case 0:
-                state.number = current
+                state.studentNumber = current
                 break
             case 1:
                 state.gender = current
@@ -72,13 +72,13 @@ function withName(data, $, state) {
 
         switch(index) {
             case 0:
-                state.number = current
+                state.studentNumber = current
                 break
             case 1:
                 state.gender = current
                 break
             case 2:
-                state.name = current
+                state.studentName = current
                 break
             case 3:
                 state.points = current

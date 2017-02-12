@@ -145,10 +145,19 @@ const isHtm = (str) => str && str.slice(-4).indexOf('.') >= 0
 function extractFromUrl(link, type) {
     if(type === 'main') {
         const typeYear = link.slice(42).slice(0, -1)
-        const type = typeYear.slice(0, -4)
-        const year = typeYear.slice(type.length)
+        let examType = ''
+        let year = ''
 
-        return {type, year}
+        //- Handling CSEE2012-2 typed exams!
+        if(typeYear.indexOf('-') > 0) {
+            examType = typeYear.slice(0, -6)
+            year = typeYear.slice(examType.length).slice(0, -2)
+        } else {
+            examType = typeYear.slice(0, -4)
+            year = typeYear.slice(type.length)
+        }
+
+        return {examType, year}
     } else if(type === 'retry') {
         if(isHtm(link)) {
             return link.slice(0, -4).slice(-5)
@@ -160,7 +169,7 @@ function extractFromUrl(link, type) {
 
 async function checkResultsExistance(mainLink) {
     const obj = extractFromUrl(mainLink, 'main')
-    const examType = obj.type
+    const examType = obj.examType
     const examYear = obj.year
 
     return await getSchools({examYear, examType})
@@ -186,7 +195,7 @@ function rollerCoaster(links) {
             return _.reduce(results, (promiseChain, currPromise) => {
                 return promiseChain.then(() => currPromise).then(saveResults)
             }, Promise.resolve())
-        })
+        }).then(() => console.log('Complete!'))
         .catch(err => err)
 }
 
