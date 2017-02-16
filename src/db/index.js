@@ -2,7 +2,7 @@ import Results from './results-model'
 
 export function saveResults(results) {
     
-    if(results[0]) {
+    if(results[0] && results[0].schoolName != undefined) {
         console.log(
             `Now Saving: ${results[0].schoolName} Number: ${results[0].schoolNumber}`
         )

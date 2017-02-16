@@ -5,6 +5,7 @@ export function getResultsLinks($) {
     const examTable = $('table')[2]
     let links = []
 
+    //- 2016 gets links in tables, no more directory listing.
     if(examTable) {
         const tableRow = $(examTable).find('tr')
         _.each(tableRow, row => {

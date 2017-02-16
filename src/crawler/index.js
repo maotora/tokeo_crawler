@@ -41,7 +41,7 @@ function getResults(schoolLink, cb, fail) {
     request.get(schoolLink).end((err, res) => {
         if(err) { fail(err) }
 
-        if(res) {
+        if(res && res.text != null) {
             jsdom.env({
                 html: [res.text],
                 src: [jquery],
@@ -154,7 +154,7 @@ function extractFromUrl(link, type) {
             year = typeYear.slice(examType.length).slice(0, -2)
         } else {
             examType = typeYear.slice(0, -4)
-            year = typeYear.slice(type.length)
+            year = typeYear.slice(examType.length)
         }
 
         return {examType, year}
