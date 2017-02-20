@@ -96,12 +96,24 @@ function withName(data, $, state) {
     return state
 }
 
-function post2003Exams(examHeader, $, headerInfo) {
-    let schoolHeader = $('h3:first').text()
-    let schoolHeadWords = _.split(schoolHeader, ' ')
-    let examHeadWords = _.split(examHeader, ' ')
+function aLevelHeaders(examHeadArray, headerInfo) {
+    _.each(examHeadArray, (word, index) => {
+        
+        switch(index) {
+            case 0:
+                headerInfo.examType = word
+                break
+            case 1:
+                headerInfo.examYear = word
+                break
+        }
+    })
 
-    _.each(examHeadWords, (word, index) => {
+    return headerInfo
+}
+
+function oLevelHeaders(examHeadArray, headerInfo) {
+    _.each(examHeadArray, (word, index) => {
         
         switch(index) {
             case 1:
@@ -112,6 +124,22 @@ function post2003Exams(examHeader, $, headerInfo) {
                 break
         }
     })
+
+    return headerInfo
+}
+
+const isYear = (val) => val && /^[0-9]{4}$/.test(val)
+
+function post2003Exams(examHeader, $, headerInfo) {
+    let schoolHeader = $('h3:first').text()
+    let schoolHeadWords = _.split(schoolHeader, ' ')
+    let examHeadArray = _.split(examHeader, ' ')
+
+    if(isYear(examHeadArray[1])) {
+        headerInfo = aLevelHeaders(examHeadArray, headerInfo)
+    } else {
+        headerInfo = oLevelHeaders(examHeadArray, headerInfo)
+    }
 
     headerInfo.schoolNumber = _.join(_.slice(schoolHeadWords,  0, 1), '')
     headerInfo.schoolName = _.trim(_.replace(_.reduce(_.slice(schoolHeadWords, 1), (acc, curr) => `${acc} ${curr}`, ''), /\n/g, ''))

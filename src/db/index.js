@@ -1,4 +1,4 @@
-import Results from './results-model'
+import { Results, SampleDb } from './results-model'
 
 export function saveResults(results) {
     
@@ -16,11 +16,14 @@ export function saveResults(results) {
 
 export async function getSchools(queryParams) {
     
-    const schools = await Results.find(queryParams).distinct('schoolNumber', (err, schoolsList) => {
-        if(err) { return err }
-
-        return schoolsList
-    })
+    const schools = await Results.find(queryParams).distinct('schoolNumber')
 
     return schools
+}
+
+export async function updateStudents(updater) {
+    // await Results.find().exec(updater)
+    const results = await SampleDb.find().exec(updater)
+
+    return results
 }
