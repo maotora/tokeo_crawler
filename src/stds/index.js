@@ -20,9 +20,18 @@ const nonObjRemover = (array) => {
 
 const flattenArray = (array) => {
     if(_.isArray(array)) {
-        return _.reduce(array, (acc, curr) => {
-            return acc + curr
-        }, '')
+        if(array.length > 1) {
+            return _.reduce(array, (acc, curr, index) => {
+                if(index > 0) {
+                    return acc + ' ' + curr
+                }
+                return acc + curr
+            }, '')
+        } else {
+            return _.reduce(array, (acc, curr) => {
+                return acc + curr
+            }, '')
+        }
     } else {
         return array
     }
@@ -83,22 +92,38 @@ const unstupidify = (arrayWithSomeStupid) => {
     })
 }
 
+const logger = ({schoolName, schoolNumber}, info) => {
+    if(schoolNumber != info.number) {
+        info = {name: schoolName, number: schoolNumber}
+        console.log(`Currently Updating\nSchool Name: ${info.name} School Number: ${info.number}`)
+    }
+}
+
 const savingResults = (results) => {
     _.each(results, student => {
 
+        logger(student, {})
         const subjects = student.subjects
         const splitedSubject = splitSubject(subjects)
         const dirtySubjectsObj = splitToObject(splitedSubject)
         const cleanSubjectsObj = cleanDirtySubjects(dirtySubjectsObj)
-        const supportingStupids = unstupidify(cleanSubjectsObj)
-        console.log(supportingStupids)
+        const evenCleanerSubjects = unstupidify(cleanSubjectsObj)
+
+        student.subjects = evenCleanerSubjects
+        student.save()
+
     })
 }
 
-function executor(err, result) {
+function executor(err, results) {
     if(err) { return err }
+
+    if(results.length === 0) {
+        console.log('Done!')
+        return 'Done'
+    }
     
-    savingResults(result)
+    savingResults(results)
 
 }
 

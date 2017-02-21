@@ -11,9 +11,9 @@ import standardize from './stds'
 
 mongoose.Promise = es6Promise.Promise
 try {
-    mongoose.connect('mongodb://localhost/necta')
+    mongoose.connect('mongodb://localhost/necta-backup')
 }catch(err) {
-    mongoose.createConnection('mongodb://localhost/necta')
+    mongoose.createConnection('mongodb://localhost/necta-backup')
 }
 
 const app = new koa()

@@ -21,9 +21,12 @@ export async function getSchools(queryParams) {
     return schools
 }
 
-export async function updateStudents(updater) {
-    // await Results.find().exec(updater)
-    const results = await SampleDb.find().exec(updater)
+export function updateStudents(updater) {
+    const rollerCoaster = setInterval(async () => {
+        let res = await Results.find({subjects: {'$regex': /[A-Z]/}}).limit(1000).exec(updater)
 
-    return results
+        if(res === 'Done') {
+            clearInterval(rollerCoaster)
+        }
+    }, 3000)
 }
