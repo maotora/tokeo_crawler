@@ -3,7 +3,7 @@ import { executor } from './../stds/'
 import _ from 'lodash'
 
 function updater() {
-    knex('results').select('*').whereNull('subjects').limit(1000).map((student) => {
+    knex('results').select('*').whereNull('subjects').whereNot('subjects-raw', '"---"').limit(8000).map((student) => {
 
             let updatedStudent = executor(null, student)
 
@@ -12,6 +12,7 @@ function updater() {
 
     }).then((ids) => console.log('Chillin...'))
         .catch((err) => console.error(err))
+        .finally(() => console.log('Done lol!'))
 }
 
 export default function rollIt() {

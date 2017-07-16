@@ -1,4 +1,4 @@
-import { updateStudents } from './../db/'
+// import { updateStudents } from './../db/' --> Refer to the comment on the bottom
 import _ from 'lodash'
 //- Standards for the app.
 
@@ -105,12 +105,12 @@ const logger = ({schoolName, schoolNumber}, info) => {
 
 const savingResults = (student) => {
 
-    logger(student, {})
     const subjects = student['subjects-raw']
     const splitedSubject = splitSubject(subjects)
     const dirtySubjectsObj = splitToObject(splitedSubject)
     const cleanSubjectsObj = cleanDirtySubjects(dirtySubjectsObj)
     const evenCleanerSubjects = unstupidify(cleanSubjectsObj)
+    logger(student, {})
 
     student.subjects = evenCleanerSubjects
 
@@ -131,7 +131,7 @@ export function executor(err, results) {
 
 }
 
-//- The way I used mongodb: won't bother with pg
-export default async function() {
-    await updateStudents(executor)
-}
+//- The way I used mongodb: won't bother with pg --> Good point Me from last year, this is me from year 2017 I'm proud of this comment.
+// export default async function() {
+//     await updateStudents(executor)
+// }
