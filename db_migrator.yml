@@ -1,0 +1,18 @@
+necta:
+  results:
+    :columns:
+      - id:
+        :source: _id
+        :type: TEXT
+      - studentNumber: TEXT
+      - studentName: TEXT
+      - gender: TEXT
+      - division: TEXT
+      - points: TEXT
+      - subjects: TEXT
+      - examType: TEXT
+      - examYear: TEXT
+      - schoolNumber: TEXT
+      - schoolName: TEXT
+    :meta:
+      :table: results

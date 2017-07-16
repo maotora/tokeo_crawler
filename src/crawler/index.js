@@ -23,6 +23,7 @@ function getSchoolsLink(mainLink, cb, fail) {
 
                     const jQuery = window.$
                     schoolLinks = getResultsLinks(jQuery)
+                    mainLink = mainLink.slice(0, -9) //- For http://www.necta.go.tz/matokeo/ACSEE2017/index.htm & http://maktaba.tetea.org/exam-results/ACSEE2017/index.htm
                     schoolLinks = _.map(schoolLinks, (eachLink) => `${mainLink}${eachLink}`)
 
                     cb(schoolLinks)
@@ -131,8 +132,8 @@ function processPartialResults(linksArray) {
 }
 
 async function getResultsNetworkErorr(link) {
-    let mainLink = link.slice(0, 51)
-    console.log(`Network Error while parsing:\n${mainLink}`)
+    console.log(`Network Error while parsing:\n${link}`)
+    let mainLink = `${link.slice(0, -9)}index.htm`
 
     const links = await getLinks(mainLink)
     
@@ -144,7 +145,8 @@ const isHtm = (str) => str && str.slice(-4).indexOf('.') >= 0
 
 function extractFromUrl(link, type) {
     if(type === 'main') {
-        const typeYear = link.slice(42).slice(0, -1)
+        // const typeYear = link.slice(38).slice(0, 9) //- For : http://www.necta.go.tz/matokeo/ACSEE2017/index.htm
+        const typeYear = link.slice(38).slice(0, -10) //- For http://www.maktaba.tetea.org/exam-results/ACSEE2017/index.htm
         let examType = ''
         let year = ''
 
@@ -175,7 +177,7 @@ async function checkResultsExistance(mainLink) {
     return await getSchools({examYear, examType})
 }
 
-export default async function runner(mainLink) {
+const runner = async function runner(mainLink) {
     const links = await getLinks(mainLink)
     const dbSchools = links.dbSchools
     const urlLinks = links.urlLinks
@@ -201,7 +203,9 @@ function rollerCoaster(links) {
 
 async function getLinks(mainLink) {
     const dbSchools = await checkResultsExistance(mainLink)
-    const urlLinks = await promisify(getSchoolsLink, mainLink)
+    let urlLinks = await promisify(getSchoolsLink, mainLink)
 
     return {dbSchools, urlLinks}
 }
+
+export default runner

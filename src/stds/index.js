@@ -45,20 +45,23 @@ const splitSubject = (subject) => {
 const splitToObject = (subjectArr) => {
     return _.reduce(subjectArr, (acc, currentSubj, index, array) => {
         const obj = {}
-        if(currentSubj.length === 1) {
+        
+        //- currentSuj = ['CIV B'], ['CIV B+'], ['A'] or ['B+']
+        
+        if(currentSubj.length === 1 || currentSubj.length === 2) { //- Some grades have B+ which fucks up everything!
             //- Grade
             const lastSubject = acc[--index].grade = currentSubj
             return _.concat(acc, lastSubject)
-        } else if(currentSubj.length > 1) {
+        } else if(currentSubj.length > 2) { //- Cause it might be [B+].length === 2 and should resign ^
             //- Grade &/Or subject
 
-            const chunk = _.split(currentSubj, ' ')
-            const gradeChunk = _.slice(chunk, 0, 1)
+            const chunk = _.split(currentSubj, ' ') //- chunk = ['CIV', 'B'] or ['CIV', 'B', '+']
+            const gradeChunk = _.slice(chunk, 0, 1) //- gradeChunk = ['B'] or['B', '+'] and the array[0] is ['CIV']
             let grade = ''
             let subj = ''
 
-            if(gradeChunk[0].length > 1) {
-                subj = gradeChunk
+            if(gradeChunk[0].length > 2) {
+                subj = gradeChunk //- Getting the array[0] === ['CIV'] to subject
             } else {
                 grade = gradeChunk
                 subj = _.slice(chunk, 1)
@@ -72,6 +75,7 @@ const splitToObject = (subjectArr) => {
             return _.concat(acc, obj)
         }
     }, [])
+
 }
 
 const cleanDirtySubjects = (dirtySubjects) => {
@@ -99,23 +103,23 @@ const logger = ({schoolName, schoolNumber}, info) => {
     }
 }
 
-const savingResults = (results) => {
-    _.each(results, student => {
+const savingResults = (student) => {
 
-        logger(student, {})
-        const subjects = student.subjects
-        const splitedSubject = splitSubject(subjects)
-        const dirtySubjectsObj = splitToObject(splitedSubject)
-        const cleanSubjectsObj = cleanDirtySubjects(dirtySubjectsObj)
-        const evenCleanerSubjects = unstupidify(cleanSubjectsObj)
+    logger(student, {})
+    const subjects = student['subjects-raw']
+    const splitedSubject = splitSubject(subjects)
+    const dirtySubjectsObj = splitToObject(splitedSubject)
+    const cleanSubjectsObj = cleanDirtySubjects(dirtySubjectsObj)
+    const evenCleanerSubjects = unstupidify(cleanSubjectsObj)
 
-        student.subjects = evenCleanerSubjects
-        student.save()
+    student.subjects = evenCleanerSubjects
 
-    })
+    return student
+
 }
 
-function executor(err, results) {
+//- Exporting for pg usage
+export function executor(err, results) {
     if(err) { return err }
 
     if(results.length === 0) {
@@ -123,10 +127,11 @@ function executor(err, results) {
         return 'Done'
     }
     
-    savingResults(results)
+    return savingResults(results)
 
 }
 
+//- The way I used mongodb: won't bother with pg
 export default async function() {
     await updateStudents(executor)
 }
