@@ -103,9 +103,18 @@ const logger = ({schoolName, schoolNumber}, info) => {
     }
 }
 
+const cleanQuotes = str => {
+    if(str.indexOf('"') > -1) {
+        str = str.replace(/\"/g, '')
+    }
+
+    return str
+}
+
 const savingResults = (student) => {
 
-    const subjects = student['subjects-raw']
+    const subjectsWithQuotes = student['subjects-raw']
+    const subjects = cleanQuotes(subjectsWithQuotes)
     const splitedSubject = splitSubject(subjects)
     const dirtySubjectsObj = splitToObject(splitedSubject)
     const cleanSubjectsObj = cleanDirtySubjects(dirtySubjectsObj)
@@ -113,6 +122,8 @@ const savingResults = (student) => {
     logger(student, {})
 
     student.subjects = evenCleanerSubjects
+
+    console.log('Got you this ', evenCleanerSubjects)
 
     return student
 
