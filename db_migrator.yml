@@ -1,4 +1,4 @@
-necta:
+necta-2017:
   results:
     :columns:
       - id:
@@ -6,7 +6,7 @@ necta:
         :type: TEXT
       - studentNumber: TEXT
       - studentName: TEXT
-      - gender: TEXT
+      - gender: VARCHAR(1)
       - division: TEXT
       - points: TEXT
       - subjects: TEXT
