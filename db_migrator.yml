@@ -15,4 +15,4 @@ necta-2017:
       - schoolNumber: TEXT
       - schoolName: TEXT
     :meta:
-      :table: results
+      :table: necta

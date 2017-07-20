@@ -5,7 +5,7 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'necta',
+      database: 'statistics-test',
       user:     'postgres',
       password: ''
     },

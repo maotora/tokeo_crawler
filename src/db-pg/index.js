@@ -3,11 +3,11 @@ import { executor } from './../stds/'
 import _ from 'lodash'
 
 function updater() {
-    knex('results').select('*').whereNull('subjects').whereNot('subjects-raw', '"---"').limit(8000).map((student) => {
+    knex('necta').select('*').whereNull('subjects').whereNot('subjects-raw', '"---"').limit(5000).map((student) => {
 
             let updatedStudent = executor(null, student)
 
-            return knex('results').where({id: updatedStudent.id})
+            return knex('necta').where({id: updatedStudent.id})
                 .update({subjects: JSON.stringify(updatedStudent.subjects)}, 'id')
 
     }).then((ids) => console.log('Chillin...'))
