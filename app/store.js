@@ -5,6 +5,7 @@ import rootReducer from './reducers'
 import rootSaga from './sagas'
 import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
+import persistStorage from 'redux-localstorage'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createHistory()
@@ -27,7 +28,7 @@ const middlewares = [sagaMiddleware, logger, routingMiddleware];
 //     return store.run(rootSaga)
 // }
 
-const middleware = compose(applyMiddleware(...middlewares))
+const middleware = compose(applyMiddleware(...middlewares), persistStorage())
 const store = createStore(rootReducer, {}, middleware)
 sagaMiddleware.run(rootSaga)
 
