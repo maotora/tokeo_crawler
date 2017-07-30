@@ -82,7 +82,7 @@ class LoggedIn extends Component {
                         <Text 
                             horizontalAlignment="center"
                             style={{fontSize: 20}}
-                        > Tables Screen </Text>
+                        > Tables Page </Text>
                     </Col>
                     <Col md={4}>
                         <Text>Logged in as {this.props.user.username}</Text>
