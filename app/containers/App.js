@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import { Route } from 'react-router-dom'
 import { Window, TitleBar } from 'react-desktop/windows'
 
 export default class App extends Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired
-  };
-
   render() {
     return (
         <Window

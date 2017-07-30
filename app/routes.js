@@ -1,19 +1,25 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { BrowserRouter as Router, Switch, Route, IndexRoute } from 'react-router-dom'
+import { Window, TitleBar } from 'react-desktop/windows'
 
+// import App from './containers/App'
 import App from './containers/App'
 import MainPage from './containers/mainPage'
 import AddAdmin from './containers/addAdmin'
 import AddCustomer from './containers/addCustomer'
-import LoggedIn from './containers/LoggedInPage'
-import Login from './containers/LoginPage'
+import LoggedIn from './components/LoggedIn'
+import Login from './components/Login'
 
-export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={MainPage} />
-    <Route path="add_customer" component={AddCustomer} />
-    <Route path="add_admin" component={AddAdmin} />
-    <Route path="login" component={Login} />
-    <Route path="loggedin" component={LoggedIn} />
-  </Route>
-);
+export default () => {
+    return (
+        <Router>
+            <App>
+                <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/loggedin" component={LoggedIn} />
+                    <Route path="/" component={MainPage} />
+                </Switch>
+            </App>
+        </Router>
+    )
+}

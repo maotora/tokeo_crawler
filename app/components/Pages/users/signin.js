@@ -1,23 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { Label, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
+import { connect } from 'react-redux'
 
 class SignIn extends Component {
     constructor(props) {
         super(props)
     }
 
-    static propTypes = {
-        onLogin: PropTypes.func.isRequired
-    };
-
     handleLogin() {
-        const { onLogin } = this.props;
+        const { dispatch } = this.props;
         const username = this.refs.username.value;
+        const password = this.refs.passwd.value;
 
-        onLogin({ username, loggedIn: true });
+        dispatch({type: 'LOGIN_CLICK', payload: {username, password}});
 
-        this.props.router.push('/loggedin');
+        this.props.history.push('/loggedin');
     }
 
     render() {
@@ -48,4 +46,8 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn
+const mapStateToProps = state => ({
+    creds: state
+})
+
+export default connect(mapStateToProps)(SignIn)

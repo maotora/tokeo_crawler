@@ -8,7 +8,7 @@ class Main extends Component {
     }
 
     handleClick() {
-        this.props.router.push('/login')
+        this.props.history.push('/login')
     }
 
     render() {
@@ -50,6 +50,7 @@ class Main extends Component {
                         <Button
                             onClick={::this.handleClick}
                             color="blue"
+                            push={true}
                         >
                             Get Started
                         </Button>

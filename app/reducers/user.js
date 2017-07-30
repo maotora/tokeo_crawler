@@ -1,8 +1,40 @@
-import { handleActions } from 'redux-actions';
-import actions from '../actions/user';
+const initialState = {
+    username: null,
+    password: null,
+    logged: false,
+}
 
-export default handleActions({
-  [actions.login]: (state, action) => {
-    return { ...state, ...action.payload };
-  }
-}, {});
+function reducer(state=initialState, {type, payload}) {
+    switch(type) {
+        case 'LOGIN_CLICK': {
+            return {
+                ...state,
+                username: payload.username,
+                password: payload.password,
+                logged: true,
+            }
+        }
+
+        case 'LOGIN': {
+            return {
+                ...state,
+                username: payload.username,
+                password: payload.password,
+                logged: true,
+            }
+        }
+
+        case 'LOGOUT': {
+            return {
+                ...state,
+                username: null,
+                password: null,
+                logged: false,
+            }
+        }
+    }
+
+    return state
+}
+
+export default reducer

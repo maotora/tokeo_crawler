@@ -1,37 +1,30 @@
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import { hashHistory } from 'react-router';
-import { routerMiddleware, routerReducer as routing, push } from 'react-router-redux';
-import persistState from 'redux-localstorage';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import logger from 'redux-logger'
+import rootReducer from './reducers'
+import rootSaga from './sagas'
 
-import user from './reducers/user';
-import userActions from './actions/user';
+const sagaMiddleware = createSagaMiddleware()
 
-const router = routerMiddleware(hashHistory);
+const middlewares = [sagaMiddleware, logger];
 
-const actionCreators = {
-  ...userActions,
-  push
-};
+// const composeEnhancers = (() => {
+//     const compose_ = window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+//     if(process.env.NODE_ENV === 'development' && compose_) {
+//         return compose_();
+//     }
+//     return compose;
+// })();
 
-const reducers = {
-  user,
-  routing
-};
+// export default function configureStore(initialState) {
+//     const enhancer = composeEnhancers(applyMiddleware(...middlewares));
+//     const store = createStore(rootReducer, initialState, enhancer);
 
-const middlewares = [ thunk, router ];
+//     return store.run(rootSaga)
+// }
 
-const composeEnhancers = (() => {
-  const compose_ = window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-  if(process.env.NODE_ENV === 'development' && compose_) {
-    return compose_({ actionCreators });
-  }
-  return compose;
-})();
+const middleware = compose(applyMiddleware(...middlewares))
+const store = createStore(rootReducer, {}, middleware)
+sagaMiddleware.run(rootSaga)
 
-export default function configureStore(initialState) {
-  const enhancer = composeEnhancers(applyMiddleware(...middlewares), persistState());
-  const rootReducer = combineReducers(reducers);
-  
-  return createStore(rootReducer, initialState, enhancer);
-}
+export default store

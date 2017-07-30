@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
+import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 
-export default class LoggedIn extends Component {
+class LoggedIn extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -81,7 +82,7 @@ export default class LoggedIn extends Component {
                         <Text 
                             horizontalAlignment="center"
                             style={{fontSize: 20}}
-                        > Tables Page </Text>
+                        > Tables Screen </Text>
                     </Col>
                     <Col md={4}>
                         <Text>Logged in as {this.props.user.username}</Text>
@@ -92,3 +93,8 @@ export default class LoggedIn extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    user: state.user
+})
+
+export default connect(mapStateToProps)(LoggedIn)
