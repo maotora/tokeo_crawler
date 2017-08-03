@@ -9,10 +9,10 @@ const Header = props => {
                 <Text 
                     horizontalAlignment="center"
                     style={{fontSize: 20}}
-                > Customer Page </Text>
+                > {props.pageName} Page </Text>
             </Col>
             <Col md={4}>
-                <Text>Logged in as {props.user.username}</Text>
+                <Text>Logged in as {props.logged.username}</Text>
             </Col>
         </Row>
     )

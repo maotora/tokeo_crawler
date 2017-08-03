@@ -1,39 +1,36 @@
 import React, { Component } from 'react';
-import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
+import { TextInput, View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import * as icons from 'react-icons/lib/fa'
+import { connect } from 'react-redux'
 import Header from './header'
 
-const products = [
-    {
-        id: 1,
-        name: "product 1",
-        price: 20
-    },
-
-    {
-        id: 2,
-        name: "product 2",
-        price: 40
-    },
-    {
-        id: 3,
-        name: "product 3",
-        price: 80
-    }
-]
-
 const Table = props => {
+	const { history, customers } = props
+
     return (
         <Container>
-            <Header {...props} />
+            <Header pageName="Tables" {...props} />
+			<Row>
+				<Col md={8}>
+					<Col md={4}></Col>
+					<Col md={8}>
+						<TextInput width="90%" placeholder="Search Customers" />
+					</Col>
+				</Col>
+				<Col md={4}>
+					<Button onClick={() => history.push('/add_customer')} push={true} color="green">Add Customer</Button>
+				</Col>
+			</Row>
             <Row>
                 <Col md={11}>
-                    <BootstrapTable data={products} hover striped>
-                        <TableHeaderColumn isKey dataField="id">Product ID</TableHeaderColumn>
-                        <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="price">Price</TableHeaderColumn>
+                    <BootstrapTable data={customers} hover striped>
+                        <TableHeaderColumn isKey={true} dataField="name">Customer Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="email">Email</TableHeaderColumn>
+                        <TableHeaderColumn dataField="phone">Phone</TableHeaderColumn>
+                        <TableHeaderColumn dataField="product">Product Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="startDate">Start Date</TableHeaderColumn>
+                        <TableHeaderColumn dataField="endDate">End Date</TableHeaderColumn>
                     </BootstrapTable>
                 </Col>
             </Row>
@@ -41,4 +38,8 @@ const Table = props => {
     )
 }
 
-export default Table
+const mapStateToProps = state => ({
+	customers: state.customers
+})
+
+export default connect(mapStateToProps)(Table)

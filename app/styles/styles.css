@@ -1,0 +1,10 @@
+/*** Most doesn't work, will chekc on it later */
+* {
+    box-sizing: border-box;
+}
+
+input {
+    margin-bottom: 10;
+}
+
+

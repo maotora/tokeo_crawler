@@ -13,7 +13,7 @@ class Main extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={styles.container}>
                 <Row>
                     <View>
                         <Text 
@@ -65,6 +65,12 @@ class Main extends Component {
                 </Row>
             </Container>
         )
+    }
+}
+
+const styles = {
+    container: {
+        padding: 30
     }
 }
 

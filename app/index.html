@@ -3,14 +3,20 @@
   <head>
     <title>Mijengo</title>
     <link rel="stylesheet" href="../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"/>
-     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
-        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./styles/bootstrap-yeti.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <style>
+        body {
+            overlfow: hidden;
+        }
+    </style>
   </head>
   <body>
     <div id="app"></div>
     <script src="./app.js" data-container="#app"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
+        const jQuery = require('jquery')
       if (process.env.BROWSER_SYNC_CLIENT_URL) {
         const current = document.currentScript;
         const script = document.createElement('script');
@@ -19,5 +25,6 @@
         current.parentNode.insertBefore(script, current);
       }
     </script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -17,21 +17,21 @@ class LoggedIn extends Component {
 
     render() {
         return (
-            <Container style={styles.container}>
+            <Col> {/* Col -> Gives better fullscreen than Container */}
                 <Row>
                     <Col>
                         <NavPane push={true} openLength={200}>
-                            {this.renderItems('Customer', 'Customers Content', 'FaUser')}
-                            {this.renderItems('Tables', 'Tables Content', 'FaTh')}
-                            {this.renderItems('Admin', 'Admin Content', 'FaUserSecret')}
+                            {this.renderItems('Customer', 'FaUser')}
+                            {this.renderItems('Tables', 'FaTh')}
+                            {this.renderItems('Admin', 'FaUserSecret')}
                         </NavPane>
                     </Col>
                 </Row>
-            </Container>
+            </Col>
         );
     }
 
-    renderItems(title, content, iconParam) {
+    renderItems(title, iconParam) {
         const icon = icons[iconParam]
         return (
             <NavPaneItem
@@ -60,7 +60,8 @@ class LoggedIn extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    logged: state.login,
+	users: state.users,
 })
 
 const styles = {

@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
+import { View, TextInput, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import * as icons from 'react-icons/lib/fa'
 
-const CustomerList = props => {
-    const { history, data, dispatch } = props
-
-	function removeCustomer(index) {
-		dispatch({type: 'REMOVE_CUSTOMER', payload: {index}})
+class List extends Component {
+    constructor(props) {
+        super(props)
+    }
+	
+	removeAdmin(index) {
+		const { history, dispatch } = this.props
+		dispatch({type: 'REMOVE_USER', payload: {index}})
 		history.push('/admin')
 	}
 
-    function list(data) {
+    adminLists(data) {
         if(data.length >= 1) {
-            return data.map((item, index) => {
-                let { name, email, phone, product } = item
+            return data.map((admin, index) => {
+                const { names, role, email, phone } = admin
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -22,10 +25,10 @@ const CustomerList = props => {
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Customer Names: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Admin Names: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {name} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {names} </Text>
                             </Col>
                         </Col>
                         <Col>
@@ -46,37 +49,26 @@ const CustomerList = props => {
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Product Owned: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Admin Role </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {product} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {role} </Text>
                             </Col>
                         </Col>
-                        <Col> <Text horizontalAlignment="center" style={styles.form_title}> Customer Actions </Text> </Col>
+                        <Col> <Text horizontalAlignment="center" style={styles.form_title}> Admin Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
-                            <Col md={3}>
-                                <Button push={true}>
+                            <Col md={1}>
+                                <button className="btn btn-primary">
                                     {icons.FaPencil()}
-                                </Button>
+                                </button>
                                 <Text style={styles.form_text}> Edit </Text>
                             </Col>
-                            <Col md={3}>
-                                <Button push={true}>
-                                    {icons.FaPlus()}
-                                </Button>
-                                <Text style={styles.form_text}> Add Product </Text>
-                            </Col>
-                            <Col md={3}>
-                                <Button push={true}>
-                                    {icons.FaFilePdfO()}
-                                </Button>
-                                <Text style={styles.form_text}> Contracts </Text>
-                            </Col>
-                            <Col md={3}>
-                                <Button push={true} onClick={() => removeCustomer(index)}>
+                            <Col md={10}></Col> {/* Spacer */}
+                            <Col md={1}>
+                                <button className="btn btn-danger" onClick={() => this.removeAdmin(index)}>
                                     {icons.FaClose()}
-                                </Button>
-                                <Text style={styles.form_text}> Delete </Text>
+                                </button>
+                                <Text style={styles.form_text}> Remove </Text>
                             </Col>
                         </Col>
                         <Col> <hr /> </Col>
@@ -84,17 +76,24 @@ const CustomerList = props => {
                 )
             })
         } else {
-            return <Text> No customer yet! </Text>
+            return (
+                <Row>
+                    <Text> No admins for now </Text>
+                    <Text> Care to add one? </Text>
+                </Row>
+            )
         }
     }
 
-    return (
-        <Col>
-            <ul>
-                {list(data)}
-            </ul>
-        </Col>
-    )
+    render() {
+        return (
+            <Col>
+                <ul>
+                    {this.adminLists(this.props.data)}
+                </ul>
+            </Col>
+        )
+    }
 }
 
 const styles = {
@@ -121,4 +120,4 @@ const styles = {
         color: 'black',
     }
 }
-export default CustomerList
+export default List

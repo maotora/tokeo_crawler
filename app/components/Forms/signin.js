@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { Label, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
@@ -13,9 +14,9 @@ class SignIn extends Component {
         const username = this.refs.username.value;
         const password = this.refs.passwd.value;
 
-        dispatch({type: 'LOGIN_CLICK', payload: {username, password}});
+        dispatch({type: 'LOGIN', payload: {username, password}});
 
-        this.props.history.push('/loggedin');
+        this.props.history.push('/admin');
     }
 
     render() {
