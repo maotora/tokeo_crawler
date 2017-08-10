@@ -14,10 +14,16 @@ class List extends Component {
 		history.push('/admin')
 	}
 
+    toEdit(data) {
+		const { dispatch, history } = this.props
+		dispatch({type: 'USER_EDITS', payload: {data}})
+		history.push('edit_admin')
+    }
+
     adminLists(data) {
         if(data.length >= 1) {
             return data.map((admin, index) => {
-                const { names, role, email, phone } = admin
+                const { firstName, lastName, role, email, phone } = admin
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -28,7 +34,7 @@ class List extends Component {
                                 <Text style={{...styles.form_text, ...styles.property}}> Admin Names: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {names} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {`${lastName}, ${firstName}`} </Text>
                             </Col>
                         </Col>
                         <Col>
@@ -58,7 +64,9 @@ class List extends Component {
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Admin Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
                             <Col md={1}>
-                                <button className="btn btn-primary">
+                                <button className="btn btn-primary"
+                                    onClick={() => this.toEdit({admin, index})}
+                                >
                                     {icons.FaPencil()}
                                 </button>
                                 <Text style={styles.form_text}> Edit </Text>

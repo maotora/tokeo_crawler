@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 
-const AddCustomer = props => {
-    const {handleSubmit, togglePassword, reset, history} = props
+let EditCustomer = props => {
+    const {handleSubmit, togglePassword, reset, history, getIndex} = props
+    getIndex(props.initialValues.index)
 
     return (
         <Row style={styles.container}>
@@ -99,9 +101,13 @@ const AddCustomer = props => {
     )
 }
 
-const config = {
-    form: 'add_customer'
+const formConfig = {
+    form: 'edit_customer'
 }
+
+const reduxConfig = state => ({
+    initialValues: state.customerTempEdits
+})
 
 const styles = {
     container: {
@@ -112,4 +118,5 @@ const styles = {
     }
 }
 
-export default reduxForm(config)(AddCustomer)
+EditCustomer = reduxForm(formConfig)(EditCustomer)
+export default connect(reduxConfig)(EditCustomer)

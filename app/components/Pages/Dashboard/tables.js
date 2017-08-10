@@ -25,7 +25,7 @@ const Table = props => {
             <Row>
                 <Col md={11}>
                     <BootstrapTable data={customers} hover striped>
-                        <TableHeaderColumn isKey={true} dataField="name">Customer Name</TableHeaderColumn>
+                        <TableHeaderColumn isKey={true} dataField="names">Customer Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="email">Email</TableHeaderColumn>
                         <TableHeaderColumn dataField="phone">Phone</TableHeaderColumn>
                         <TableHeaderColumn dataField="product">Product Name</TableHeaderColumn>

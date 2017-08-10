@@ -3,18 +3,27 @@ import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import * as icons from 'react-icons/lib/fa'
 
-const CustomerList = props => {
-    const { history, data, dispatch } = props
+class CustomerList extends Component {
+    constructor(props) {
+        super(props)
+    }
 
-	function removeCustomer(index) {
+    toEditCustomer(data) {
+        const { history, dispatch } = this.props
+        dispatch({type: 'CUSTOMER_EDITS', payload: {data}})
+        history.push('/edit_customer')
+    }
+
+	removeCustomer(index) {
+        const { history, data, dispatch } = this.props
 		dispatch({type: 'REMOVE_CUSTOMER', payload: {index}})
 		history.push('/admin')
 	}
 
-    function list(data) {
+    list(data) {
         if(data.length >= 1) {
             return data.map((item, index) => {
-                let { name, email, phone, product } = item
+                let { firstName, lastName, email, phone, product } = item
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -25,7 +34,7 @@ const CustomerList = props => {
                                 <Text style={{...styles.form_text, ...styles.property}}> Customer Names: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {name} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {`${lastName}, ${firstName}`} </Text>
                             </Col>
                         </Col>
                         <Col>
@@ -55,7 +64,9 @@ const CustomerList = props => {
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Customer Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
                             <Col md={3}>
-                                <Button push={true}>
+                                <Button push={true}
+                                    onClick={() => this.toEditCustomer({item, index})}
+                                >
                                     {icons.FaPencil()}
                                 </Button>
                                 <Text style={styles.form_text}> Edit </Text>
@@ -73,7 +84,7 @@ const CustomerList = props => {
                                 <Text style={styles.form_text}> Contracts </Text>
                             </Col>
                             <Col md={3}>
-                                <Button push={true} onClick={() => removeCustomer(index)}>
+                                <Button push={true} onClick={() => this.removeCustomer(index)}>
                                     {icons.FaClose()}
                                 </Button>
                                 <Text style={styles.form_text}> Delete </Text>
@@ -88,13 +99,17 @@ const CustomerList = props => {
         }
     }
 
-    return (
-        <Col>
-            <ul>
-                {list(data)}
-            </ul>
-        </Col>
-    )
+    render() {
+        const { history, data, dispatch } = this.props
+
+        return (
+            <Col>
+                <ul>
+                    {this.list(data)}
+                </ul>
+            </Col>
+        )
+    }
 }
 
 const styles = {

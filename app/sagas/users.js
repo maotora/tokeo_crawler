@@ -1,4 +1,6 @@
 import { select, put, call, take } from 'redux-saga/effects'
+import { Redirect } from 'react-router-dom'
+import _ from 'lodash'
 
 export function *loginSaga() {
     try {
@@ -25,4 +27,24 @@ export function *removeUserSaga() {
 	} catch(err) {
 		console.log(err)
 	}
+}
+
+export function *editUserSaga({payload}) {
+    try {
+        let usersData = yield select(state => state.users)
+
+        usersData = _.map(usersData, (user, index) => {
+            if(index === payload.index) {
+                delete payload.index
+                user = payload
+            }
+
+            return user
+        })
+
+        yield put({type: 'EDIT_USER', payload: {data: usersData}})
+
+    } catch(err) {
+        console.log(err)
+    }
 }

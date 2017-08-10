@@ -2,29 +2,15 @@ import _ from 'lodash'
 
 const initialUsersState = [
     {
-        'names': 'Simoni Salikile',
-        'phone': '+255742938281',
-        'email': 'simon@mail.admin.yo',
-        'role': 'Viewer',
-        'username': 'ArchNoob',
-        'password': 'kajsdfkljf',
-    },
-    {
-        'names': 'Malinge Plahh',
-        'phone': '+255742938281',
-        'email': 'simon@mail.admin.yo',
-        'role': 'Administrator',
-        'username': 'ArchNoob',
-        'password': '10291asjk',
-    },
-    {
-        'names': 'Sumoki Salmin',
-        'phone': '+255742938281',
-        'email': 'simon@mail.admin.yo',
-        'role': 'Administrator',
-        'username': 'ArchNoob',
-        'password': 'kajsdfkljasdklf',
-    },
+        firstName: null,
+        lastName: null,
+        names: null,
+        username: null,
+        password: null,
+        role: null,
+        phone: null,
+        email: null,
+    }
 ]
 
 const initialLoginState = {
@@ -61,13 +47,25 @@ function usersReducer(state=initialUsersState, {type, payload}) {
     switch(type) {
         case 'SIGNUP': {
 			state = state.concat({
+				firstName: payload.firstName,
+				lastName: payload.lastName,
+                names: `${payload.firstName} ${payload.lastName}`,
 				username: payload.username,
 				password: payload.password,
-				names: `${payload.lastName}, ${payload.firstName}`,
 				role: payload.role,
 				phone: payload.phone,
 				email: payload.email,
-			logged: true})
+                logged: true
+            })
+
+            return state
+        }
+
+        case 'EDIT_USER': {
+            const { data } = payload
+            state = data
+
+            return state
         }
 
 		case 'REMOVE_USER': {
@@ -75,9 +73,11 @@ function usersReducer(state=initialUsersState, {type, payload}) {
 				return index === payload.index
 			})
 		}
+
+        return state
 	}
 
-	return state
+	return state || []
 }
 
 export {usersReducer, loginReducer}

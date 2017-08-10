@@ -6,7 +6,9 @@ import MainPage from './containers/mainPage'
 import Dashboard from './components/Pages/Dashboard'
 import Login from './components/Login'
 import AddAdmin from './components/Pages/users/addAdmin'
+import EditAdmin from './components/Pages/users/editAdmin'
 import AddCustomer from './components/Pages/customers/addCustomers'
+import EditCustomer from './components/Pages/customers/editCustomer'
 import Admin from './components/Pages/users/admin'
 
 export default () => {
@@ -16,6 +18,8 @@ export default () => {
                 <Route path="/login" component={Login} />
                 <Route path="/admin" component={Dashboard} />
                 <Route path="/add_admin" component={AddAdmin} />
+                <Route path="/edit_admin" component={EditAdmin} />
+                <Route path="/edit_customer" component={EditCustomer} />
                 <Route path="/add_customer" component={AddCustomer} />
                 <Route path="/" component={MainPage} />
             </Switch>
