@@ -9,7 +9,7 @@ necta-2017:
       - gender: VARCHAR(1)
       - division: TEXT
       - points: TEXT
-      - subjects: TEXT
+      - subjects: JSONB
       - examType: TEXT
       - examYear: TEXT
       - schoolNumber: TEXT
