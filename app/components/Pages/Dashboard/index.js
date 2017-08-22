@@ -3,7 +3,7 @@ import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
-import Table from './tables'
+import Table from '../tables'
 import Customers from '../customers'
 import Admin from '../users/admin'
 
@@ -17,7 +17,7 @@ class LoggedIn extends Component {
 
     render() {
         return (
-            <Col> {/* Col -> Gives better fullscreen than Container */}
+            <Col style={{overflow: 'hidden'}}> {/* Col -> Gives better fullscreen than Container */}
                 <Row>
                     <Col>
                         <NavPane push={true} openLength={200}>

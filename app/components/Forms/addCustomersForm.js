@@ -61,38 +61,36 @@ const AddCustomer = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="fromDate">Start Date</label>
+                    <label htmlFor="startDate">Start Date</label>
                     <Field
-                        name="fromDate"
+                        name="startDate"
                         component="input"
                         type="date"
                         className="form-control"
                     />
 
-                    <label htmlFor="toDate">End Date</label>
+                    <label htmlFor="endDate">End Date</label>
                     <Field
-                        name="toDate"
+                        name="endDate"
                         component="input"
                         type="date"
                         className="form-control"
                     />
 
-                    <Row style={{marginTop: 10}}>
-						<Col md={6}>
-							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-primary" type="submit">
-									Submit
-								</button>
-							</View>
-						</Col>
-						<Col md={6}>
-							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-danger" onClick={reset}>
-									Reset
-								</button>
-							</View>
-						</Col>
-                    </Row>
+                    <View width="100%" horizontalAlignment="center">
+                        <Row style={{marginTop: 10}}>
+                            <Col md={6}>
+                                    <button className="btn btn-primary" type="submit">
+                                        Submit
+                                    </button>
+                            </Col>
+                            <Col md={6}>
+                                    <button className="btn btn-danger" onClick={reset}>
+                                        Reset
+                                    </button>
+                            </Col>
+                        </Row>
+                    </View>
                 </form>
             </Row>
         </Row>

@@ -20,6 +20,14 @@ class CustomerList extends Component {
 		history.push('/admin')
 	}
 
+    payments(index) {
+        console.log('To payments ', index)
+    }
+
+    contracts(index) {
+        console.log('To contaracts ', index)
+    }
+
     list(data) {
         if(data.length >= 1) {
             return data.map((item, index) => {
@@ -72,13 +80,13 @@ class CustomerList extends Component {
                                 <Text style={styles.form_text}> Edit </Text>
                             </Col>
                             <Col md={3}>
-                                <Button push={true}>
+                                <Button push={true} onClick={() => this.payments(index)}>
                                     {icons.FaPlus()}
                                 </Button>
-                                <Text style={styles.form_text}> Add Product </Text>
+                                <Text style={styles.form_text}> Payments </Text>
                             </Col>
                             <Col md={3}>
-                                <Button push={true}>
+                                <Button push={true} onClick={() => this.contracts(index)}>
                                     {icons.FaFilePdfO()}
                                 </Button>
                                 <Text style={styles.form_text}> Contracts </Text>

@@ -1,10 +1,17 @@
-/*** Most doesn't work, will chekc on it later */
-* {
-    box-sizing: border-box;
+.paid {
+    background-color: #D0ED4F !important;
 }
 
-input {
-    margin-bottom: 10;
+.expired {
+    background-color: #ED5249 !important;
+    font-weight: bold !important;
 }
 
+.fewer_days {
+    background-color: #ED9141 !important;
+    font-weight: bold !important;
+}
 
+.few_days {
+    background-color: #EDC54F !important;
+}

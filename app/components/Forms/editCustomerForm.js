@@ -63,17 +63,17 @@ let EditCustomer = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="fromDate">Start Date</label>
+                    <label htmlFor="startDate">Start Date</label>
                     <Field
-                        name="fromDate"
+                        name="startDate"
                         component="input"
                         type="date"
                         className="form-control"
                     />
 
-                    <label htmlFor="toDate">End Date</label>
+                    <label htmlFor="endDate">End Date</label>
                     <Field
-                        name="toDate"
+                        name="endDate"
                         component="input"
                         type="date"
                         className="form-control"

@@ -9,7 +9,7 @@ export default function *() {
         takeLatest('TO_EDIT_USER', editUserSaga),
         takeLatest('TO_EDIT_CUSTOMER', editCustomerSaga),
         takeLatest('REMOVE_USER', removeUserSaga),
-        takeLatest('ADD_CUSTOMER', addCustomerSaga),
+        takeLatest('TO_ADD_CUSTOMER', addCustomerSaga),
         takeLatest('REMOVE_CUSTOMER', removeCustomerSaga),
     ])
 }

@@ -15,6 +15,7 @@ const customerEdits = {
     product: null,
     phone: null,
     email: null,
+    status: null,
     startDate: null,
     index: null,
     endDate: null,
@@ -45,15 +46,17 @@ export function customerReducer(state=customerEdits, {type, payload}) {
     switch(type) {
         case 'CUSTOMER_EDITS': {
             const { data } = payload
+            const { item } = data
             state = {
-                ...state,
-                firstName: data.item.firstName,
-                lastName: data.item.lastName,
-                product: data.item.product,
-                phone: data.item.phone,
-                email: data.item.email,
-                fromDate: data.item.startDate,
-                toDate: data.item.endDate,
+                firstName: item.firstName,
+                lastName: item.lastName,
+                names: data.names,
+                product: item.product,
+                phone: item.phone,
+				status: item.status,
+                email: item.email,
+                startDate: item.startDate,
+                endDate: item.endDate,
                 index: data.index,
             }
         }
