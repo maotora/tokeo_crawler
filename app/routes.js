@@ -10,6 +10,8 @@ import EditAdmin from './components/Pages/users/editAdmin'
 import AddCustomer from './components/Pages/customers/addCustomers'
 import EditCustomer from './components/Pages/customers/editCustomer'
 import Admin from './components/Pages/users/admin'
+import Contracts from './components/Pages/contracts'
+import Payments from './components/Pages/payments'
 
 export default () => {
     return (
@@ -21,6 +23,8 @@ export default () => {
                 <Route path="/edit_admin" component={EditAdmin} />
                 <Route path="/edit_customer" component={EditCustomer} />
                 <Route path="/add_customer" component={AddCustomer} />
+                <Route path="/contracts" component={Contracts} />
+                <Route path="/payments" component={Payments} />
                 <Route path="/" component={MainPage} />
             </Switch>
         </Router>

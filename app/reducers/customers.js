@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 const initialCustomersState = [
     {
         firstName: null,
@@ -11,14 +9,14 @@ const initialCustomersState = [
         status: null,
         startDate: null,
         endDate: null,
+        payments: [],
     }
 ]
 
 export default function reducer(state=initialCustomersState, {type, payload}) {
     switch(type) {
         case 'ADD_CUSTOMER': {
-            state = _.concat(state, {
-                ...state,
+            state = state.concat({
                 firstName: payload.firstName,
                 lastName: payload.lastName,
                 names: `${payload.firstName} ${payload.lastName}`,
@@ -28,6 +26,7 @@ export default function reducer(state=initialCustomersState, {type, payload}) {
                 status: payload.status,
                 startDate: payload.startDate,
                 endDate: payload.endDate,
+                payments: payload.payments,
             })
 
             return state
@@ -40,13 +39,10 @@ export default function reducer(state=initialCustomersState, {type, payload}) {
         }
 
         case 'REMOVE_CUSTOMER': {
-            _.remove(state, (customer, index) => { 
-                return index === payload.index
-            })
-            return state
+            return state.filter((customer, index) => index !== payload.index)
         }
     }
 
-    return state || []
+    return state
 
 }

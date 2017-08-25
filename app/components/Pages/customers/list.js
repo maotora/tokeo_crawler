@@ -20,12 +20,10 @@ class CustomerList extends Component {
 		history.push('/admin')
 	}
 
-    payments(index) {
-        console.log('To payments ', index)
-    }
-
-    contracts(index) {
-        console.log('To contaracts ', index)
+    payments(data) {
+        const { history, dispatch } = this.props
+        dispatch({type: 'CUSTOMER_EDITS', payload: {data}})
+        history.push('/payments')
     }
 
     list(data) {
@@ -71,32 +69,25 @@ class CustomerList extends Component {
                         </Col>
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Customer Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
-                            <Col md={3}>
-                                <Button push={true}
-                                    onClick={() => this.toEditCustomer({item, index})}
-                                >
-                                    {icons.FaPencil()}
-                                </Button>
-                                <Text style={styles.form_text}> Edit </Text>
-                            </Col>
-                            <Col md={3}>
-                                <Button push={true} onClick={() => this.payments(index)}>
-                                    {icons.FaPlus()}
-                                </Button>
-                                <Text style={styles.form_text}> Payments </Text>
-                            </Col>
-                            <Col md={3}>
-                                <Button push={true} onClick={() => this.contracts(index)}>
-                                    {icons.FaFilePdfO()}
-                                </Button>
-                                <Text style={styles.form_text}> Contracts </Text>
-                            </Col>
-                            <Col md={3}>
-                                <Button push={true} onClick={() => this.removeCustomer(index)}>
-                                    {icons.FaClose()}
-                                </Button>
-                                <Text style={styles.form_text}> Delete </Text>
-                            </Col>
+                            <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
+                                <div className="btn-group" role="group">
+                                    <button className='btn btn-default'
+                                        onClick={() => this.toEditCustomer({item, index})}
+                                    >
+                                        <p style={styles.btn_text}> Edit Customer </p>
+                                    </button>
+                                </div>
+                                <div className="btn-group" role="group">
+                                    <button className='btn btn-default' onClick={() => this.payments({item, index})}>
+                                        <p style={styles.btn_text}> View Customer Payments </p>
+                                    </button>
+                                </div>
+                                <div className="btn-group" role="group">
+                                    <button className='btn btn-default' onClick={() => this.removeCustomer(index)}>
+                                        <p style={styles.btn_text}> Delete Customer </p>
+                                    </button>
+                                </div>
+                            </div>
                         </Col>
                         <Col> <hr /> </Col>
                     </li>
@@ -124,6 +115,9 @@ const styles = {
     form_text: {
         textAlign: 'center',
         lineHeight: 3,
+        fontSize: 17,
+    },
+    btn_text: {
         fontSize: 17,
     },
     property: {

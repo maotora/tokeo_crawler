@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 const initialUsersState = [
     {
         firstName: null,
@@ -69,15 +67,13 @@ function usersReducer(state=initialUsersState, {type, payload}) {
         }
 
 		case 'REMOVE_USER': {
-			_.remove(state, (user, index) => {
-				return index === payload.index
-			})
+            return state.filter((user, index) => index !== payload.index)
 		}
 
         return state
 	}
 
-	return state || []
+	return state
 }
 
 export {usersReducer, loginReducer}

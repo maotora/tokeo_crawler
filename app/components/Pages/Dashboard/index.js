@@ -7,7 +7,7 @@ import Table from '../tables'
 import Customers from '../customers'
 import Admin from '../users/admin'
 
-class LoggedIn extends Component {
+class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -70,4 +70,4 @@ const styles = {
         marginLeft: 50,
     }
 }
-export default connect(mapStateToProps)(LoggedIn)
+export default connect(mapStateToProps)(Dashboard)
