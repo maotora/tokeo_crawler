@@ -101,9 +101,14 @@ class Payments extends Component {
 }
 
 
-const mapStateToProps = state => ({
-    customer: state.customerTempEdits,
-    logged: state.login,
-})
+const mapStateToProps = state => {
+    const {id} = state.customerTempEdits
+    const customers = state.customers
+
+    return {
+        logged: state.login,
+        customer: customers[id]
+    }
+}
 
 export default connect(mapStateToProps)(Payments)

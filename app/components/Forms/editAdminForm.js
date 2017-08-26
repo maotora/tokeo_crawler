@@ -6,7 +6,7 @@ import { Field, reduxForm } from 'redux-form'
 
 let EditAdmin = props => {
     const {handleSubmit, togglePassword, getIndex, reset} = props
-    getIndex(props.initialValues.index)
+    getIndex(props.index)
 
     return (
         <Row style={styles.container}>
@@ -142,9 +142,15 @@ const formConfig = {
     form: 'edit_admin',
 }
 
-const reduxConfig = state => ({
-    initialValues: state.userTempEdits
-})
+const reduxConfig = state => {
+    const {id} = state.userTempEdits
+    const users = state.users
+
+    return {
+        initialValues: users[id],
+        index: id
+    }
+}
 
 const styles = {
     container: {

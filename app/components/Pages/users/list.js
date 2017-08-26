@@ -14,9 +14,9 @@ class List extends Component {
 		history.push('/admin')
 	}
 
-    toEdit(data) {
+    toEdit(index) {
 		const { dispatch, history } = this.props
-		dispatch({type: 'USER_EDITS', payload: {data}})
+		dispatch({type: 'USER_EDITS', payload: {id: index}})
 		history.push('edit_admin')
     }
 
@@ -65,7 +65,7 @@ class List extends Component {
                         <Col style={{marginTop: 10}}>
                             <Col md={1}>
                                 <button className="btn btn-primary"
-                                    onClick={() => this.toEdit({admin, index})}
+                                    onClick={() => this.toEdit(index)}
                                 >
                                     {icons.FaPencil()}
                                 </button>

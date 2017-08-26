@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 let PaymentsForm = props => {
     const {handleSubmit, togglePassword, reset, history, getIndex} = props
-    getIndex(props.initialValues.index)
+    getIndex(props.index)
 
     return (
         <Row style={styles.container}>
@@ -55,9 +55,15 @@ const formConfig = {
     form: 'payment_form'
 }
 
-const reduxConfig = state => ({
-    initialValues: state.customerTempEdits
-})
+const reduxConfig = state => {
+    const {id} = state.customerTempEdits
+    const customers = state.customers
+
+    return {
+        initialValues: customers[id],
+        index: id
+    }
+}
 
 const styles = {
     container: {

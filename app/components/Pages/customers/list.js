@@ -8,9 +8,10 @@ class CustomerList extends Component {
         super(props)
     }
 
-    toEditCustomer(data) {
+    toEditCustomer(index) {
+        console.log('Clicked lol ', index)
         const { history, dispatch } = this.props
-        dispatch({type: 'CUSTOMER_EDITS', payload: {data}})
+        dispatch({type: 'CUSTOMER_EDITS', payload: {id: index}})
         history.push('/edit_customer')
     }
 
@@ -20,9 +21,9 @@ class CustomerList extends Component {
 		history.push('/admin')
 	}
 
-    payments(data) {
+    payments(index) {
         const { history, dispatch } = this.props
-        dispatch({type: 'CUSTOMER_EDITS', payload: {data}})
+        dispatch({type: 'CUSTOMER_EDITS', payload: {id: index}})
         history.push('/payments')
     }
 
@@ -72,13 +73,13 @@ class CustomerList extends Component {
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
-                                        onClick={() => this.toEditCustomer({item, index})}
+                                        onClick={() => this.toEditCustomer(index)}
                                     >
                                         <p style={styles.btn_text}> Edit Customer </p>
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.payments({item, index})}>
+                                    <button className='btn btn-default' onClick={() => this.payments(index)}>
                                         <p style={styles.btn_text}> View Customer Payments </p>
                                     </button>
                                 </div>
