@@ -12,6 +12,8 @@ import EditCustomer from './components/Pages/customers/editCustomer'
 import Admin from './components/Pages/users/admin'
 import Contracts from './components/Pages/contracts'
 import Payments from './components/Pages/payments'
+import AddProperty from './components/Pages/properties/addProperty'
+import EditProperty from './components/Pages/properties/editProperty'
 
 export default () => {
     return (
@@ -25,6 +27,8 @@ export default () => {
                 <Route path="/add_customer" component={AddCustomer} />
                 <Route path="/contracts" component={Contracts} />
                 <Route path="/payments" component={Payments} />
+                <Route path="/add_property" component={AddProperty} />
+                <Route path="/edit_property" component={EditProperty} />
                 <Route path="/" component={MainPage} />
             </Switch>
         </Router>

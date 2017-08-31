@@ -41,7 +41,7 @@ function loginReducer(state=initialLoginState, {type, payload}) {
     return state
 }
 
-function usersReducer(state=initialUsersState, {type, payload}) {
+function usersReducer(state=[], {type, payload}) {
     switch(type) {
         case 'SIGNUP': {
 			state = state.concat({

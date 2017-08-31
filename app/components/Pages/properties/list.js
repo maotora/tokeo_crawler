@@ -3,33 +3,26 @@ import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import * as icons from 'react-icons/lib/fa'
 
-class CustomerList extends Component {
+class PropertiesList extends Component {
     constructor(props) {
         super(props)
     }
 
-    toEditCustomer(index) {
-        const { history, dispatch } = this.props
-        dispatch({type: 'CUSTOMER_EDITS', payload: {id: index}})
-        history.push('/edit_customer')
+    toEditProperty(id) {
+        this.props.dispatch({type: 'PROPERTY_EDITS', payload: {id}})
+        this.props.history.push('/edit_property')
     }
 
-	removeCustomer(index) {
-        const { history, data, dispatch } = this.props
-		dispatch({type: 'REMOVE_CUSTOMER', payload: {index}})
-		history.push('/admin')
-	}
-
-    payments(index) {
-        const { history, dispatch } = this.props
-        dispatch({type: 'CUSTOMER_EDITS', payload: {id: index}})
-        history.push('/payments')
+    toRemoveProperty(index) {
+        this.props.dispatch({type: 'REMOVE_PROPERTY', payload: index})
+        //- TODO change Dashboard highlighting to current screen
+        this.props.history.push('/admin')
     }
 
     list(data) {
-        if(data.length >= 1) {
-            return data.map((item, index) => {
-                let { firstName, lastName, email, phone, product } = item
+        if(data.length >= 1 && data[0].name !== null) {
+            return data.map((property, index) => {
+                let {name, owner, price, location, description} = property
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -37,54 +30,60 @@ class CustomerList extends Component {
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Customer Names: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Name: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {`${lastName}, ${firstName}`} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}>{name}</Text>
                             </Col>
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Email Address: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Location: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {email} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}>{location}</Text>
                             </Col>
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Phone Number: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Description: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {phone} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}>{description}</Text>
                             </Col>
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Product Owned: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Owner: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {product} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}>{owner}</Text>
                             </Col>
                         </Col>
-                        <Col> <Text horizontalAlignment="center" style={styles.form_title}> Customer Actions </Text> </Col>
+                        <Col>
+                            <Col md={4}>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Price: </Text>
+                            </Col>
+                            <Col md={8}>
+                                <Text style={{...styles.form_text, ...styles.value}}>{price}</Text>
+                            </Col>
+                        </Col>
+
+                        <Col> <Text horizontalAlignment="center" style={styles.form_title}> Property Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
-                                        onClick={() => this.toEditCustomer(index)}
+                                        onClick={() => this.toEditProperty(index)}
                                     >
-                                        <p style={styles.btn_text}> Edit Customer </p>
+                                        <p style={styles.btn_text}> Edit Property </p>
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.payments(index)}>
-                                        <p style={styles.btn_text}> View Customer Payments </p>
-                                    </button>
-                                </div>
-                                <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.removeCustomer(index)}>
-                                        <p style={styles.btn_text}> Delete Customer </p>
+                                    <button className='btn btn-default'
+                                        onClick={() => this.toRemoveProperty(index)}
+                                    >
+                                        <p style={styles.btn_text}> Delete Property </p>
                                     </button>
                                 </div>
                             </div>
@@ -94,17 +93,15 @@ class CustomerList extends Component {
                 )
             })
         } else {
-            return <Text> No customer yet! </Text>
+            return <Text> No Properties yet! </Text>
         }
     }
 
     render() {
-        const { history, data, dispatch } = this.props
-
         return (
-            <Col>
+            <Col md={12}>
                 <ul>
-                    {this.list(data)}
+                    {this.list(this.props.properties)}
                 </ul>
             </Col>
         )
@@ -138,4 +135,4 @@ const styles = {
         color: 'black',
     }
 }
-export default CustomerList
+export default PropertiesList

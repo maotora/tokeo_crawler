@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
+import { View, NavPaneItem, NavPane } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
@@ -76,7 +76,7 @@ class Payments extends Component {
         if(this.state.showUpdate) {
             return <UpdateCustomer update={true} {...this.props} />
         } else if(this.state.showRenew) {
-            return <UpdateCustomer update={false} {...this.props} />
+            return <UpdateCustomer renew={true} {...this.props} />
         }
     }
 

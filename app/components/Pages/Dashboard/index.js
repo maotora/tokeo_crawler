@@ -5,13 +5,14 @@ import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 import Table from '../tables'
 import Customers from '../customers'
+import Properties from '../properties'
 import Admin from '../users/admin'
 
 class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selected: 'Customer'
+            selected: 'Tables'
         }
     }
 
@@ -21,9 +22,10 @@ class Dashboard extends Component {
                 <Row>
                     <Col>
                         <NavPane push={true} openLength={200}>
-                            {this.renderItems('Customer', 'FaUser')}
                             {this.renderItems('Tables', 'FaTh')}
-                            {this.renderItems('Admin', 'FaUserSecret')}
+                            {this.renderItems('Customer', 'FaGroup')}
+                            {this.renderItems('Properties', 'FaBuilding')}
+                            {this.renderItems('Admin', 'FaUser')}
                         </NavPane>
                     </Col>
                 </Row>
@@ -52,6 +54,9 @@ class Dashboard extends Component {
         }
         else if(title === 'Admin') {
             return <Admin {...this.props} />
+        }
+        else if(title === 'Properties') {
+            return <Properties {...this.props} />
         }
         else if(title === 'Tables') {
             return <Table {...this.props} />

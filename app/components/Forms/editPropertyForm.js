@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
+import { View, Text } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-let EditCustomer = props => {
-    const {handleSubmit, togglePassword, reset, history, getIndex} = props
-    getIndex(props.index)
+let EditPropertyForm = props => {
+    const {getIndex, initialValues, handleSubmit, reset, index} = props
+    getIndex(index)
 
     return (
         <Row style={styles.container}>
@@ -19,63 +19,48 @@ let EditCustomer = props => {
             </Row>
             <Row>
                 <form onSubmit={handleSubmit} className="form-group">
-                    <label htmlFor="firstName">First Name</label>
+                    <label htmlFor="name">Property Name</label>
                     <Field
-                        name="firstName"
-                        placeholder="First Name"
+                        name="name"
+                        placeholder="House/Frame/2nd Floor"
                         component="input"
                         type="text"
                         className="form-control"
                     />
 
-                    <label htmlFor="lastName">Last Name</label>
+                    <label htmlFor="location">Property Location</label>
                     <Field
-                        name="lastName"
-                        placeholder="Last Name"
+                        name="location"
+                        placeholder="Dodoma, Ilazo"
                         component="input"
                         type="text"
                         className="form-control"
                     />
 
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="description">Property Description</label>
                     <Field
-                        name="email"
-                        component="input"
-                        type="email"
-                        placeholder="customer@company.com"
-                        className="form-control"
+                        name="description"
+                        component="textarea"
+                        rows="4"
+                        placeholder="Two stories building along the mainroad"
+                        className="form-control field span2"
                     />
 
-                    <label htmlFor="phone">Phone</label>
+                    <label htmlFor="owner">Property Owner</label>
                     <Field
-                        name="phone"
-                        placeholder="+255626763274"
+                        name="owner"
                         component="input"
+                        placeholder="Mr. Landlord"
                         type="text"
                         className="form-control"
                     />
 
-                    <label htmlFor="product">Product</label>
+                    <label htmlFor="price">Property Price (Tsh)</label>
                     <Field
-                        name="product"
+                        name="price"
+                        placeholder="200,000/="
                         component="input"
                         type="text"
-                        className="form-control"
-                    />
-
-                    <label htmlFor="startDate">Start Date</label>
-                    <Field
-                        name="startDate"
-                        component="input"
-                        type="date"
-                        className="form-control"
-                    />
-
-                    <label htmlFor="endDate">End Date</label>
-                    <Field
-                        name="endDate"
-                        component="input"
-                        type="date"
                         className="form-control"
                     />
 
@@ -102,15 +87,15 @@ let EditCustomer = props => {
 }
 
 const formConfig = {
-    form: 'edit_customer'
+    form: 'edit_property'
 }
 
 const reduxConfig = state => {
-    const {id} = state.customerTempEdits
-    const customers = state.customers
+    const {id} = state.propertyTempEdits
+    const properties = state.properties
 
     return {
-        initialValues: customers[id],
+        initialValues: properties[id],
         index: id
     }
 }
@@ -124,5 +109,5 @@ const styles = {
     }
 }
 
-EditCustomer = reduxForm(formConfig)(EditCustomer)
-export default connect(reduxConfig)(EditCustomer)
+EditPropertyForm = reduxForm(formConfig)(EditPropertyForm)
+export default connect(reduxConfig)(EditPropertyForm)

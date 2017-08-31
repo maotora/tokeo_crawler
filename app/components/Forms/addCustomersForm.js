@@ -85,7 +85,7 @@ const AddCustomer = props => {
                                     </button>
                             </Col>
                             <Col md={6}>
-                                    <button className="btn btn-danger" onClick={reset}>
+                                    <button className="btn btn-danger" type="button" onClick={reset}>
                                         Reset
                                     </button>
                             </Col>

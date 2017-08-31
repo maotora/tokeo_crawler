@@ -28,8 +28,6 @@ class Table extends Component {
                 return 'few_days'
             }
         }
-
-        console.log('value is ', value)
     }
 
 	render() {

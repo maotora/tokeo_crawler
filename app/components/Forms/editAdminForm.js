@@ -126,7 +126,7 @@ let EditAdmin = props => {
 						</Col>
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-danger" onClick={reset}>
+								<button className="btn btn-danger" type="button" onClick={reset}>
 									Reset
 								</button>
 							</View>

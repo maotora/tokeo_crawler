@@ -4,19 +4,12 @@ import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-let EditCustomer = props => {
+let CustomerRenewal = props => {
     const {handleSubmit, togglePassword, reset, history, getIndex} = props
     getIndex(props.index)
 
     return (
         <Row style={styles.container}>
-            <Row style={{marginBottom: 20}}>
-                <View width="100%" horizontalAlignment="center">
-                    <button onClick={() => props.history.push('/admin')} className="btn btn-default">
-                        Click to go back
-                    </button>
-                </View>
-            </Row>
             <Row>
                 <form onSubmit={handleSubmit} className="form-group">
                     <label htmlFor="firstName">First Name</label>
@@ -89,7 +82,7 @@ let EditCustomer = props => {
 						</Col>
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-danger" type="button" onClick={reset}>
+								<button className="btn btn-danger" onClick={reset}>
 									Reset
 								</button>
 							</View>
@@ -102,7 +95,7 @@ let EditCustomer = props => {
 }
 
 const formConfig = {
-    form: 'edit_customer'
+    form: 'customer_renewal'
 }
 
 const reduxConfig = state => {
@@ -124,5 +117,6 @@ const styles = {
     }
 }
 
-EditCustomer = reduxForm(formConfig)(EditCustomer)
-export default connect(reduxConfig)(EditCustomer)
+CustomerRenewal = reduxForm(formConfig)(CustomerRenewal)
+export default connect(reduxConfig)(CustomerRenewal)
+

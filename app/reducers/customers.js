@@ -13,7 +13,7 @@ const initialCustomersState = [
     }
 ]
 
-export default function reducer(state=initialCustomersState, {type, payload}) {
+export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_CUSTOMER': {
             state = state.concat({

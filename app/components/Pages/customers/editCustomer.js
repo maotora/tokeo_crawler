@@ -4,6 +4,7 @@ import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import EditCustomersForm from '../../Forms/editCustomerForm'
 import Paymentsform from '../../Forms/paymentsForm'
+import RenewalForm from '../../Forms/renewalForm'
 
 class EditCustomers extends Component {
     constructor(props) {
@@ -22,7 +23,6 @@ class EditCustomers extends Component {
     submitPayments(values) {
         values.index = this.state.index
         this.props.dispatch({type: 'TO_EDIT_CUSTOMER', payload: values})
-        alert("Payments Updaded!")
     }
 
     getIndex(index) {
@@ -47,7 +47,22 @@ class EditCustomers extends Component {
                     </Row>
                 </Col>
             )
-        } else {
+            } else if(this.props.renew) {
+                return (
+                    <Col>
+                        <Row>
+                            <View width="100%" horizontalAlignment="center">
+                                <Text style={styles.header}> Update Customer Payments </Text>
+                            </View>
+                        </Row>
+                        <Row>
+                            <View width="100%" horizontalAlignment="center">
+                                <RenewalForm getIndex={::this.getIndex} {...this.props} onSubmit={::this.submitPayments} />
+                            </View>
+                        </Row>
+                    </Col>
+                )
+            } else {
             return (
                 <Col>
                     <Row>
