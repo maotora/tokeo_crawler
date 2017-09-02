@@ -5,7 +5,8 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 let CustomerRenewal = props => {
-    const {handleSubmit, togglePassword, reset, history, getIndex} = props
+    const {properties, initialValues, handleSubmit, togglePassword, reset, history, getIndex} = props
+    const { property } = initialValues
     getIndex(props.index)
 
     return (
@@ -48,13 +49,23 @@ let CustomerRenewal = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="product">Product</label>
+                    <label htmlFor="property">Property</label>
                     <Field
-                        name="product"
-                        component="input"
-                        type="text"
+                        name="property"
+                        component="select"
                         className="form-control"
-                    />
+                    >
+                        <option value={properties[property]['name']}>{properties[property]['name']}</option>
+                        {properties.map((property, index) => {
+                            if(property.status === 'Vacant') {
+                                return (
+                                    <option value={index} key={index}>
+                                        {property.name}
+                                    </option>
+                                )
+                            }
+                        })}
+                    </Field>
 
                     <label htmlFor="startDate">Start Date</label>
                     <Field
@@ -101,10 +112,12 @@ const formConfig = {
 const reduxConfig = state => {
     const {id} = state.customerTempEdits
     const customers = state.customers
+    const properties = state.properties
 
     return {
         initialValues: customers[id],
-        index: id
+        index: id,
+        properties
     }
 }
 

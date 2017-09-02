@@ -30,6 +30,14 @@ class Table extends Component {
         }
     }
 
+    propertyNameFormat(cell, row) {
+        return `${this.props.properties[cell]['name']}`
+    }
+
+    propertyLocationFormat(cell, row) {
+        return `${this.props.properties[cell]['location']}`
+    }
+
 	render() {
         const { history, customers } = this.props
 
@@ -52,7 +60,8 @@ class Table extends Component {
                         <BootstrapTable data={customers} hover striped pagination >
                             <TableHeaderColumn isKey={true} dataField="names">Customer Names</TableHeaderColumn>
                             <TableHeaderColumn dataField="phone">Phone Number</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataField="product">Product Name</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyNameFormat} dataField="property">Property Name</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyLocationFormat} dataField="property">Property Location</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' columnClassName={ this.tableColors } dataField="status">Contract Status</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataSort={true} dataField="endDate">End Date</TableHeaderColumn>
                         </BootstrapTable>
@@ -64,8 +73,8 @@ class Table extends Component {
 }
 
 const mapStateToProps = state => ({
-	customers: state.customers
+    customers: state.customers,
+    properties: state.properties,
 })
 
 export default connect(mapStateToProps)(Table)
-

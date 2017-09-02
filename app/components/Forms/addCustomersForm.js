@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 
-const AddCustomer = props => {
-    const {handleSubmit, togglePassword, reset, history} = props
+let AddCustomer = props => {
+    const {properties, handleSubmit, togglePassword, reset, history} = props
 
     return (
         <Row style={styles.container}>
@@ -53,13 +54,24 @@ const AddCustomer = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="product">Product</label>
+                    <label htmlFor="property">Property</label>
                     <Field
-                        name="product"
-                        component="input"
-                        type="text"
+                        name="property"
+                        component="select"
+                        type="select"
                         className="form-control"
-                    />
+                    >
+                        <option value="">Select Property</option>
+                        {properties.map((property, index) => {
+                            if(property.status === 'Vacant') {
+                                return (
+                                    <option value={index} key={index}>
+                                        {`${property.name}, ${property.location}`}
+                                    </option>
+                                )
+                            }
+                        })}
+                    </Field>
 
                     <label htmlFor="startDate">Start Date</label>
                     <Field
@@ -101,6 +113,10 @@ const config = {
     form: 'add_customer'
 }
 
+const mapStateToProps = state => ({
+    properties: state.properties
+})
+
 const styles = {
     container: {
         padding: 50,
@@ -110,4 +126,5 @@ const styles = {
     }
 }
 
-export default reduxForm(config)(AddCustomer)
+AddCustomer = reduxForm(config)(AddCustomer)
+export default connect(mapStateToProps)(AddCustomer)

@@ -34,7 +34,7 @@ class EditProperty extends Component {
 
                 <Row>
                     <View width="100%" horizontalAlignment="center">
-                        <EditPropertyForm getIndex={() => this.getIndex} {...this.props} onSubmit={::this.submit} />
+                        <EditPropertyForm getIndex={::this.getIndex} {...this.props} onSubmit={::this.submit} />
                     </View>
                 </Row>
             </Container>

@@ -15,7 +15,7 @@ export default function *() {
 
         takeLatest('TO_ADD_CUSTOMER', addCustomerSaga),
         takeLatest('TO_EDIT_CUSTOMER', editCustomerSaga),
-        takeLatest('REMOVE_CUSTOMER', removeCustomerSaga),
+        takeLatest('TO_REMOVE_CUSTOMER', removeCustomerSaga),
 
         takeLatest('TO_ADD_PROPERTY', addPropertySaga),
         takeLatest('TO_EDIT_PROPERTY', editPropertySaga),

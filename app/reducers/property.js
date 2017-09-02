@@ -12,17 +12,14 @@ const initialPropertyState = [
 export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_PROPERTY': {
-            state = [
-                ...state,
-                {
+            state = state.concat({
                     name: payload.name,
                     owner: payload.owner,
                     price: payload.price,
                     description: payload.description,
                     location: payload.location,
                     status: payload.status
-                }
-            ]
+                })
 
             return state
         }

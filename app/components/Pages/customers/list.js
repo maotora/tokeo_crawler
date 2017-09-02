@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
+import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 
 class CustomerList extends Component {
@@ -14,9 +15,9 @@ class CustomerList extends Component {
         history.push('/edit_customer')
     }
 
-	removeCustomer(index) {
+	removeCustomer(customerIndex, propertyIndex) {
         const { history, data, dispatch } = this.props
-		dispatch({type: 'REMOVE_CUSTOMER', payload: {index}})
+		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {customerIndex, propertyIndex}})
 		history.push('/admin')
 	}
 
@@ -29,7 +30,7 @@ class CustomerList extends Component {
     list(data) {
         if(data.length >= 1) {
             return data.map((item, index) => {
-                let { firstName, lastName, email, phone, product } = item
+                let { status, firstName, lastName, email, phone, property } = item
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -61,10 +62,26 @@ class CustomerList extends Component {
                         </Col>
                         <Col>
                             <Col md={4}>
-                                <Text style={{...styles.form_text, ...styles.property}}> Product Owned: </Text>
+                                <Text style={{...styles.form_text, ...styles.property}}> Payments Status: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {product} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {status} </Text>
+                            </Col>
+                        </Col>
+                        <Col>
+                            <Col md={4}>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Owned: </Text>
+                            </Col>
+                            <Col md={8}>
+                                <Text style={{...styles.form_text, ...styles.value}}> {this.props.properties[property]['name']} </Text>
+                            </Col>
+                        </Col>
+                        <Col>
+                            <Col md={4}>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Location: </Text>
+                            </Col>
+                            <Col md={8}>
+                                <Text style={{...styles.form_text, ...styles.value}}> {this.props.properties[property]['location']} </Text>
                             </Col>
                         </Col>
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Customer Actions </Text> </Col>
@@ -83,7 +100,7 @@ class CustomerList extends Component {
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.removeCustomer(index)}>
+                                    <button className='btn btn-default' onClick={() => this.removeCustomer(index, property)}>
                                         <p style={styles.btn_text}> Delete Customer </p>
                                     </button>
                                 </div>
@@ -110,6 +127,12 @@ class CustomerList extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    properties: state.properties
+})
+
+export default connect(mapStateToProps)(CustomerList)
 
 const styles = {
     form_text: {
@@ -138,4 +161,3 @@ const styles = {
         color: 'black',
     }
 }
-export default CustomerList

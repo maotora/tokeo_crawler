@@ -5,8 +5,8 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 let EditPropertyForm = props => {
-    const {getIndex, initialValues, handleSubmit, reset, index} = props
-    getIndex(index)
+    const {getIndex, initialValues, handleSubmit, reset} = props
+    getIndex(props.index)
 
     return (
         <Row style={styles.container}>

@@ -10,7 +10,7 @@ class EditCustomers extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            index: 0
+            index: null
         }
     }
 

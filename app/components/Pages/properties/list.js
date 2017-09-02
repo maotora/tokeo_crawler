@@ -14,15 +14,14 @@ class PropertiesList extends Component {
     }
 
     toRemoveProperty(index) {
-        this.props.dispatch({type: 'REMOVE_PROPERTY', payload: index})
-        //- TODO change Dashboard highlighting to current screen
+        this.props.dispatch({type: 'REMOVE_PROPERTY', payload: {index}})
         this.props.history.push('/admin')
     }
 
     list(data) {
         if(data.length >= 1 && data[0].name !== null) {
             return data.map((property, index) => {
-                let {name, owner, price, location, description} = property
+                let {name, owner, price, location, description, status} = property
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -62,6 +61,14 @@ class PropertiesList extends Component {
                         </Col>
                         <Col>
                             <Col md={4}>
+                                <Text style={{...styles.form_text, ...styles.property}}> Property Status: </Text>
+                            </Col>
+                            <Col md={8}>
+                                <Text style={{...styles.form_text, ...styles.value}}>{status}</Text>
+                            </Col>
+                        </Col>
+                        <Col>
+                            <Col md={4}>
                                 <Text style={{...styles.form_text, ...styles.property}}> Property Price: </Text>
                             </Col>
                             <Col md={8}>
@@ -82,6 +89,7 @@ class PropertiesList extends Component {
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
                                         onClick={() => this.toRemoveProperty(index)}
+                                        disabled={status && status === 'Occupied'}
                                     >
                                         <p style={styles.btn_text}> Delete Property </p>
                                     </button>

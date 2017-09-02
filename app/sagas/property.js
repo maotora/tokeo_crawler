@@ -10,7 +10,7 @@ export function *addPropertySaga({payload}) {
             yield put({type: 'ADD_PROPERTY', payload})
         } else {
             property.status = 'Vacant'
-            yield put({type: 'ADD_PROPERTY', property})
+            yield put({type: 'ADD_PROPERTY', payload: property})
         }
 
         /* Perform some validations */
@@ -26,10 +26,13 @@ export function *editPropertySaga({payload}) {
 
         let newerProperties = _.map(properties, (property, index) => {
             if(index === payload.index) {
+                console.log('Inside saga', payload.values)
                 property = payload.values
             }
             return property
         })
+        console.log('Outside saga', newerProperties)
+
         yield put({type: 'EDIT_PROPERTY', payload: {data: newerProperties}})
 
         /* Perform some validations */
