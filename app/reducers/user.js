@@ -11,39 +11,9 @@ const initialUsersState = [
     }
 ]
 
-const initialLoginState = {
-	username: null,
-	password: null,
-	logged: false
-}
-
-function loginReducer(state=initialLoginState, {type, payload}) {
+export default function usersReducer(state=[], {type, payload}) {
     switch(type) {
-        case 'LOGIN': {
-            return {
-                ...state,
-                username: payload.username,
-                password: payload.password,
-                logged: true,
-            }
-        }
-
-        case 'LOGOUT': {
-            return {
-                ...state,
-                username: null,
-                password: null,
-                logged: false,
-            }
-        }
-    }
-
-    return state
-}
-
-function usersReducer(state=[], {type, payload}) {
-    switch(type) {
-        case 'SIGNUP': {
+        case 'ADD_USER': {
 			state = state.concat({
 				firstName: payload.firstName,
 				lastName: payload.lastName,
@@ -53,7 +23,6 @@ function usersReducer(state=[], {type, payload}) {
 				role: payload.role,
 				phone: payload.phone,
 				email: payload.email,
-                logged: true
             })
 
             return state
@@ -75,5 +44,3 @@ function usersReducer(state=[], {type, payload}) {
 
 	return state
 }
-
-export {usersReducer, loginReducer}

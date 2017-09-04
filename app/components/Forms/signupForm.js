@@ -3,21 +3,11 @@ import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/wi
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
 
-const AddAdmin = props => {
+const SignUp = props => {
     const {handleSubmit, togglePassword, reset} = props
 
     return (
         <Row style={styles.container}>
-            <Row style={{marginBottom: 20}}>
-                <View width="100%" horizontalAlignment="center">
-                    <button
-						onClick={() => props.history.push('/admin')}
-						className="btn btn-default"
-					>
-                        Click to go back
-                    </button>
-                </View>
-            </Row>
             <Row>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="firstName">First Name</label>
@@ -85,6 +75,15 @@ const AddAdmin = props => {
                         className="form-control"
                     />
 
+                    <label htmlFor="username">License Key</label>
+                    <Field
+                        name="license"
+                        placeholder="XXX-XXXX-XXXX-XXXX"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                    />
+
 					<View 
 						width="100%"
 						horizontalAlignment="center"
@@ -118,7 +117,7 @@ const AddAdmin = props => {
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
 								<button className="btn btn-default" type="submit">
-									Add Admin
+                                    Sign Up
 								</button>
 							</View>
 						</Col>
@@ -137,7 +136,7 @@ const AddAdmin = props => {
 }
 
 const config = {
-    form: 'add_admin'
+    form: 'sign_up'
 }
 
 const styles = {
@@ -149,4 +148,4 @@ const styles = {
     }
 }
 
-export default reduxForm(config)(AddAdmin)
+export default reduxForm(config)(SignUp)

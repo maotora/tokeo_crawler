@@ -106,7 +106,7 @@ const mapStateToProps = state => {
     const customers = state.customers
 
     return {
-        logged: state.login,
+        auth: state.auth,
         customer: customers[id]
     }
 }

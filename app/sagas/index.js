@@ -1,15 +1,19 @@
 import { fork, takeLatest, all } from 'redux-saga/effects'
-import {loginSaga, editUserSaga, signUpSaga, removeUserSaga} from './users'
+
+import {addUserSaga, editUserSaga, removeUserSaga} from './users'
 import { editCustomerSaga, addCustomerSaga, removeCustomerSaga } from './customers'
-import { paymentSaga } from './payments'
 import {editPropertySaga, removePropertySaga, addPropertySaga} from './property'
+
+import { signUpSaga, loginSaga } from './auth'
+import { paymentSaga } from './payments'
 
 export default function *() {
     yield all([
-        takeLatest('LOGIN', loginSaga),
+        takeLatest('TO_LOGIN', loginSaga),
         takeLatest('SIGNUP', signUpSaga),
-
         takeLatest('TO_PAYMENTS', paymentSaga),
+
+        takeLatest('ADD_USER', addUserSaga),
         takeLatest('TO_EDIT_USER', editUserSaga),
         takeLatest('REMOVE_USER', removeUserSaga),
 

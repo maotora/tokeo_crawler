@@ -38,7 +38,7 @@ class Admin extends Component {
 }
 
 const mapStateToProps = state => ({
-	logged: state.login,
+	auth: state.auth,
 	users: state.users,
 })
 

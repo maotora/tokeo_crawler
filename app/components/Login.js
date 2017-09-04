@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-grid-system'
-import SignIn from './Forms/signin'
+import SignIn from './Pages/users/signin'
+import { connect } from 'react-redux'
+import SignUp from './Pages/users/signup'
+import { SignupText, SigninText } from './Pages/users/ui'
 
-const Login = (props) => {
-    return (
-        <Container style={styles.container}>
-            <Row>
-                <Col md={4}>
-                    <SignIn {...props} />
-                </Col>
-                <Col md={4}></Col>
-            </Row>
-        </Container>
-    );
-}
+class Login extends Component {
+    constructor(props) {
+        super(props)
+    }
 
-const styles = {
-    container: {
-        padding: 30
+    renderForm() {
+        if(this.props.users.length > 0) {
+            return (
+                <Row>
+                    <Col md={6}>
+                        <SignIn {...this.props} />
+                    </Col>
+
+                    <Col md={6}>
+                        <SigninText {...this.props} />
+                    </Col>
+                </Row>
+            )
+        } else {
+            return (
+                <Row>
+                    <Col md={6}>
+                        <SignUp {...this.props} />
+                    </Col>
+                    <Col md={6}>
+                        <SignupText {...this.props} />
+                    </Col>
+                </Row>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <Col style={{marginTop: 30}}>
+                {this.renderForm()}
+            </Col>
+        )
     }
 }
 
-export default Login
+const mapStateToProps = state => ({
+    users: state.users
+})
+
+export default connect(mapStateToProps)(Login)

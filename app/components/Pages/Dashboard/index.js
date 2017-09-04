@@ -16,6 +16,16 @@ class Dashboard extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(!nextProps.auth.logged) {
+            this.props.history.push('/login')
+        }
+    }
+
+    logout() {
+        this.props.dispatch({type: 'LOGOUT'})
+    }
+
     render() {
         return (
             <Col style={{overflow: 'hidden'}}> {/* Col -> Gives better fullscreen than Container */}
@@ -50,22 +60,22 @@ class Dashboard extends Component {
 
     renderComponent(title) {
         if(title === 'Customer') {
-            return <Customers {...this.props} />
+            return <Customers logout={::this.logout} {...this.props} />
         }
         else if(title === 'Admin') {
-            return <Admin {...this.props} />
+            return <Admin logout={::this.logout} {...this.props} />
         }
         else if(title === 'Properties') {
-            return <Properties {...this.props} />
+            return <Properties logout={::this.logout} {...this.props} />
         }
         else if(title === 'Tables') {
-            return <Table {...this.props} />
+            return <Table logout={::this.logout} {...this.props} />
         }
     }
 }
 
 const mapStateToProps = state => ({
-    logged: state.login,
+    auth: state.auth,
 	users: state.users,
 })
 

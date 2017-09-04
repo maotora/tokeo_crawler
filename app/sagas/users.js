@@ -2,23 +2,15 @@ import { select, put, call, take } from 'redux-saga/effects'
 import { Redirect } from 'react-router-dom'
 import _ from 'lodash'
 
-export function *loginSaga() {
+export function *addUserSaga({payload}) {
     try {
-        const username = yield select(state => state.login.username)
-        const password = yield select(state => state.login.password)
-		/* Should implement some validation stuff here */
+        /* 
+         * Send to server and expect a 200 OK status
+         * Agree to add user.
+        */
     } catch(err) {
         console.log(err)
     }
-}
-
-export function *signUpSaga() {
-	try {
-		const { values } = yield select(state => state.form.add_admin) 
-		console.log('values are ', values)
-	} catch(err) {
-		console.log(err)
-	}
 }
 
 export function *removeUserSaga() {
