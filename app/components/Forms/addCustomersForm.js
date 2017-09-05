@@ -91,7 +91,7 @@ let AddCustomer = props => {
                     >
                         <option value="">Select Property</option>
                         {properties.map((property, index) => {
-                            if(property.status === 'Vacant') {
+                            if(property.status !== 'Occupied') {
                                 return (
                                     <option value={index} key={index}>
                                         {`${property.name}, ${property.location}`}

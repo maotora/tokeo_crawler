@@ -89,7 +89,7 @@ class PropertiesList extends Component {
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
                                         onClick={() => this.toRemoveProperty(index)}
-                                        disabled={status && status === 'Occupied'}
+                                        disabled={status && status !== 'Vacant'}
                                     >
                                         <p style={styles.btn_text}> Delete Property </p>
                                     </button>

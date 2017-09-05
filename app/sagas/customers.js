@@ -7,8 +7,22 @@ export function *addCustomerSaga({payload}) {
 
         let properties = yield select(state => state.properties)
         properties = _.map(properties, (property, index) => {
+
             if(index === Number(payload.property)) {
-                property.status = 'Occupied'
+
+                property.propertyCount = --property.propertyCount
+
+                if(property.propertyCount <= 0) {
+                    property.status = 'Occupied'
+                } else {
+
+                    //- Singular & Plural
+                    if(property.propertyCount > 1) {
+                        property.status = `${property.propertyCount} ${property.propertyType}s left`
+                    } else {
+                        property.status = `${property.propertyCount} ${property.propertyType} left`
+                    }
+                }
             }
 
             return property
@@ -34,7 +48,13 @@ export function *removeCustomerSaga({payload}) {
 
         properties = _.map(properties, (property, index) => {
             if(index === Number(propertyIndex)) {
-                property.status = 'Vacant'
+                property.propertyCount = ++property.propertyCount
+                    //- Singular & Plural
+                    if(property.propertyCount > 1) {
+                        property.status = `${property.propertyCount} ${property.propertyType}s left`
+                    } else {
+                        property.status = `${property.propertyCount} ${property.propertyType} left`
+                    }
             }
 
             return property
@@ -57,12 +77,30 @@ export function *editCustomerSaga({payload}) {
                 //- Assign Vacant & Occupied to a current property & selected property respectfully.
                 if(customer.property !== payload.property) {
                     properties = _.map(properties, (property, index) => {
+
                         if(index === Number(customer.property)) {
-                            property.status = 'Vacant'
+                            property.propertyCount = ++property.propertyCount
+                            //- Singular & Plural
+                            if(property.propertyCount > 1) {
+                                property.status = `${property.propertyCount} ${property.propertyType}s left`
+                            } else {
+                                property.status = `${property.propertyCount} ${property.propertyType} left`
+                            }
                         }
 
                         if(index === Number(payload.property)) {
-                            property.status = 'Occupied'
+                            property.propertyCount = --property.propertyCount
+
+                            if(property.propertyCount <= 0) {
+                                property.status = 'Occupied'
+                            } else {
+                                //- Singular & Plural
+                                if(property.propertyCount > 1) {
+                                    property.status = `${property.propertyCount} ${property.propertyType}s left`
+                                } else {
+                                    property.status = `${property.propertyCount} ${property.propertyType} left`
+                                }
+                            }
                         }
 
                         return property
