@@ -4,7 +4,9 @@ import { Row, Container, Col } from 'react-grid-system'
 
 const Profile = props => {
 
-    const { firstName, lastName, email, phone, property, status } = props
+    const { firstName, lastName, email, phone, id, property, status } = props.customer
+    const { properties } = props
+
 
     return (
         <Row>
@@ -14,6 +16,14 @@ const Profile = props => {
                 </Col>
                 <Col md={8}>
                     <Text style={{...styles.form_text, ...styles.value}}> {`${lastName}, ${firstName}`} </Text>
+                </Col>
+            </Col>
+            <Col>
+                <Col md={4}>
+                    <Text style={{...styles.form_text}}>Identification Number:</Text>
+                </Col>
+                <Col md={8}>
+                    <Text style={{...styles.form_text, ...styles.value}}> {id} </Text>
                 </Col>
             </Col>
             <Col>
@@ -37,7 +47,15 @@ const Profile = props => {
                     <Text style={{...styles.form_text}}> Property Owned: </Text>
                 </Col>
                 <Col md={8}>
-                    <Text style={{...styles.form_text, ...styles.value}}> {property} </Text>
+                    <Text style={{...styles.form_text, ...styles.value}}> {properties[property]['name']} </Text>
+                </Col>
+            </Col>
+            <Col>
+                <Col md={4}>
+                    <Text style={{...styles.form_text}}> Property Location: </Text>
+                </Col>
+                <Col md={8}>
+                    <Text style={{...styles.form_text, ...styles.value}}> {properties[property]['location']} </Text>
                 </Col>
             </Col>
             <Col>

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 let EditCustomer = props => {
     const {initialValues, properties, handleSubmit, togglePassword, reset, history, getIndex} = props
     const { property } = initialValues
+    const idType = ['Passport', 'Driving License', 'Voting Card']
     getIndex(props.index)
 
     return (
@@ -46,6 +47,33 @@ let EditCustomer = props => {
                         placeholder="customer@company.com"
                         className="form-control"
                     />
+
+                    <label htmlFor="customer_id">Customer Identification</label>
+                    <View width="100%" horizontalAlignment="center">
+                        <Field
+                            name="id"
+                            component="input"
+                            type="text"
+                            placeholder="Customer ID"
+                            className="form-control"
+                        />
+
+                        <Field
+                            name="id_type"
+                            component="select"
+                            type="select"
+                            className="form-control"
+                        >
+                            <option value="">Select ID Type</option>
+                            {idType.map((id, index) => {
+                                return (
+                                    <option value={id} key={index}>
+                                        {id}
+                                    </option>
+                                )
+                            })}
+                        </Field>
+                    </View>
 
                     <label htmlFor="phone">Phone</label>
                     <Field

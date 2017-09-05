@@ -11,19 +11,21 @@ import Admin from '../users/admin'
 class Dashboard extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            selected: 'Tables'
-        }
     }
 
     componentWillReceiveProps(nextProps) {
         if(!nextProps.auth.logged) {
             this.props.history.push('/login')
         }
+
     }
 
     logout() {
         this.props.dispatch({type: 'LOGOUT'})
+    }
+
+    changeSelect(title) {
+        this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: title})
     }
 
     render() {
@@ -50,8 +52,8 @@ class Dashboard extends Component {
                 title={title}
                 icon={icon()}
                 push={true}
-                selected={this.state.selected === title}
-                onSelect={() => this.setState({selected: title})}
+                selected={this.props.ui.selection === title}
+                onSelect={() => this.changeSelect(title)}
             >
                 <Text> {this.renderComponent(title)} </Text>
             </NavPaneItem>
@@ -77,6 +79,7 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
     auth: state.auth,
 	users: state.users,
+	ui: state.ui,
 })
 
 const styles = {

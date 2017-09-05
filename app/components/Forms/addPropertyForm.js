@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 let AddPropertyForm = props => {
     const {handleSubmit, reset} = props
+    const propertyType = ['Apartment', 'House', 'Room', 'Frame', 'Floor', 'Building', 'Other']
 
     return (
         <Row style={styles.container}>
@@ -18,14 +19,41 @@ let AddPropertyForm = props => {
             </Row>
             <Row>
                 <form onSubmit={handleSubmit} className="form-group">
-                    <label htmlFor="name">Property Name</label>
+                    <label htmlFor="name">Property Number / Name</label>
                     <Field
                         name="name"
-                        placeholder="House/Frame/2nd Floor"
+                        placeholder="Frame No. 8 / Room No. 102 / TZ Towers"
                         component="input"
                         type="text"
                         className="form-control"
                     />
+
+                    <label htmlFor="type">Property Type & Count</label>
+                    <View width="100%" horizontalAlignment="center">
+                        <Field
+                            name="propertyType"
+                            component="select"
+                            type="select"
+                            className="form-control"
+                        >
+                            <option value="">Property Types</option>
+                            {propertyType.map((type, index) => {
+                                return (
+                                    <option value={type} key={index}>
+                                        {type}
+                                    </option>
+                                )
+                            })}
+                        </Field>
+
+                        <Field
+                            name="propertyCount"
+                            component="input"
+                            type="number"
+                            placeholder="How many?"
+                            className="form-control"
+                        />
+                    </View>
 
                     <label htmlFor="location">Property Location</label>
                     <Field

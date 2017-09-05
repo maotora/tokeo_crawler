@@ -5,7 +5,9 @@ const initialPropertyState = [
         price: null,
         description: null,
         location: null,
-        status: null
+        status: null,
+        propertyType: null,
+        propertyCount: null,
     }
 ]
 
@@ -18,7 +20,9 @@ export default function reducer(state=[], {type, payload}) {
                     price: payload.price,
                     description: payload.description,
                     location: payload.location,
-                    status: payload.status
+                    status: payload.status,
+                    propertyCount: payload.propertyCount,
+                    propertyType: payload.propertyType
                 })
 
             return state

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextInput, View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import Header from '../Dashboard/header'
 
@@ -15,16 +16,24 @@ class Table extends Component {
             case 'Contract Expired': {
                 return 'expired'
             }
+
             case 'Payments Settled': {
                 return 'paid'
             }
-            case '5 < Days remain': {
+
+            case '1 month remain': {
                 return 'fewer_days'
             }
-            case '10 < Days remain': {
+
+            case '2 months remain': {
+                return 'fewer_days'
+            }
+
+            case '3 months remain': {
                 return 'few_days'
             }
-            case '30 < Days remain': {
+
+            case '4 months remain': {
                 return 'few_days'
             }
         }
@@ -36,6 +45,10 @@ class Table extends Component {
 
     propertyLocationFormat(cell, row) {
         return `${this.props.properties[cell]['location']}`
+    }
+
+    expiryDateFormat(cell, row) {
+        return `${moment(cell).format('Do MMMM YYYY')}`
     }
 
 	render() {
@@ -63,7 +76,7 @@ class Table extends Component {
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyNameFormat} dataField="property">Property Name</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyLocationFormat} dataField="property">Property Location</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' columnClassName={ this.tableColors } dataField="status">Contract Status</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataSort={true} dataField="endDate">End Date</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.expiryDateFormat} dataSort={true} dataField="endDate">End Date</TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                 </Row>

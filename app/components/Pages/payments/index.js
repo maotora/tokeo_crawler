@@ -38,7 +38,7 @@ class Payments extends Component {
                 <Row>
                     <Col md={6}>
                         <Col>
-                            <Profile {...this.props.customer} />
+                            <Profile {...this.props} />
                         </Col>
                         <Col>
                             <Col md={3}>
@@ -104,10 +104,12 @@ class Payments extends Component {
 const mapStateToProps = state => {
     const {id} = state.customerTempEdits
     const customers = state.customers
+    const properties = state.properties
 
     return {
         auth: state.auth,
-        customer: customers[id]
+        customer: customers[id],
+        properties
     }
 }
 

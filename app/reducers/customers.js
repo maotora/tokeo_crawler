@@ -1,5 +1,7 @@
 const initialCustomersState = [
     {
+        id: null,
+        id_type: null,
         firstName: null,
         lastName: null,
         names: null,
@@ -17,6 +19,8 @@ export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_CUSTOMER': {
             state = state.concat({
+                id: payload.id,
+                id_type: payload.id_type,
                 firstName: payload.firstName,
                 lastName: payload.lastName,
                 names: `${payload.firstName} ${payload.lastName}`,
