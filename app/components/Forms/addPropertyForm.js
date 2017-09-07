@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
+import { normalizePrice } from './lib'
 import { connect } from 'react-redux'
 
 let AddPropertyForm = props => {
@@ -85,9 +86,10 @@ let AddPropertyForm = props => {
                     <label htmlFor="price">Property Price (Tsh)</label>
                     <Field
                         name="price"
-                        placeholder="200,000/="
+                        placeholder="200,000"
                         component="input"
                         type="text"
+                        normalize={normalizePrice}
                         className="form-control"
                     />
 

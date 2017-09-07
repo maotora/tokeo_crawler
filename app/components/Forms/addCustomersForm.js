@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
+import { normalizePhone } from './lib'
 import { connect } from 'react-redux'
 
 let AddCustomer = props => {
@@ -79,6 +80,7 @@ let AddCustomer = props => {
                         placeholder="+255626763274"
                         component="input"
                         type="text"
+                        normalize={normalizePhone}
                         className="form-control"
                     />
 

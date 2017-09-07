@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
+import { normalizePhone } from './lib'
 import { Field, reduxForm } from 'redux-form'
 
 let EditAdmin = props => {
@@ -84,6 +85,7 @@ let EditAdmin = props => {
                         placeholder="+255626763274"
                         component="input"
                         type="text"
+                        normalize={normalizePhone}
                         className="form-control"
                     />
 
@@ -114,6 +116,18 @@ let EditAdmin = props => {
 								className="radio"
 							/>
 							Viewer
+						</label>
+
+						<label htmlFor="owner" className="radio-inline">
+							<Field
+								name="role"
+								id="owner"
+								value="owner"
+								component="input"
+								type="radio"
+								className="radio"
+							/>
+							Owner
 						</label>
 					</View>
                     <Row>

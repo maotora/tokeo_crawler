@@ -1,6 +1,7 @@
 const initialCustomersState = [
     {
         id: null,
+        cardId: null,
         id_type: null,
         firstName: null,
         lastName: null,
@@ -12,6 +13,8 @@ const initialCustomersState = [
         startDate: null,
         endDate: null,
         payments: [],
+        createdAt: null,
+        updatedAt: null,
     }
 ]
 
@@ -20,6 +23,7 @@ export default function reducer(state=[], {type, payload}) {
         case 'ADD_CUSTOMER': {
             state = state.concat({
                 id: payload.id,
+                cardId: payload.id,
                 id_type: payload.id_type,
                 firstName: payload.firstName,
                 lastName: payload.lastName,
@@ -31,6 +35,8 @@ export default function reducer(state=[], {type, payload}) {
                 startDate: payload.startDate,
                 endDate: payload.endDate,
                 payments: payload.payments,
+                createdAt: payload.createdAt,
+                updatedAt: payload.updatedAt,
             })
 
             return state

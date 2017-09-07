@@ -6,6 +6,8 @@ export function *addPropertySaga({payload}) {
     try {
 
         let property = payload
+        property.totalProperties = payload.propertyCount
+
         if(property.status) {
             yield put({type: 'ADD_PROPERTY', payload})
         } else {

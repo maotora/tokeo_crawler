@@ -51,32 +51,102 @@ class Table extends Component {
         return `${moment(cell).format('Do MMMM YYYY')}`
     }
 
+    priceFormat(cell, row) {
+        return `${cell}/=`
+    }
+
+    phoneFormat(cell) {
+        return `+${cell}`
+    }
+
+    createdFormat(cell, row) {
+        return `${moment(cell.createdAt).format('DD MMMM YYYY')}`
+    }
+
+    onPropertyRowClick(row) {
+        console.log(row)
+    }
+
+    onCustomerRowClick(row) {
+        console.log(row)
+    }
+
+    //- TODO: this gives error, fix it to allow multiple customers deletion!
+    handleDelete(onClick) {
+        console.log('Delete stuff!')
+        onClick()
+    }
+
+    createCustomBtn(onClick) {
+        return (
+            <DeleteButton
+                className="btn btn-danger"
+                btnText="Delete"
+                btnContextual="btn-danger"
+                onClick={() => this.handleDelete(onClick)}
+            />
+        )
+    }
+
 	render() {
-        const { history, customers } = this.props
+        const { properties, history, customers } = this.props
+
+        const options = {
+            customer: {
+                onRowClick: this.onCustomerRowClick,
+                deleteBtn: ::this.createCustomBtn
+            },
+            property: {
+                onRowClick: this.onPropertyRowClick,
+            }
+        }
 
         return (
             <Container>
                 <Header pageName="Tables" {...this.props} />
+
                 <Row>
                     <Col md={8}>
-                        <Col md={4}></Col>
-                        <Col md={8}>
-                            <TextInput width="90%" placeholder="Search Customers" />
-                        </Col>
+                        <Text style={{fontWeight: 'bold', fontSize: 20}}> Customers Table </Text>
                     </Col>
+
                     <Col md={4}>
                         <Button onClick={() => history.push('/add_customer')} push={true} color="green">Add Customer</Button>
                     </Col>
                 </Row>
-                <Row style={{paddingBottom: 100}}>
+
+                <Row style={{marginBottom: 100, marginTop: 10}}>
                     <Col md={11}>
-                        <BootstrapTable data={customers} hover striped pagination >
+                        <BootstrapTable options={options.customer} data={customers} hover striped pagination deleteRow>
                             <TableHeaderColumn isKey={true} dataField="names">Customer Names</TableHeaderColumn>
-                            <TableHeaderColumn dataField="phone">Phone Number</TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={::this.phoneFormat} dataField="phone">Phone Number</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyNameFormat} dataField="property">Property Name</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyLocationFormat} dataField="property">Property Location</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' columnClassName={ this.tableColors } dataField="status">Contract Status</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.createdFormat} dataSort={true} dataField="createdAt">Created At</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.expiryDateFormat} dataSort={true} dataField="endDate">End Date</TableHeaderColumn>
+                        </BootstrapTable>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col md={8}>
+                        <Text style={{fontWeight: 'bold', fontSize: 20}}> Properties Table </Text>
+                    </Col>
+
+                    <Col md={4}>
+                        <Button onClick={() => history.push('/add_property')} push={true} color="green">Add Properties</Button>
+                    </Col>
+                </Row>
+
+                <Row style={{marginBottom: 100, marginTop: 10}}>
+                    <Col md={11}>
+                        <BootstrapTable options={options.property} data={properties} hover striped pagination >
+                            <TableHeaderColumn dataAlign='center' isKey={true} dataField="name">Name</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataField="propertyType">Type</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataField="location">Location</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataField="status">Status</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.priceFormat} dataField="price">Price</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataField="owner">Owner</TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                 </Row>

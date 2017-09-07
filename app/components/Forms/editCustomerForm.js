@@ -92,7 +92,7 @@ let EditCustomer = props => {
                     >
                         <option value={properties[property]['name']}>{properties[property]['name']}</option>
                         {properties.map((property, index) => {
-                            if(property.status === 'Vacant') {
+                            if(property.status !== 'Occupied') {
                                 return (
                                     <option value={index} key={index}>
                                         {property.name}
