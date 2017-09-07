@@ -68,7 +68,9 @@ class Table extends Component {
     }
 
     onCustomerRowClick(row) {
-        console.log(row)
+        const { id } = row
+        this.props.dispatch({type: 'CUSTOMER_EDITS', payload: {id}})
+        this.props.history.push('/payments')
     }
 
     //- TODO: this gives error, fix it to allow multiple customers deletion!
@@ -93,7 +95,7 @@ class Table extends Component {
 
         const options = {
             customer: {
-                onRowClick: this.onCustomerRowClick,
+                onRowClick: ::this.onCustomerRowClick,
                 deleteBtn: ::this.createCustomBtn
             },
             property: {

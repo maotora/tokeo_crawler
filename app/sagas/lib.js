@@ -8,7 +8,6 @@ export function contractStatus(customer={}) {
 
     const daysLeft = Number(new Date(customer.endDate)) - _.now()
     let status
-        console.log(twoMonths, threeMonths, fourMonths, daysLeft)
 
     if(daysLeft <= 0) {
         status = 'Contract Expired'
@@ -51,3 +50,13 @@ function experimental(customer={}) {
 
     return {...customer, status: status}
 }
+
+export const statusGen = (count, property, all) => {
+    if(Number(count) === Number(all)) {
+        return 'Vacant'
+    } else {
+        return (count > 1) ? `${count} ${property}s left` : `${count} ${property} left`
+    }
+}
+
+export const genId = () => _.times(32, () => _.random(35).toString(36)).join('')

@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 let AddCustomer = props => {
     const {properties, handleSubmit, togglePassword, reset, history} = props
-    const idType = ['Passport', 'Driving License', 'Voting Card']
+    const idType = ['Passport', 'Driving License', 'Voting Card', 'Citizenship Card']
 
     return (
         <Row style={styles.container}>
@@ -47,10 +47,10 @@ let AddCustomer = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="customer_id">Customer Identification</label>
+                    <label htmlFor="cardId">Customer Identification</label>
                     <View width="100%" horizontalAlignment="center">
                         <Field
-                            name="id"
+                            name="cardId"
                             component="input"
                             type="text"
                             placeholder="Customer ID"

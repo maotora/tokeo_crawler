@@ -9,28 +9,28 @@ class CustomerList extends Component {
         super(props)
     }
 
-    toEditCustomer(index) {
+    toEditCustomer(id) {
         const { history, dispatch } = this.props
-        dispatch({type: 'CUSTOMER_EDITS', payload: {id: index}})
+        dispatch({type: 'CUSTOMER_EDITS', payload: {id}})
         history.push('/edit_customer')
     }
 
-	removeCustomer(customerIndex, propertyIndex) {
+	removeCustomer(id, propertyIndex) {
         const { history, data, dispatch } = this.props
-		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {customerIndex, propertyIndex}})
+		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {id, propertyIndex}})
 		history.push('/admin')
 	}
 
-    payments(index) {
+    payments(id) {
         const { history, dispatch } = this.props
-        dispatch({type: 'CUSTOMER_EDITS', payload: {id: index}})
+        dispatch({type: 'CUSTOMER_EDITS', payload: {id}})
         history.push('/payments')
     }
 
     list(data) {
         if(data.length >= 1) {
             return data.map((item, index) => {
-                let { status, firstName, lastName, email, phone, property } = item
+                let { id, status, firstName, lastName, email, phone, property } = item
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -89,18 +89,18 @@ class CustomerList extends Component {
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
-                                        onClick={() => this.toEditCustomer(index)}
+                                        onClick={() => this.toEditCustomer(id)}
                                     >
                                         <p style={styles.btn_text}> Edit Customer </p>
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.payments(index)}>
+                                    <button className='btn btn-default' onClick={() => this.payments(id)}>
                                         <p style={styles.btn_text}> View Customer Payments </p>
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.removeCustomer(index, property)}>
+                                    <button className='btn btn-default' onClick={() => this.removeCustomer(id, property)}>
                                         <p style={styles.btn_text}> Delete Customer </p>
                                     </button>
                                 </div>

@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 let EditCustomer = props => {
     const {initialValues, properties, handleSubmit, togglePassword, reset, history, getIndex} = props
     const { property } = initialValues
-    const idType = ['Passport', 'Driving License', 'Voting Card']
+    const idType = ['Passport', 'Driving License', 'Voting Card', 'Citizenship Card']
     getIndex(props.index)
 
     return (
@@ -48,10 +48,10 @@ let EditCustomer = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="customer_id">Customer Identification</label>
+                    <label htmlFor="cardId">Customer Identification</label>
                     <View width="100%" horizontalAlignment="center">
                         <Field
-                            name="id"
+                            name="cardId"
                             component="input"
                             type="text"
                             placeholder="Customer ID"
@@ -150,7 +150,7 @@ const reduxConfig = state => {
     const properties = state.properties
 
     return {
-        initialValues: customers[id],
+        initialValues: customers.filter(customer => customer.id === id)[0],
         index: id,
         properties
     }

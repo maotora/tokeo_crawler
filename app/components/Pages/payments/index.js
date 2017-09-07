@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, NavPaneItem, NavPane } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
+import { remote } from 'electron'
 import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 import Profile from './profile'
 import Contracts from '../contracts'
 import Header from '../Dashboard/header'
 import UpdateCustomer from '../customers/editCustomer'
+import docxTemplating from './lib'
 
 class Payments extends Component {
     constructor(props) {
@@ -37,10 +39,10 @@ class Payments extends Component {
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <Col>
+                        <Row>
                             <Profile {...this.props} />
-                        </Col>
-                        <Col>
+                        </Row>
+                        <Row>
                             <Col md={3}>
                                 <button className="btn btn-primary"
                                     onClick={() => this.renewContract()}
@@ -49,10 +51,17 @@ class Payments extends Component {
                                 </button>
                             </Col>
                             <Col md={3}>
-                                <button className="btn btn-success"
+                                <button className="btn btn-info"
                                     onClick={() => this.updateContract()}
                                 > 
                                     Update Contract 
+                                </button>
+                            </Col>
+                            <Col md={3}>
+                                <button className="btn btn-success"
+                                    onClick={() => this.generateContract()}
+                                > 
+                                    Generate Contract
                                 </button>
                             </Col>
                             <Col md={3}>
@@ -62,7 +71,7 @@ class Payments extends Component {
                                     Terminate Contract
                                 </button>
                             </Col>
-                        </Col>
+                        </Row>
                     </Col>
                     <Col md={6}>
                         {this.renderForm()}
@@ -87,6 +96,18 @@ class Payments extends Component {
         })
     }
 
+    generateContract() {
+        const { dispatch, index } = this.props
+        const { dialog } = remote
+        const file = dialog.showOpenDialog({
+            title: 'Open Contract Template File',
+            defaultPath: '$HOME',
+            filters: [{name: 'Documents', extensions: ['doc', 'docx']}]
+        })[0]
+
+        docxTemplating(file)
+    }
+
     renewContract() {
         this.setState({
             showRenew: !this.state.showRenew,
@@ -108,7 +129,7 @@ const mapStateToProps = state => {
 
     return {
         auth: state.auth,
-        customer: customers[id],
+        customer: customers.filter(customer => customer.id === id)[0],
         properties
     }
 }

@@ -23,7 +23,7 @@ export default function reducer(state=[], {type, payload}) {
         case 'ADD_CUSTOMER': {
             state = state.concat({
                 id: payload.id,
-                cardId: payload.id,
+                cardId: payload.cardId,
                 id_type: payload.id_type,
                 firstName: payload.firstName,
                 lastName: payload.lastName,
@@ -49,7 +49,7 @@ export default function reducer(state=[], {type, payload}) {
         }
 
         case 'REMOVE_CUSTOMER': {
-            return state.filter((customer, index) => index !== payload.index)
+            return state.filter((customer, index) => customer.id !== payload.id)
         }
     }
 

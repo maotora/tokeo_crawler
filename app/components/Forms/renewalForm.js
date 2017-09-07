@@ -115,7 +115,7 @@ const reduxConfig = state => {
     const properties = state.properties
 
     return {
-        initialValues: customers[id],
+        initialValues: customers.filter(customer => customer.id === id)[0],
         index: id,
         properties
     }

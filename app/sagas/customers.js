@@ -1,16 +1,6 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
-import { contractStatus } from './lib'
-
-const singularPlural = (count, property, all) => {
-    if(Number(count) === Number(all)) {
-        return 'Vacant'
-    } else {
-        return (count > 1) ? `${count} ${property}s left` : `${count} ${property} left`
-    }
-}
-
-const genId = () => _.times(20, () => _.random(35).toString(36)).join('');
+import { statusGen, genId, contractStatus } from './lib'
 
 export function *addCustomerSaga({payload}) {
     try {
@@ -20,23 +10,22 @@ export function *addCustomerSaga({payload}) {
 
             //- Reducing properties as customers are added.
             if(index === Number(payload.property)) {
-
                 property.propertyCount = --property.propertyCount
 
-                //- Occupied if all properties are occupied.
+                //- Occupied if all properties are occupied & ${count} left is some are left.
                 if(property.propertyCount <= 0) {
                     property.status = 'Occupied'
                 } else {
-
-                    //- Singular & Plural
-                    property.status = singularPlural(property.propertyCount, property.propertyType, property.totalProperties)
+                    property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
                 }
             }
 
             return property
         })
 
+        const _id = genId()
         payload.createdAt = _.now()
+        payload.id = _id
         const customers = contractStatus(payload)
 
         yield put({type: 'ADD_CUSTOMER', payload: customers})
@@ -52,23 +41,21 @@ export function *removeCustomerSaga({payload}) {
     try {
         /* do some async stuff babe.. */
 
-        const { customerIndex, propertyIndex } = payload
+        const { id, propertyIndex } = payload
         let properties = yield select(state => state.properties)
 
         //- Increase properties when customer removed.
         properties = _.map(properties, (property, index) => {
             if(index === Number(propertyIndex)) {
                 property.propertyCount = ++property.propertyCount
-
-                //- Singular & Plural
-                property.status = singularPlural(property.propertyCount, property.propertyType, property.totalProperties)
+                property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
             }
 
             return property
         })
 
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
-        yield put({type: 'REMOVE_CUSTOMER', payload: {index: customerIndex}})
+        yield put({type: 'REMOVE_CUSTOMER', payload: {id}})
     } catch(err) {
         console.log(err)
     }
@@ -80,7 +67,7 @@ export function *editCustomerSaga({payload}) {
         let properties = yield select(state => state.properties)
 
         customerData = _.map(customerData, (customer, index) => {
-            if(index === Number(payload.index)) {
+            if(customer.id === payload.index) {
 
                 //- Reduce & add the property that is left & that is going to be taken.
                 //- as the customer shifts from one property to another
@@ -89,8 +76,7 @@ export function *editCustomerSaga({payload}) {
 
                         if(index === Number(customer.property)) {
                             property.propertyCount = ++property.propertyCount
-                            //- Singular & Plural
-                            property.status = singularPlural(property.propertyCount, property.propertyType, property.totalProperties)
+                            property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
                         }
 
                         if(index === Number(payload.property)) {
@@ -99,8 +85,7 @@ export function *editCustomerSaga({payload}) {
                             if(property.propertyCount <= 0) {
                                 property.status = 'Occupied'
                             } else {
-                                //- Singular & Plural
-                                property.status = singularPlural(property.propertyCount, property.propertyType, property.totalProperties)
+                                property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
                             }
                         }
 
@@ -118,10 +103,7 @@ export function *editCustomerSaga({payload}) {
             return customer
         })
 
-        //-Giving contract status
-        customerData = _.map(customerData, (customer, index) => {
-            return contractStatus(customer)
-        })
+        customerData = _.map(customerData, customer => contractStatus(customer))
 
         yield put({type: 'EDIT_CUSTOMER', payload: {data: customerData}})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
