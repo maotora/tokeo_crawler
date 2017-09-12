@@ -5,10 +5,9 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 let EditCustomer = props => {
-    const {initialValues, properties, handleSubmit, togglePassword, reset, history, getIndex} = props
+    const {initialValues, properties, handleSubmit, togglePassword, reset, history} = props
     const { property } = initialValues
     const idType = ['Passport', 'Driving License', 'Voting Card', 'Citizenship Card']
-    getIndex(props.index)
 
     return (
         <Row style={styles.container}>
@@ -151,7 +150,6 @@ const reduxConfig = state => {
 
     return {
         initialValues: customers.filter(customer => customer.id === id)[0],
-        index: id,
         properties
     }
 }

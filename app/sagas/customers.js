@@ -66,12 +66,11 @@ export function *editCustomerSaga({payload}) {
         let customerData = yield select(state => state.customers)
         let properties = yield select(state => state.properties)
 
-        customerData = _.map(customerData, (customer, index) => {
-            if(customer.id === payload.index) {
 
+        customerData = _.map(customerData, (customer, index) => {
+            if(customer.id === payload.id) {
                 //- Reduce & add the property that is left & that is going to be taken.
-                //- as the customer shifts from one property to another
-                if(customer.property !== payload.property) {
+                if(customer.property !== payload.property || payload.status === 'Contract Terminated') {
                     properties = _.map(properties, (property, index) => {
 
                         if(index === Number(customer.property)) {
@@ -93,8 +92,8 @@ export function *editCustomerSaga({payload}) {
                     })
                 }
 
-                delete payload.index
                 /** Setting names here as it sorta can't be set directly in reducers **/
+                customerData = _.map(customerData, contractStatus)
                 payload.names = `${payload.firstName} ${payload.lastName}`
                 payload.updatedAt = _.now()
                 customer = payload
@@ -103,7 +102,6 @@ export function *editCustomerSaga({payload}) {
             return customer
         })
 
-        customerData = _.map(customerData, customer => contractStatus(customer))
 
         yield put({type: 'EDIT_CUSTOMER', payload: {data: customerData}})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})

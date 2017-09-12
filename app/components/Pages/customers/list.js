@@ -18,7 +18,6 @@ class CustomerList extends Component {
 	removeCustomer(id, propertyIndex) {
         const { history, data, dispatch } = this.props
 		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {id, propertyIndex}})
-		history.push('/admin')
 	}
 
     payments(id) {
@@ -28,9 +27,12 @@ class CustomerList extends Component {
     }
 
     list(data) {
+
+        data = data.filter(customer => customer.status !== 'Contract Terminated')
+
         if(data.length >= 1) {
             return data.map((item, index) => {
-                let { id, status, firstName, lastName, email, phone, property } = item
+                let { id, status, names, email, phone, property } = item
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -41,7 +43,7 @@ class CustomerList extends Component {
                                 <Text style={{...styles.form_text, ...styles.property}}> Customer Names: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {`${lastName}, ${firstName}`} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {names} </Text>
                             </Col>
                         </Col>
                         <Col>

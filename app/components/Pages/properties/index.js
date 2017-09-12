@@ -44,7 +44,8 @@ class Property extends Component {
 }
 
 const mapStateToProps = state => ({
-    properties: state.properties
+    properties: state.properties,
+    users: state.users
 })
 
 const styles = {

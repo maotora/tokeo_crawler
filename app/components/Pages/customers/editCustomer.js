@@ -9,26 +9,15 @@ import RenewalForm from '../../Forms/renewalForm'
 class EditCustomers extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            index: null
-        }
     }
 
     submit(values) {
-        values.index = this.state.index
         this.props.dispatch({type: 'TO_EDIT_CUSTOMER', payload: values})
         this.props.history.push('/admin')
     }
 
     submitPayments(values) {
-        values.index = this.state.index
         this.props.dispatch({type: 'TO_EDIT_CUSTOMER', payload: values})
-    }
-
-    getIndex(index) {
-        if(index !== this.state.index) {
-            this.setState({index})
-        }
     }
 
     renderForm() {
@@ -42,7 +31,7 @@ class EditCustomers extends Component {
                     </Row>
                     <Row>
                         <View width="100%" horizontalAlignment="center">
-                            <Paymentsform getIndex={::this.getIndex} {...this.props} onSubmit={::this.submitPayments} />
+                            <Paymentsform {...this.props} onSubmit={::this.submitPayments} />
                         </View>
                     </Row>
                 </Col>
@@ -57,7 +46,7 @@ class EditCustomers extends Component {
                         </Row>
                         <Row>
                             <View width="100%" horizontalAlignment="center">
-                                <RenewalForm getIndex={::this.getIndex} {...this.props} onSubmit={::this.submitPayments} />
+                                <RenewalForm {...this.props} onSubmit={::this.submitPayments} />
                             </View>
                         </Row>
                     </Col>
@@ -72,7 +61,7 @@ class EditCustomers extends Component {
                     </Row>
                     <Row>
                         <View width="100%" horizontalAlignment="center">
-                            <EditCustomersForm getIndex={::this.getIndex} {...this.props} onSubmit={::this.submit} />
+                            <EditCustomersForm {...this.props} onSubmit={::this.submit} />
                         </View>
                     </Row>
                 </Col>

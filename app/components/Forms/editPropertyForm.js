@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 let EditPropertyForm = props => {
-    const {getIndex, initialValues, handleSubmit, reset} = props
+    const {users, getIndex, initialValues, handleSubmit, reset} = props
     const propertyType = ['Apartment', 'House', 'Room', 'Frame', 'Floor', 'Building', 'Other']
     getIndex(props.index)
 
@@ -77,11 +77,21 @@ let EditPropertyForm = props => {
                     <label htmlFor="owner">Property Owner</label>
                     <Field
                         name="owner"
-                        component="input"
-                        placeholder="Mr. Landlord"
-                        type="text"
+                        component="select"
+                        type="select"
                         className="form-control"
-                    />
+                    >
+                        <option value="">Select Owner</option>
+                        {users.map((user, index) => {
+                            if(user.role === 'owner') {
+                                return (
+                                    <option key={index} value={index}>
+                                        {user.names}
+                                    </option>
+                                )
+                            }
+                        })}
+                    </Field>
 
                     <label htmlFor="price">Property Price (Tsh)</label>
                     <Field
@@ -121,10 +131,12 @@ const formConfig = {
 const reduxConfig = state => {
     const {id} = state.propertyTempEdits
     const properties = state.properties
+    const users = state.users
 
     return {
         initialValues: properties[id],
-        index: id
+        index: id,
+        users
     }
 }
 

@@ -5,9 +5,8 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 let CustomerRenewal = props => {
-    const {properties, initialValues, handleSubmit, togglePassword, reset, history, getIndex} = props
+    const {properties, initialValues, handleSubmit, togglePassword, reset, history} = props
     const { property } = initialValues
-    getIndex(props.index)
 
     return (
         <Row style={styles.container}>
@@ -116,7 +115,6 @@ const reduxConfig = state => {
 
     return {
         initialValues: customers.filter(customer => customer.id === id)[0],
-        index: id,
         properties
     }
 }

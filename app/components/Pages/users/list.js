@@ -11,7 +11,6 @@ class List extends Component {
 	removeAdmin(index) {
 		const { history, dispatch } = this.props
 		dispatch({type: 'REMOVE_USER', payload: {index}})
-		history.push('/admin')
 	}
 
     toEdit(index) {

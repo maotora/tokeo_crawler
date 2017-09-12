@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, NavPaneItem, NavPane } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
-import { remote } from 'electron'
 import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 import Profile from './profile'
@@ -14,7 +13,6 @@ class Payments extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selected: 'Profile',
             showUpdate: false,
             showRenew: false,
         }
@@ -26,7 +24,7 @@ class Payments extends Component {
 
     render() {
         return (
-            <Col style={{overflow: 'hidden', paddingLeft: 0}}>
+            <Col>
                 <Row style={{marginTop: 10}}>
                     <Col md={2}>
                         <button style={{border: 0}} className="btn btn-default btn-lg" onClick={::this.goBack}>
@@ -97,15 +95,23 @@ class Payments extends Component {
     }
 
     generateContract() {
-        const { dispatch, index } = this.props
-        const { dialog } = remote
-        const file = dialog.showOpenDialog({
-            title: 'Open Contract Template File',
-            defaultPath: '$HOME',
-            filters: [{name: 'Documents', extensions: ['doc', 'docx']}]
-        })[0]
+        const outputPath = docxTemplating(this.props)
 
-        docxTemplating(file)
+        if(outputPath) {
+            const payments = [...this.props.customer.payments || {}, {
+                contractUrl: outputPath,
+                contractCreated: new Date().getTime(),
+            }]
+
+            const values = {
+                ...this.props.customer,
+                payments,
+            }
+
+            //-TODO:fix the browser reloading
+
+            this.props.dispatch({type: 'TO_EDIT_CUSTOMER', payload: values})
+        }
     }
 
     renewContract() {
@@ -116,8 +122,14 @@ class Payments extends Component {
     }
 
     endContract() {
-        const { dispatch, index } = this.props
-        console.log('Some prompt Ending amigoooo')
+        //- TODO: Fix this hack!
+        const { dispatch, id } = this.props
+        const contractValues = {
+            ...this.props.customer,
+            status: 'Contract Terminated',
+        }
+
+        dispatch({type: 'TO_EDIT_CUSTOMER', payload: contractValues})
     }
 }
 
@@ -126,11 +138,15 @@ const mapStateToProps = state => {
     const {id} = state.customerTempEdits
     const customers = state.customers
     const properties = state.properties
+    const users = state.users
 
     return {
         auth: state.auth,
         customer: customers.filter(customer => customer.id === id)[0],
-        properties
+        properties,
+        customers,
+        users,
+        id,
     }
 }
 

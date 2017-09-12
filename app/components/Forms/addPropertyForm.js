@@ -6,7 +6,7 @@ import { normalizePrice } from './lib'
 import { connect } from 'react-redux'
 
 let AddPropertyForm = props => {
-    const {handleSubmit, reset} = props
+    const {users, handleSubmit, reset} = props
     const propertyType = ['Apartment', 'House', 'Room', 'Frame', 'Floor', 'Building', 'Other']
 
     return (
@@ -77,11 +77,22 @@ let AddPropertyForm = props => {
                     <label htmlFor="owner">Property Owner</label>
                     <Field
                         name="owner"
-                        component="input"
-                        placeholder="Mr. Landlord"
-                        type="text"
+                        component="select"
+                        type="select"
                         className="form-control"
-                    />
+                    >
+                        <option value="">Select Owner</option>
+                        {users.map((user, index) => {
+                            console.log(user)
+                            if(user.role === 'owner') {
+                                return (
+                                    <option key={index} value={index}>
+                                        {user.names}
+                                    </option>
+                                )
+                            }
+                        })}
+                    </Field>
 
                     <label htmlFor="price">Property Price (Tsh)</label>
                     <Field
@@ -128,5 +139,9 @@ const styles = {
     }
 }
 
+const mapStateToProps = state => ({
+    users: state.users
+})
+
 AddPropertyForm = reduxForm(formConfig)(AddPropertyForm)
-export default connect()(AddPropertyForm)
+export default connect(mapStateToProps)(AddPropertyForm)

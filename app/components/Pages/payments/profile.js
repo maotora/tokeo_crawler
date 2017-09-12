@@ -4,7 +4,7 @@ import { Row, Container, Col } from 'react-grid-system'
 
 const Profile = props => {
 
-    const { firstName, lastName, email, phone, cardId, property, status } = props.customer
+    const { names, email, phone, cardId, property, status } = props.customer
     const { properties } = props
 
 
@@ -15,7 +15,7 @@ const Profile = props => {
                     <Text style={{...styles.form_text}}> Customer Names: </Text>
                 </Col>
                 <Col md={8}>
-                    <Text style={{...styles.form_text, ...styles.value}}> {`${lastName}, ${firstName}`} </Text>
+                    <Text style={{...styles.form_text, ...styles.value}}> {names} </Text>
                 </Col>
             </Col>
             <Col>

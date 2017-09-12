@@ -18,12 +18,14 @@ const Header = props => {
                     <Text>Logged in as {props.auth.username}</Text>
                 </Col>
             </Row>
-            <Row style={{marginBottom: 20}}>
-                <Col md={8.2}></Col>
-                <Col md={3}>
-                    <Button onClick={() => logout()}><Text>Logout</Text></Button>
-                </Col>
-            </Row>
+            {logout &&
+                <Row style={{marginBottom: 20}}>
+                    <Col md={8.2}></Col>
+                    <Col md={3}>
+                        <Button onClick={() => logout()}><Text>Logout</Text></Button>
+                    </Col>
+                </Row>
+            }
         </Col>
     )
 }

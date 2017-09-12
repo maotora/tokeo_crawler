@@ -1,5 +1,5 @@
 const initialState = {
-    selection: 'Customers'
+    selection: 'Dashboard'
 }
 
 export default function reducer(state=initialState, {type, payload}) {

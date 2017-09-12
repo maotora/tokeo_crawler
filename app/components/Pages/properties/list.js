@@ -15,13 +15,13 @@ class PropertiesList extends Component {
 
     toRemoveProperty(index) {
         this.props.dispatch({type: 'REMOVE_PROPERTY', payload: {index}})
-        this.props.history.push('/admin')
     }
 
     list(data) {
         if(data.length >= 1 && data[0].name !== null) {
             return data.map((property, index) => {
-                let {name, owner, price, location, description, status} = property
+                const {name, owner, price, location, description, status} = property
+                const { users } = this.props
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -56,7 +56,7 @@ class PropertiesList extends Component {
                                 <Text style={{...styles.form_text, ...styles.property}}> Property Owner: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}>{owner}</Text>
+                                <Text style={{...styles.form_text, ...styles.value}}>{users[owner]['names']}</Text>
                             </Col>
                         </Col>
                         <Col>

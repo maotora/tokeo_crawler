@@ -47,6 +47,10 @@ class Table extends Component {
         return `${this.props.properties[cell]['location']}`
     }
 
+    propertyOwnerFormat(cell, row) {
+        return `${this.props.users[cell]['names']}`
+    }
+
     expiryDateFormat(cell, row) {
         return `${moment(cell).format('Do MMMM YYYY')}`
     }
@@ -148,7 +152,7 @@ class Table extends Component {
                             <TableHeaderColumn dataAlign='center' dataField="location">Location</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataField="status">Status</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.priceFormat} dataField="price">Price</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataField="owner">Owner</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyOwnerFormat} dataField="owner">Owner</TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                 </Row>
@@ -160,6 +164,7 @@ class Table extends Component {
 const mapStateToProps = state => ({
     customers: state.customers,
     properties: state.properties,
+    users: state.users,
 })
 
 export default connect(mapStateToProps)(Table)
