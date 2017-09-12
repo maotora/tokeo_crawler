@@ -7,6 +7,8 @@ import Table from '../tables'
 import Customers from '../customers'
 import Properties from '../properties'
 import Admin from '../users/admin'
+import Settings from '../settings'
+import About from '../about'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -34,10 +36,12 @@ class Dashboard extends Component {
                 <Row>
                     <Col>
                         <NavPane push={true} openLength={200}>
-                            {this.renderItems('Tables', 'FaTh')}
+                            {this.renderItems('Dashboard', 'FaTh')}
                             {this.renderItems('Customer', 'FaGroup')}
                             {this.renderItems('Properties', 'FaBuilding')}
+                            {this.renderItems('Settings', 'FaCog')}
                             {this.renderItems('Admin', 'FaUser')}
+                            {this.renderItems('About', 'FaMapSigns')}
                         </NavPane>
                     </Col>
                 </Row>
@@ -70,8 +74,14 @@ class Dashboard extends Component {
         else if(title === 'Properties') {
             return <Properties logout={::this.logout} {...this.props} />
         }
-        else if(title === 'Tables') {
+        else if(title === 'Dashboard') {
             return <Table logout={::this.logout} {...this.props} />
+        }
+        else if(title === 'Settings') {
+            return <Settings logout={::this.logout} {...this.props} />
+        }
+        else if(title === 'About') {
+            return <About logout={::this.logout} {...this.props} />
         }
     }
 }
