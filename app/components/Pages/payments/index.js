@@ -62,13 +62,16 @@ class Payments extends Component {
                                     Generate Contract
                                 </button>
                             </Col>
-                            <Col md={3}>
-                                <button className="btn btn-danger"
-                                    onClick={() => this.endContract()}
-                                > 
-                                    Terminate Contract
-                                </button>
-                            </Col>
+                            {/*
+                                <Col md={3}>
+                                    <button className="btn btn-danger"
+                                        onClick={() => this.endContract()}
+                                    > 
+                                        Terminate Contract
+                                    </button>
+                                </Col>
+                                * Not sure about this code to, amma skip it for now.
+                            */}
                         </Row>
                     </Col>
                     <Col md={6}>
