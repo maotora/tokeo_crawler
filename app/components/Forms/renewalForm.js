@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 let CustomerRenewal = props => {
     const {properties, initialValues, handleSubmit, togglePassword, reset, history} = props
     const { property } = initialValues
+    const propertyObj = properties.filter(propertyVal => propertyVal.id === property)[0]
 
     return (
         <Row style={styles.container}>
@@ -54,11 +55,11 @@ let CustomerRenewal = props => {
                         component="select"
                         className="form-control"
                     >
-                        <option value={properties[property]['name']}>{properties[property]['name']}</option>
+                        <option value={propertyObj['name']}>{propertyObj['name']}</option>
                         {properties.map((property, index) => {
                             if(property.status === 'Vacant') {
                                 return (
-                                    <option value={index} key={index}>
+                                    <option value={property.id} key={index}>
                                         {property.name}
                                     </option>
                                 )

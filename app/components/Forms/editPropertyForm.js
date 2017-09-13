@@ -85,7 +85,7 @@ let EditPropertyForm = props => {
                         {users.map((user, index) => {
                             if(user.role === 'owner') {
                                 return (
-                                    <option key={index} value={index}>
+                                    <option key={index} value={user.id}>
                                         {user.names}
                                     </option>
                                 )

@@ -9,6 +9,9 @@ const { dialog } = remote
 export default function(props) {
     //- Opening the file
     const { customer, users, properties } = props
+    const propertyObj = properties.filter(property => property.id === customer.property)[0]
+    const ownerObj = users.filter(user => user.id === propertyObj.owner)[0]
+
     const filesArray = dialog.showOpenDialog({
         title: 'Open Contract Template File',
         filters: [{name: 'Documents', extensions: ['doc', 'docx']}]
@@ -17,16 +20,14 @@ export default function(props) {
     if(filesArray) {
         const filename = filesArray[0]
 
-        const [ propertyIndex, ownerIndex ] = [ customer.property, properties[customer.property]['owner'] ]
-
         const [ property_location, price, property_type, property_name, owner_name, owner_email, owner_phone] = [ 
-            properties[propertyIndex]['location'],
-            properties[propertyIndex]['price'],
-            properties[propertyIndex]['propertyType'],
-            properties[propertyIndex]['name'],
-            users[ownerIndex]['names'],
-            users[ownerIndex]['email'],
-            users[ownerIndex]['phone'],
+            propertyObj['location'],
+            propertyObj['price'],
+            propertyObj['propertyType'],
+            propertyObj['name'],
+            ownerObj['names'],
+            ownerObj['email'],
+            ownerObj['phone'],
         ]
 
         const [

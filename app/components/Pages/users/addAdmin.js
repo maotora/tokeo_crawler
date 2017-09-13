@@ -19,7 +19,7 @@ class AddAdmin extends Component {
     }
 
     submit(values) {
-		this.props.dispatch({type: 'ADD_USER', payload: values})
+		this.props.dispatch({type: 'TO_ADD_USER', payload: values})
 		this.props.history.push('/admin')
     }
 

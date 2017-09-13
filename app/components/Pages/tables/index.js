@@ -40,15 +40,18 @@ class Table extends Component {
     }
 
     propertyNameFormat(cell, row) {
-        return `${this.props.properties[cell]['name']}`
+        const propertyObj = this.props.properties.filter(property => property.id === cell)[0]
+        return `${propertyObj['name']}`
     }
 
     propertyLocationFormat(cell, row) {
-        return `${this.props.properties[cell]['location']}`
+        const propertyObj = this.props.properties.filter(property => property.id === cell)[0]
+        return `${propertyObj['location']}`
     }
 
     propertyOwnerFormat(cell, row) {
-        return `${this.props.users[cell]['names']}`
+        const user = this.props.users.filter(user => user.id === cell)[0]
+        return `${user['names']}`
     }
 
     expiryDateFormat(cell, row) {

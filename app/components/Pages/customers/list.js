@@ -33,6 +33,8 @@ class CustomerList extends Component {
         if(data.length >= 1) {
             return data.map((item, index) => {
                 let { id, status, names, email, phone, property } = item
+                const propertyObj = this.props.properties.filter(propertyVal => propertyVal.id === property)[0]
+
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -75,7 +77,7 @@ class CustomerList extends Component {
                                 <Text style={{...styles.form_text, ...styles.property}}> Property Owned: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {this.props.properties[property]['name']} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {propertyObj['name']} </Text>
                             </Col>
                         </Col>
                         <Col>
@@ -83,14 +85,14 @@ class CustomerList extends Component {
                                 <Text style={{...styles.form_text, ...styles.property}}> Property Location: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}> {this.props.properties[property]['location']} </Text>
+                                <Text style={{...styles.form_text, ...styles.value}}> {propertyObj['location']} </Text>
                             </Col>
                         </Col>
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Customer Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default'
+                                    <button className='btn btn-primary'
                                         onClick={() => this.toEditCustomer(id)}
                                     >
                                         <p style={styles.btn_text}> Edit Customer </p>
@@ -102,7 +104,7 @@ class CustomerList extends Component {
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-default' onClick={() => this.removeCustomer(id, property)}>
+                                    <button className='btn btn-danger' onClick={() => this.removeCustomer(id, property)}>
                                         <p style={styles.btn_text}> Delete Customer </p>
                                     </button>
                                 </div>

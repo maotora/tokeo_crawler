@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TextInput, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import * as icons from 'react-icons/lib/fa'
+import { connect } from 'react-redux'
 
 class List extends Component {
     constructor(props) {
@@ -19,10 +20,20 @@ class List extends Component {
 		history.push('edit_admin')
     }
 
+    deletionStatus(id) {
+        const hasProperty = this.props.properties.find(property => property.owner === id)
+        const isLoggedIn = this.props.auth.id === id
+
+        if(hasProperty || isLoggedIn) {
+            return true
+        }
+        return false
+    }
+
     adminLists(data) {
         if(data.length >= 1) {
             return data.map((admin, index) => {
-                const { firstName, lastName, role, email, phone } = admin
+                const { firstName, lastName, role, email, phone, id} = admin
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -62,21 +73,21 @@ class List extends Component {
                         </Col>
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Admin Actions </Text> </Col>
                         <Col style={{marginTop: 10}}>
-                            <Col md={1}>
-                                <button className="btn btn-primary"
-                                    onClick={() => this.toEdit(index)}
-                                >
-                                    {icons.FaPencil()}
-                                </button>
-                                <Text style={styles.form_text}> Edit </Text>
-                            </Col>
-                            <Col md={10}></Col> {/* Spacer */}
-                            <Col md={1}>
-                                <button className="btn btn-danger" onClick={() => this.removeAdmin(index)}>
-                                    {icons.FaClose()}
-                                </button>
-                                <Text style={styles.form_text}> Remove </Text>
-                            </Col>
+                            <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
+                                <div className="btn-group" role="group">
+                                    <button className='btn btn-default'
+                                        onClick={() => this.toEdit(index)}
+                                    >
+                                        <p style={styles.btn_text}> Edit User </p>
+                                    </button>
+                                </div>
+                                <div className="btn-group" role="group">
+                                    <button className='btn btn-danger' onClick={() => this.removeAdmin(index)}
+                                        disabled={this.deletionStatus(id)}>
+                                        <p style={styles.btn_text}> Remove User </p>
+                                    </button>
+                                </div>
+                            </div>
                         </Col>
                         <Col> <hr /> </Col>
                     </li>
@@ -112,6 +123,9 @@ const styles = {
     property: {
         fontWeight: 320,
     },
+    btn_text: {
+        fontSize: 17,
+    },
     value: {
         fontWeight: 300,
     },
@@ -127,4 +141,9 @@ const styles = {
         color: 'black',
     }
 }
-export default List
+const mapStateToProps = state => ({
+    properties: state.properties,
+    users: state.users,
+})
+
+export default connect(mapStateToProps)(List)

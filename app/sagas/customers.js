@@ -93,7 +93,6 @@ export function *editCustomerSaga({payload}) {
                 }
 
                 /** Setting names here as it sorta can't be set directly in reducers **/
-                customerData = _.map(customerData, contractStatus)
                 payload.names = `${payload.firstName} ${payload.lastName}`
                 payload.updatedAt = _.now()
                 customer = payload
@@ -102,7 +101,7 @@ export function *editCustomerSaga({payload}) {
             return customer
         })
 
-
+        customerData = _.map(customerData, contractStatus)
         yield put({type: 'EDIT_CUSTOMER', payload: {data: customerData}})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
 

@@ -8,6 +8,7 @@ let EditCustomer = props => {
     const {initialValues, properties, handleSubmit, togglePassword, reset, history} = props
     const { property } = initialValues
     const idType = ['Passport', 'Driving License', 'Voting Card', 'Citizenship Card']
+    const propertyObj = properties.filter(propertyVal => propertyVal.id === property)[0]
 
     return (
         <Row style={styles.container}>
@@ -89,11 +90,11 @@ let EditCustomer = props => {
                         component="select"
                         className="form-control"
                     >
-                        <option value={properties[property]['name']}>{properties[property]['name']}</option>
+                        <option value={propertyObj['name']}>{propertyObj['name']}</option>
                         {properties.map((property, index) => {
                             if(property.status !== 'Occupied') {
                                 return (
-                                    <option value={index} key={index}>
+                                    <option value={property.id} key={index}>
                                         {property.name}
                                     </option>
                                 )

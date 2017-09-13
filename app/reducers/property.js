@@ -1,5 +1,6 @@
 const initialPropertyState = [
     {
+        id: null,
         name: null,
         owner: null,
         price: null,
@@ -16,6 +17,7 @@ export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_PROPERTY': {
             state = state.concat({
+                    id: payload.id,
                     name: payload.name,
                     owner: payload.owner,
                     price: payload.price,
@@ -37,7 +39,7 @@ export default function reducer(state=[], {type, payload}) {
         }
 
         case 'REMOVE_PROPERTY': {
-            return state.filter((property, index) => index !== payload.index)
+            return state.filter(property => property.id !== payload.id)
         }
     }
 

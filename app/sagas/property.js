@@ -1,12 +1,13 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
-import { contractStatus } from './lib'
+import { contractStatus, genId } from './lib'
 
 export function *addPropertySaga({payload}) {
     try {
 
         let property = payload
         property.totalProperties = payload.propertyCount
+        property.id = genId()
 
         if(property.status) {
             yield put({type: 'ADD_PROPERTY', payload})

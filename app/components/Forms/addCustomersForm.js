@@ -95,7 +95,7 @@ let AddCustomer = props => {
                         {properties.map((property, index) => {
                             if(property.status !== 'Occupied') {
                                 return (
-                                    <option value={index} key={index}>
+                                    <option value={property.id} key={index}>
                                         {`${property.name}, ${property.location}`}
                                     </option>
                                 )

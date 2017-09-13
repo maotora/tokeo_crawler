@@ -5,11 +5,12 @@ export function *loginSaga({payload}) {
         const { username, password } = payload
         /* Client Validation & Logging */
         const users = yield select(state => state.users)
-        var logged = false
+        var logged, id = false
 
         users.forEach((user, index) => {
             if(username === user.username && password === user.password) {
                 logged = true
+                id = user.id
             } else {
                 console.log(`Username ${username} & Password ${password}
                 have not been identified
@@ -18,7 +19,7 @@ export function *loginSaga({payload}) {
         })
 
         if(logged) {
-            yield put({type: 'LOGIN', payload: {username, password}})
+            yield put({type: 'LOGIN', payload: {username, id}})
         }
     } catch(err) {
         console.log(err)
@@ -30,8 +31,9 @@ export function *signUpSaga({payload}) {
 
         //- TODO: LICENSE logic!
         //- If not licensed don't yield LOGIN babe.
+        //- NO need generating ID it's already in TO_ADD_USER
 
-        yield put({type: 'ADD_USER', payload})
+        yield put({type: 'TO_ADD_USER', payload})
         yield put({type: 'LOGIN', payload})
 	} catch(err) {
 		console.log(err)

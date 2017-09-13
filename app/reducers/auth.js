@@ -1,23 +1,24 @@
 const initialLoginState = {
 	username: null,
 	password: null,
-	logged: false
+    logged: false,
+    id: null,
 }
 
 export default function loginReducer(state=initialLoginState, {type, payload}) {
     switch(type) {
         case 'LOGIN': {
             return {
+                id: payload.id,
                 username: payload.username,
-                password: payload.password,
                 logged: true,
             }
         }
 
         case 'LOGOUT': {
             return {
+                id: null,
                 username: null,
-                password: null,
                 logged: false,
             }
         }

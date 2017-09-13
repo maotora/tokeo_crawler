@@ -13,15 +13,15 @@ class PropertiesList extends Component {
         this.props.history.push('/edit_property')
     }
 
-    toRemoveProperty(index) {
-        this.props.dispatch({type: 'REMOVE_PROPERTY', payload: {index}})
+    toRemoveProperty(id) {
+        this.props.dispatch({type: 'REMOVE_PROPERTY', payload: {id}})
     }
 
     list(data) {
         if(data.length >= 1 && data[0].name !== null) {
             return data.map((property, index) => {
-                const {name, owner, price, location, description, status} = property
-                const { users } = this.props
+                const {id, name, owner, price, location, description, status} = property
+                const user = this.props.users.filter(user => user.id === owner)[0]
                 return (
                     <li key={index} style={{listStyle: 'none'}}>
                         <Col>
@@ -56,7 +56,7 @@ class PropertiesList extends Component {
                                 <Text style={{...styles.form_text, ...styles.property}}> Property Owner: </Text>
                             </Col>
                             <Col md={8}>
-                                <Text style={{...styles.form_text, ...styles.value}}>{users[owner]['names']}</Text>
+                                <Text style={{...styles.form_text, ...styles.value}}>{user['names']}</Text>
                             </Col>
                         </Col>
                         <Col>
@@ -88,7 +88,7 @@ class PropertiesList extends Component {
                                 </div>
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
-                                        onClick={() => this.toRemoveProperty(index)}
+                                        onClick={() => this.toRemoveProperty(id)}
                                         disabled={status && status !== 'Vacant'}
                                     >
                                         <p style={styles.btn_text}> Delete Property </p>

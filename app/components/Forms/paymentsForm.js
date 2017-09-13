@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 let PaymentsForm = props => {
     const {initialValues, properties, handleSubmit, togglePassword, reset, history} = props
     const { property } = initialValues
+    const propertyObj = properties.filter(propertyVal => propertyVal.id === property)[0]
 
     return (
         <Row style={styles.container}>
@@ -18,11 +19,11 @@ let PaymentsForm = props => {
                         component="select"
                         className="form-control"
                     >
-                        <option value={properties[property]['name']}>{properties[property]['name']}</option>
+                        <option value={propertyObj['name']}>{propertyObj['name']}</option>
                         {properties.map((property, index) => {
                             if(property.status === 'Vacant') {
                                 return (
-                                    <option value={index} key={index}>
+                                    <option value={property.id} key={index}>
                                         {property.name}
                                     </option>
                                 )

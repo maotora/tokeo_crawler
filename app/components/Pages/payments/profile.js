@@ -6,6 +6,7 @@ const Profile = props => {
 
     const { names, email, phone, cardId, property, status } = props.customer
     const { properties } = props
+    const propertyObj = properties.filter(propertyVal => propertyVal.id === property)[0]
 
 
     return (
@@ -47,7 +48,7 @@ const Profile = props => {
                     <Text style={{...styles.form_text}}> Property Owned: </Text>
                 </Col>
                 <Col md={8}>
-                    <Text style={{...styles.form_text, ...styles.value}}> {properties[property]['name']} </Text>
+                    <Text style={{...styles.form_text, ...styles.value}}> {propertyObj['name']} </Text>
                 </Col>
             </Col>
             <Col>
@@ -55,7 +56,7 @@ const Profile = props => {
                     <Text style={{...styles.form_text}}> Property Location: </Text>
                 </Col>
                 <Col md={8}>
-                    <Text style={{...styles.form_text, ...styles.value}}> {properties[property]['location']} </Text>
+                    <Text style={{...styles.form_text, ...styles.value}}> {propertyObj['location']} </Text>
                 </Col>
             </Col>
             <Col>

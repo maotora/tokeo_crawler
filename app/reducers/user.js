@@ -1,5 +1,6 @@
 const initialUsersState = [
     {
+        id: null,
         firstName: null,
         lastName: null,
         names: null,
@@ -15,6 +16,7 @@ export default function usersReducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_USER': {
 			state = state.concat({
+				id: payload.id,
 				firstName: payload.firstName,
 				lastName: payload.lastName,
                 names: `${payload.firstName} ${payload.lastName}`,
@@ -36,7 +38,7 @@ export default function usersReducer(state=[], {type, payload}) {
         }
 
 		case 'REMOVE_USER': {
-            return state.filter((user, index) => index !== payload.index)
+            return state.filter(user => user.id !== payload.id)
 		}
 
         return state

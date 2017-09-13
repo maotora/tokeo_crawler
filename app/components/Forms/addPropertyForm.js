@@ -83,10 +83,9 @@ let AddPropertyForm = props => {
                     >
                         <option value="">Select Owner</option>
                         {users.map((user, index) => {
-                            console.log(user)
                             if(user.role === 'owner') {
                                 return (
-                                    <option key={index} value={index}>
+                                    <option key={index} value={user.id}>
                                         {user.names}
                                     </option>
                                 )

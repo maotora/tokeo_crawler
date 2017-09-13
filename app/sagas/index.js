@@ -13,7 +13,7 @@ export default function *() {
         takeLatest('SIGNUP', signUpSaga),
         takeLatest('TO_PAYMENTS', paymentSaga),
 
-        takeLatest('ADD_USER', addUserSaga),
+        takeLatest('TO_ADD_USER', addUserSaga),
         takeLatest('TO_EDIT_USER', editUserSaga),
         takeLatest('REMOVE_USER', removeUserSaga),
 

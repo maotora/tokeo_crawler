@@ -1,13 +1,21 @@
 import { select, put, call, take } from 'redux-saga/effects'
 import { Redirect } from 'react-router-dom'
+import { genId } from './lib'
 import _ from 'lodash'
 
 export function *addUserSaga({payload}) {
     try {
         /* 
+         * Generate ID
          * Send to server and expect a 200 OK status
          * Agree to add user.
         */
+
+    let user = payload
+
+    user.id = genId()
+    yield put({type: 'ADD_USER', payload: user})
+
     } catch(err) {
         console.log(err)
     }

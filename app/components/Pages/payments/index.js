@@ -142,10 +142,11 @@ const mapStateToProps = state => {
     const customers = state.customers
     const properties = state.properties
     const users = state.users
+    const customer = customers.filter(customer => customer.id === id)[0]
 
     return {
         auth: state.auth,
-        customer: customers.filter(customer => customer.id === id)[0],
+        customer,
         properties,
         customers,
         users,
