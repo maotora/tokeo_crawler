@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { View, Checkbox, Text, Button } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
+import { connect } from 'react-redux'
+const imgSource = './assets/img/product.png'
 
 class Main extends Component {
     constructor(props) {
@@ -11,42 +13,22 @@ class Main extends Component {
         this.props.history.push('/login')
     }
 
+    toggleStartup(e) {
+        console.log(e.target.value)
+        this.props.dispatch({type: 'STARTUP_TOGGLE', payload: {startup: e.target.value}})
+    }
+
+    componentWillMount() {
+        if(this.props.ui.showStartup === 'false') {
+            this.props.history.push('/admin')
+        }
+    }
+
     render() {
         return (
-            <Container style={styles.container}>
-                <Row>
-                    <View>
-                        <Text 
-                            horizontalAlignment="center"
-                            verticalAlignment="center"
-                            width="100%"
-                            style={{fontSize: 42}}>
-                            Welcome To Mijengo App
-                        </Text>
-                    </View>
-                </Row>
-
-                <Row>
-                    <View>
-                        <Text
-                            horizontalAlignment="center"
-                            verticalAlignment="center"
-                            padding="100px"
-                            width="100%"
-                        >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam justo urna, posuere vitae est et, accumsan
-                            bibendum sapien. Suspendisse lobortis mollis finibus. Nunc tincidunt enim est, efficitur semper dolor luctus
-                            eget. Donec faucibus dolor id leo tincidunt, condimentum mattis augue finibus. Etiam hendrerit ipsum nisi,
-                            vel semper dolor malesuada a. Pellentesque a scelerisque sapien, quis interdum odio. Nulla posuere, velit sit
-                            amet lacinia pharetra, sapien arcu convallis dolor, id congue erat lectus nec sem. Praesent pretium a nisi et
-                            elementum. Cras lacinia sollicitudin suscipit. Phasellus accumsan felis odio. Pellentesque habitant morbi
-                            tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </Text>
-                    </View>
-                </Row>
-
-                <Row>
-                    <View horizontalAlignment="center">
+            <Col style={styles.bg}>
+                <Row style={styles.bottom}>
+                    <Col>
                         <Button
                             onClick={::this.handleClick}
                             color="blue"
@@ -54,24 +36,46 @@ class Main extends Component {
                         >
                             Get Started
                         </Button>
-                    </View>
-                </Row>
+                    </Col>
 
-                <Row style={{margin: '20px'}}>
-                    <View horizontalAlignment="center">
-                        <Text> Don't show this page again? </Text>
-                        <Checkbox />
-                    </View>
+                    {/* TODO: I will get back to this sometime later...
+                        <Col>
+                            <View horizontalAlignment="center">
+                                <Col>
+                                    <p> Don't show this page again? </p>
+                                </Col>
+
+                                <Col>
+                                    <Checkbox onChange={(e) => this.toggleStartup(e)} defaultChecked={true}/>
+                                </Col>
+                            </View>
+                        </Col>
+                    */}
                 </Row>
-            </Container>
+            </Col>
         )
     }
 }
 
+const mapStateToProps = state => ({
+    ui: state.ui
+})
+
+export default connect(mapStateToProps)(Main)
+
 const styles = {
-    container: {
-        padding: 30
+    bg: {
+        width: 1024,
+        height: 728,
+        backgroundImage: `url(${imgSource})`,
+        backgroundPosition: 'center top',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgba(33, 182, 182, 255)',
+
+    },
+    bottom: {
+        position: 'absolute',
+        bottom: 50,
+        left: '50%'
     }
 }
-
-export default Main

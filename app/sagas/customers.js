@@ -9,7 +9,7 @@ export function *addCustomerSaga({payload}) {
         properties = _.map(properties, (property, index) => {
 
             //- Reducing properties as customers are added.
-            if(index === Number(payload.property)) {
+            if(property.id === payload.property) {
                 property.propertyCount = --property.propertyCount
 
                 //- Occupied if all properties are occupied & ${count} left is some are left.
@@ -41,12 +41,12 @@ export function *removeCustomerSaga({payload}) {
     try {
         /* do some async stuff babe.. */
 
-        const { id, propertyIndex } = payload
+        const { id, propertyId } = payload
         let properties = yield select(state => state.properties)
 
         //- Increase properties when customer removed.
         properties = _.map(properties, (property, index) => {
-            if(index === Number(propertyIndex)) {
+            if(property.id === propertyId) {
                 property.propertyCount = ++property.propertyCount
                 property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
             }
@@ -73,12 +73,12 @@ export function *editCustomerSaga({payload}) {
                 if(customer.property !== payload.property || payload.status === 'Contract Terminated') {
                     properties = _.map(properties, (property, index) => {
 
-                        if(index === Number(customer.property)) {
+                        if(property.id === customer.property) {
                             property.propertyCount = ++property.propertyCount
                             property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
                         }
 
-                        if(index === Number(payload.property)) {
+                        if(property.id === payload.property) {
                             property.propertyCount = --property.propertyCount
 
                             if(property.propertyCount <= 0) {

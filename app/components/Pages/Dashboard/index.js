@@ -27,7 +27,7 @@ class Dashboard extends Component {
     }
 
     changeSelect(title) {
-        this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: title})
+        this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: {selection: title}})
     }
 
     render() {

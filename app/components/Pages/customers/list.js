@@ -15,9 +15,9 @@ class CustomerList extends Component {
         history.push('/edit_customer')
     }
 
-	removeCustomer(id, propertyIndex) {
+	removeCustomer(id, propertyId) {
         const { history, data, dispatch } = this.props
-		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {id, propertyIndex}})
+		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {id, propertyId}})
 	}
 
     payments(id) {

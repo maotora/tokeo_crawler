@@ -59,7 +59,7 @@ const styles = {
         width: 400,
         margin: 10,
         backgroundColor: 'rgba(65, 138, 63, .4)'
-    }
+    },
 }
 
 export default reduxForm(config)(SignIn)

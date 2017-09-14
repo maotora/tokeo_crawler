@@ -1,5 +1,6 @@
 const initialState = {
-    selection: 'Dashboard'
+    selection: 'Dashboard',
+    showStartup: 'true',
 }
 
 export default function reducer(state=initialState, {type, payload}) {
@@ -7,7 +8,16 @@ export default function reducer(state=initialState, {type, payload}) {
         case 'DASHBOARD_SELECTION': {
             state = {
                 ...state,
-                selection: payload
+                selection: payload.selection,
+            }
+
+            return state
+        }
+
+        case 'STARTUP_TOGGLE': {
+            state = {
+                ...state,
+                showStartup: payload.startup
             }
 
             return state
