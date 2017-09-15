@@ -9,14 +9,14 @@ class List extends Component {
         super(props)
     }
 	
-	removeAdmin(index) {
+	removeAdmin(id) {
 		const { history, dispatch } = this.props
-		dispatch({type: 'REMOVE_USER', payload: {index}})
+		dispatch({type: 'REMOVE_USER', payload: {id}})
 	}
 
-    toEdit(index) {
+    toEdit(id) {
 		const { dispatch, history } = this.props
-		dispatch({type: 'USER_EDITS', payload: {id: index}})
+		dispatch({type: 'USER_EDITS', payload: {id}})
 		history.push('edit_admin')
     }
 
@@ -76,13 +76,13 @@ class List extends Component {
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
-                                        onClick={() => this.toEdit(index)}
+                                        onClick={() => this.toEdit(id)}
                                     >
                                         <p style={styles.btn_text}> Edit User </p>
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-danger' onClick={() => this.removeAdmin(index)}
+                                    <button className='btn btn-danger' onClick={() => this.removeAdmin(id)}
                                         disabled={this.deletionStatus(id)}>
                                         <p style={styles.btn_text}> Remove User </p>
                                     </button>

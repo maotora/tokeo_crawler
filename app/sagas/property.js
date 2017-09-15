@@ -27,8 +27,8 @@ export function *editPropertySaga({payload}) {
 
         const properties = yield select(state => state.properties)
 
-        let newerProperties = _.map(properties, (property, index) => {
-            if(index === payload.index) {
+        let newerProperties = _.map(properties, property => {
+            if(property.id === payload.id) {
                 property = payload.values
             }
             return property

@@ -7,7 +7,6 @@ import { Field, reduxForm } from 'redux-form'
 
 let EditAdmin = props => {
     const {handleSubmit, togglePassword, getIndex, reset} = props
-    getIndex(props.index)
 
     return (
         <Row style={styles.container}>
@@ -159,10 +158,10 @@ const formConfig = {
 const reduxConfig = state => {
     const {id} = state.userTempEdits
     const users = state.users
+    const user = users.filter(user => user.id === id)[0]
 
     return {
-        initialValues: users[id],
-        index: id
+        initialValues: user,
     }
 }
 

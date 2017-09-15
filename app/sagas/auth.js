@@ -7,7 +7,7 @@ export function *loginSaga({payload}) {
         const users = yield select(state => state.users)
         var logged, id = false
 
-        users.forEach((user, index) => {
+        users.forEach(user => {
             if(username === user.username && password === user.password) {
                 logged = true
                 id = user.id

@@ -81,7 +81,7 @@ class PropertiesList extends Component {
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
-                                        onClick={() => this.toEditProperty(index)}
+                                        onClick={() => this.toEditProperty(id)}
                                     >
                                         <p style={styles.btn_text}> Edit Property </p>
                                     </button>

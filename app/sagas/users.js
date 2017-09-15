@@ -33,9 +33,8 @@ export function *editUserSaga({payload}) {
     try {
         let usersData = yield select(state => state.users)
 
-        usersData = _.map(usersData, (user, index) => {
-            if(index === payload.index) {
-                delete payload.index
+        usersData = _.map(usersData, user => {
+            if(user.id === payload.id) {
                 user = payload
             }
 

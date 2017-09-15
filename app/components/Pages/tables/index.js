@@ -70,8 +70,9 @@ class Table extends Component {
         return `${moment(cell.createdAt).format('DD MMMM YYYY')}`
     }
 
-    onPropertyRowClick(row) {
-        console.log(row)
+    onPropertyRowClick({id}) {
+        this.props.dispatch({type: 'PROPERTY_EDITS', payload: {id}})
+        this.props.history.push('/edit_property')
     }
 
     onCustomerRowClick(row) {
@@ -106,7 +107,7 @@ class Table extends Component {
                 deleteBtn: ::this.createCustomBtn
             },
             property: {
-                onRowClick: this.onPropertyRowClick,
+                onRowClick: ::this.onPropertyRowClick,
             }
         }
 

@@ -5,9 +5,8 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 let EditPropertyForm = props => {
-    const {users, getIndex, initialValues, handleSubmit, reset} = props
+    const {users, initialValues, handleSubmit, reset} = props
     const propertyType = ['Apartment', 'House', 'Room', 'Frame', 'Floor', 'Building', 'Other']
-    getIndex(props.index)
 
     return (
         <Row style={styles.container}>
@@ -132,10 +131,10 @@ const reduxConfig = state => {
     const {id} = state.propertyTempEdits
     const properties = state.properties
     const users = state.users
+    const property = properties.filter(property => property.id === id)[0]
 
     return {
-        initialValues: properties[id],
-        index: id,
+        initialValues: property,
         users
     }
 }
