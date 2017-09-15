@@ -4,7 +4,8 @@ import SignIn from './Pages/users/signin'
 import { connect } from 'react-redux'
 import SignUp from './Pages/users/signup'
 import { SignupText, SigninText } from './Pages/users/ui'
-const imgSource = './assets/img/login.png'
+const loginImg = './assets/img/login.png'
+const signupImg = './assets/img/signup.png'
 
 class Login extends Component {
     constructor(props) {
@@ -19,16 +20,16 @@ class Login extends Component {
                         <SignIn {...this.props} />
                     </Col>
 
-                    <Col style={styles.bg} md={4}></Col>
+                    <Col style={styles.bgLogin} md={4}></Col>
                 </Row>
             )
         } else {
             return (
                 <Row>
-                    <Col md={6}>
+                    <Col md={7}>
                         <SignUp {...this.props} />
                     </Col>
-                    <Col style={styles.bg} md={6}></Col>
+                    <Col style={styles.bgSignup} md={5}></Col>
                 </Row>
             )
         }
@@ -50,9 +51,17 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(Login)
 
 const styles = {
-    bg: {
+    bgLogin: {
         height: 500,
-        backgroundImage: `url(${imgSource})`,
+        backgroundImage: `url(${loginImg})`,
+        backgroundPosition: 'center top',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgba(33, 182, 182, .8)',
+
+    },
+    bgSignup: {
+        height: 720,
+        backgroundImage: `url(${signupImg})`,
         backgroundPosition: 'center top',
         backgroundRepeat: 'no-repeat',
         backgroundColor: 'rgba(33, 182, 182, .8)',
