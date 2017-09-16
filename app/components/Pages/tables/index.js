@@ -9,6 +9,9 @@ import Header from '../Dashboard/header'
 class Table extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            order: 'desc'
+        }
     }
 
     tableColors(value, row, rowId, colId) {
@@ -81,21 +84,18 @@ class Table extends Component {
         this.props.history.push('/payments')
     }
 
-    //- TODO: this gives error, fix it to allow multiple customers deletion!
-    handleDelete(onClick) {
-        console.log('Delete stuff!')
-        onClick()
+    sortCustomerPaymets() {
+        if(this.state.order === 'desc') {
+            this.refs.customerTable.handleSort('asc', 'endDate')
+            this.setState({order: 'asc'})
+        } else {
+            this.refs.customerTable.handleSort('desc', 'endDate')
+            this.setState({order: 'desc'})
+        }
     }
 
-    createCustomBtn(onClick) {
-        return (
-            <DeleteButton
-                className="btn btn-danger"
-                btnText="Delete"
-                btnContextual="btn-danger"
-                onClick={() => this.handleDelete(onClick)}
-            />
-        )
+    renderShowsTotal(start, to, total) {
+        return <p>From customer index { start } to { to }, total is { total }.</p>
     }
 
 	render() {
@@ -104,7 +104,20 @@ class Table extends Component {
         const options = {
             customer: {
                 onRowClick: ::this.onCustomerRowClick,
-                deleteBtn: ::this.createCustomBtn
+                sizePerPageList: [ {
+                    text: '5', value: 5
+                }, {
+                    text: '10', value: 10
+                }, {
+                    text: 'All', value: customers.length
+                } ],
+                sizePerPage: 5,
+                paginationSize: 3,
+                prePage: 'Prev',
+                nextPage: 'Next',
+                firstPage: 'First',
+                lastPage: 'Last',
+                paginationShowsTotal: this.renderShowsTotal,
             },
             property: {
                 onRowClick: ::this.onPropertyRowClick,
@@ -116,7 +129,10 @@ class Table extends Component {
                 <Header pageName="Tables" {...this.props} />
 
                 <Row>
-                    <Col md={8}>
+                    <Col md={4}>
+                        <Button onClick={() => this.sortCustomerPaymets()} push={true} color="#318484">Sort Customer</Button>
+                    </Col>
+                    <Col md={4}>
                         <Text style={{fontWeight: 'bold', fontSize: 20}}> Customers Table </Text>
                     </Col>
 
@@ -125,15 +141,16 @@ class Table extends Component {
                     </Col>
                 </Row>
 
+                {/* TODO: Work on pagination limits */}
                 <Row style={{marginBottom: 100, marginTop: 10}}>
                     <Col md={11}>
-                        <BootstrapTable options={options.customer} data={customers} hover striped pagination deleteRow>
+                        <BootstrapTable ref='customerTable' options={options.customer} data={customers} hover striped pagination={true} >
                             <TableHeaderColumn isKey={true} dataField="names">Customer Names</TableHeaderColumn>
                             <TableHeaderColumn dataFormat={::this.phoneFormat} dataField="phone">Phone Number</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyNameFormat} dataField="property">Property Name</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' columnClassName={ this.tableColors } dataField="status">Contract Status</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataFormat={::this.createdFormat} dataSort={true} dataField="createdAt">Created At</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataFormat={::this.expiryDateFormat} dataSort={true} dataField="endDate">End Date</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.createdFormat} dataField="createdAt">Created At</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.expiryDateFormat} dataField="endDate">End Date</TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                 </Row>
