@@ -27,7 +27,11 @@ class Customer extends Component {
 
         if(value.length > 0) {
             const searchedCustomer = customers.filter(customer => {
-                return customer && customer.names.toLowerCase().includes(searchVal)
+                if(customer.names.toLowerCase().includes(searchVal)) {
+                    return customer
+                } else if(customer.status.toLowerCase().includes(searchVal)) {
+                    return customer
+                }
             })
 
             this.setState({
