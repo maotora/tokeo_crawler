@@ -109,7 +109,7 @@ class PropertiesList extends Component {
         return (
             <Col md={12}>
                 <ul>
-                    {this.list(this.props.properties)}
+                    {this.list(this.props.data)}
                 </ul>
             </Col>
         )

@@ -9,10 +9,39 @@ import Header from '../Dashboard/header'
 class Property extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            properties: props.properties,
+            searchText: ''
+        }
     }
 
     addProperty() {
         this.props.history.push('/add_property')
+    }
+
+    handleSearch(e) {
+        const { value } = e.target
+        const { properties } = this.props
+        const searchVal = value.trim().toLowerCase()
+        this.setState({searchText: value})
+
+        if(value.length > 0) {
+            const searchedProperties = properties.filter(property => {
+                if(property.status.toLowerCase().includes(searchVal)) {
+                    return property
+                } else if(property.description.toLowerCase().includes(searchVal)) {
+                    return property
+                } else if(property.location.toLowerCase().includes(searchVal)) {
+                    return property
+                }
+            })
+
+            this.setState({
+                properties: searchedProperties
+            })
+        } else {
+            this.setState({properties})
+        }
     }
 
     render() {
@@ -23,7 +52,12 @@ class Property extends Component {
                     <Col md={8}>
                         <Col md={4}></Col>
                         <Col md={8}>
-                            <TextInput width="90%" placeholder="Search Properties" />
+                            <input
+                                ref={(input) => input && input.focus()}
+                                className="form-control"
+                                onChange={::this.handleSearch}
+                                value={this.state.searchText}
+                                placeholder="Search Properties" />
                         </Col>
                     </Col>
                     <Col md={4}>
@@ -36,7 +70,7 @@ class Property extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <PropertiesList {...this.props} />
+                    <PropertiesList data={this.state.properties} {...this.props} />
                 </Row>
             </Container>
         )
