@@ -75,7 +75,7 @@ class Table extends Component {
 
     onPropertyRowClick({id}) {
         this.props.dispatch({type: 'PROPERTY_EDITS', payload: {id}})
-        this.props.history.push('/edit_property')
+        this.props.history.push('/property_profile')
     }
 
     onCustomerRowClick(row) {
@@ -141,7 +141,6 @@ class Table extends Component {
                     </Col>
                 </Row>
 
-                {/* TODO: Work on pagination limits */}
                 <Row style={{marginBottom: 100, marginTop: 10}}>
                     <Col md={11}>
                         <BootstrapTable ref='customerTable' options={options.customer} data={customers} hover striped pagination={true} >

@@ -14,6 +14,7 @@ import Contracts from './components/Pages/contracts'
 import Payments from './components/Pages/payments'
 import AddProperty from './components/Pages/properties/addProperty'
 import EditProperty from './components/Pages/properties/editProperty'
+import PropertyProfile from './components/Pages/properties/profile'
 
 export default () => {
     return (
@@ -29,6 +30,7 @@ export default () => {
                 <Route path="/payments" component={Payments} />
                 <Route path="/add_property" component={AddProperty} />
                 <Route path="/edit_property" component={EditProperty} />
+                <Route path="/property_profile" component={PropertyProfile} />
                 <Route path="/" component={MainPage} />
             </Switch>
         </Router>
