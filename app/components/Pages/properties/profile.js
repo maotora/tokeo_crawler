@@ -41,12 +41,12 @@ class Profile extends Component {
 const mapStateToProps = state => {
     const {id} = state.propertyTempEdits
     const property = state.properties.filter(property => property.id === id)[0]
-    const customer = state.customers.filter(customer => customer.property === id)[0]
+    const customers = state.customers.filter(customer => customer.property === id)
     const owner = state.users.filter(user => user.id === property.owner)[0]
 
     return {
         auth: state.auth,
-        customer,
+        customers,
         property,
         owner,
     }

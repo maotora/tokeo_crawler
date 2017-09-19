@@ -70,7 +70,7 @@ class Table extends Component {
     }
 
     createdFormat(cell, row) {
-        return `${moment(cell.createdAt).format('DD MMMM YYYY')}`
+        return `${moment(cell).format('DD MMMM YYYY')}`
     }
 
     onPropertyRowClick({id}) {
@@ -95,7 +95,7 @@ class Table extends Component {
     }
 
     renderShowsTotal(start, to, total) {
-        return <p>From customer index { start } to { to }, total is { total }.</p>
+        return <p>From customer { start } to { to }, total is { total } customers.</p>
     }
 
 	render() {
