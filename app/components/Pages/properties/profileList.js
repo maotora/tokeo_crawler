@@ -53,8 +53,18 @@ class ProfileListing extends Component {
         return `${moment(cell).format('DD MMMM YYYY')}`
     }
 
+    onCustomerRowClick(row) {
+        const { id } = row
+        this.props.dispatch({type: 'CUSTOMER_EDITS', payload: {id}})
+        this.props.history.push('/payments')
+    }
+
     render() {
         const { owner, customers, property } = this.props
+
+        const options = {
+                onRowClick: ::this.onCustomerRowClick,
+        }
 
         return (
             <Row style={{marginTop: 10}}>
@@ -108,7 +118,7 @@ class ProfileListing extends Component {
                         <Col> <Text horizontalAlignment="center" style={styles.form_title}> Our Customers </Text> </Col>
 
                         <Col>
-                            <BootstrapTable data={customers}>
+                            <BootstrapTable options={options} data={customers} hover striped >
                                 <TableHeaderColumn isKey={true} dataField="names">Customer Names</TableHeaderColumn>
                                 <TableHeaderColumn dataFormat={::this.phoneFormat} dataField="phone">Phone Number</TableHeaderColumn>
                                 <TableHeaderColumn dataAlign='center' columnClassName={::this.tableColors} dataField="status">Contract Status</TableHeaderColumn>
