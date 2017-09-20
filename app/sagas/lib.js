@@ -60,3 +60,11 @@ export const statusGen = (count, property, all) => {
 }
 
 export const genId = () => _.times(32, () => _.random(35).toString(36)).join('')
+
+export const logger = (type, user, data) => ({
+    id: genId(),
+    time: _.now(),
+    data,
+    type,
+    user,
+})

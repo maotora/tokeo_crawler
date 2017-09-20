@@ -1,10 +1,11 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
-import { statusGen, genId } from './lib'
+import { logger, statusGen, genId } from './lib'
 
 export function *addPropertySaga({payload}) {
     try {
 
+        const user = yield select(state => state.auth)
         let property = payload
         property.totalProperties = Number(payload.propertyCount)
         property.id = genId()
@@ -16,6 +17,9 @@ export function *addPropertySaga({payload}) {
             yield put({type: 'ADD_PROPERTY', payload: property})
         }
 
+        const logData = logger('ADD_PROPERTY', user.id, payload)
+        yield put({type: 'CREATE_LOG', payload: logData})
+
         /* Perform some validations */
     } catch(err) {
         console.log(err)
@@ -26,6 +30,7 @@ export function *editPropertySaga({payload}) {
     try {
 
         const properties = yield select(state => state.properties)
+        const user = yield select(state => state.auth)
 
         let newerProperties = _.map(properties, property => {
             if(property.id === payload.values.id) {
@@ -52,8 +57,10 @@ export function *editPropertySaga({payload}) {
             return property
         })
 
+        const logData = logger('EDIT_PROPERTY', user.id, newerProperties)
 
         yield put({type: 'EDIT_PROPERTY', payload: {data: newerProperties}})
+        yield put({type: 'CREATE_LOG', payload: logData})
 
         /* Perform some validations */
     } catch(err) {
@@ -64,7 +71,11 @@ export function *editPropertySaga({payload}) {
 export function *removePropertySaga({payload}) {
     try {
 
+        const user = yield select(state => state.auth)
+        const logData = logger('REMOVE_PROPERTY', user.id, payload)
+
         yield put({type: 'REMOVE_PROPERTY', payload})
+        yield put({type: 'CREATE_LOG', payload: logData})
 
         /* Perform some validations */
     } catch(err) {

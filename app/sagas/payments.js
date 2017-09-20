@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
 
 export function *paymentSaga({payload}) {

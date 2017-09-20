@@ -7,6 +7,7 @@ import usersReducer from './user'
 import authReducer from './auth'
 import customersReducer from './customers'
 import PropertyReducer from './property'
+import HistoryReducer from './history'
 
 export default combineReducers({
 	users: usersReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
     userTempEdits: userReducer,
     customerTempEdits: customerReducer,
     propertyTempEdits: propertyReducer,
+    logs: HistoryReducer,
 })

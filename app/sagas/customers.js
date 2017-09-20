@@ -1,11 +1,12 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
-import { statusGen, genId, contractStatus } from './lib'
+import { logger, statusGen, genId, contractStatus } from './lib'
 
 export function *addCustomerSaga({payload}) {
     try {
 
         let properties = yield select(state => state.properties)
+        const user = yield select(state => state.auth)
         properties = _.map(properties, (property, index) => {
 
             //- Reducing properties as customers are added.
@@ -28,8 +29,11 @@ export function *addCustomerSaga({payload}) {
         payload.id = _id
         const customers = contractStatus(payload)
 
+        const logData = logger('ADD_CUSTOMER', user.id, payload)
+
         yield put({type: 'ADD_CUSTOMER', payload: customers})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
+        yield put({type: 'CREATE_LOG', payload: logData})
 
         /* Perform some validations */
     } catch(err) {
@@ -43,6 +47,7 @@ export function *removeCustomerSaga({payload}) {
 
         const { id, propertyId } = payload
         let properties = yield select(state => state.properties)
+        const user = yield select(state => state.auth)
 
         //- Increase properties when customer removed.
         properties = _.map(properties, (property, index) => {
@@ -54,8 +59,11 @@ export function *removeCustomerSaga({payload}) {
             return property
         })
 
+        const logData = logger('REMOVE_CUSTOMER', user.id, payload)
+
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'REMOVE_CUSTOMER', payload: {id}})
+        yield put({type: 'CREATE_LOG', payload: logData})
     } catch(err) {
         console.log(err)
     }
@@ -65,6 +73,7 @@ export function *editCustomerSaga({payload}) {
     try {
         let customerData = yield select(state => state.customers)
         let properties = yield select(state => state.properties)
+        const user = yield select(state => state.auth)
 
 
         customerData = _.map(customerData, (customer, index) => {
@@ -102,8 +111,11 @@ export function *editCustomerSaga({payload}) {
         })
 
         customerData = _.map(customerData, contractStatus)
+        const logData = logger('EDIT_CUSTOMER', user.id, payload)
+
         yield put({type: 'EDIT_CUSTOMER', payload: {data: customerData}})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
+        yield put({type: 'CREATE_LOG', payload: logData})
 
     } catch(err) {
         console.log(err)
