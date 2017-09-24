@@ -8,9 +8,13 @@ const Header = props => {
     return (
         <Col>
             <Row style={{marginBottom: 10}}>
-                <Col md={8}>
+                <Col md={4}>
+                    <Button onClick={() => props.dispatch({type: 'DATA_SYNC'})} color="#D9EDF7" push >
+                        <Text>Synchronise Data</Text>
+                    </Button>
+                </Col>
+                <Col md={4}>
                     <Text 
-                        horizontalAlignment="center"
                         style={{fontSize: 20}}
                     > {props.pageName} Page </Text>
                 </Col>

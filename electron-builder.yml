@@ -30,6 +30,8 @@ mac:
 
 win:
   target: nsis
+  arch:
+    - all
 
 linux:
   target:

@@ -3,12 +3,12 @@ import { Col, Row, Container } from 'react-grid-system'
 import { View, Text } from 'react-desktop/windows'
 
 const Developer = props => {
-    const { 
+    const [ 
         npm_package_author_name,
         npm_package_author_email,
         npm_package_name,
         npm_package_version
-    } = process.env
+    ] = ['Maotora Makweba', 'maotoramakweba@live.com', 'Mijengo', 'Version 1.0.1']
 
     return (
         <Row>

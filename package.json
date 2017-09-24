@@ -1,6 +1,6 @@
 {
   "name": "Mijengo",
-  "version": "0.4.0",
+  "version": "0.9.0",
   "description": "Mijengo landlord desktop application",
   "main": "init.js",
   "author": {
@@ -10,6 +10,7 @@
   "repository": "https://github.com/maotora/mijengo.git",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-runtime": "^6.22.0",
     "bootstrap": "^3.3.7",
     "docxtemplater": "^3.1.6",
@@ -18,6 +19,7 @@
     "jquery": "^1.11.3",
     "jszip": "^2.6.1",
     "moment": "^2.18.1",
+    "node-fetch": "^1.7.3",
     "open": "0.0.5",
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
@@ -35,7 +37,8 @@
     "redux-form": "^7.0.3",
     "redux-localstorage": "^0.4.1",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.15.6"
+    "redux-saga": "^0.15.6",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
