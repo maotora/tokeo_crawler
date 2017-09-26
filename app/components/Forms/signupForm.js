@@ -77,15 +77,6 @@ const SignUp = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="username">License Key</label>
-                    <Field
-                        name="license"
-                        placeholder="XXX-XXXX-XXXX-XXXX"
-                        component="input"
-                        type="text"
-                        className="form-control"
-                    />
-
 					<View 
 						width="100%"
 						horizontalAlignment="center"

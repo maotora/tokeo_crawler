@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 
 const SignIn = props => {
     const {handleSubmit, reset} = props
@@ -28,14 +29,22 @@ const SignIn = props => {
                         style={{marginBottom: 20}}
                     />
                     <Row>
-						<Col md={6}>
+						<Col md={4}>
 							<View width="100%" horizontalAlignment="center">
 								<button className="btn btn-default" type="submit">
-                                    SignIn
+                                    Sign In
 								</button>
 							</View>
 						</Col>
-						<Col md={6}>
+						<Col md={4}>
+							<View width="100%" horizontalAlignment="center">
+                                <button className="btn btn-warning" type="button"
+                                    onClick={() => props.dispatch({type: 'RECOVER_PASSWORD'})}>
+									Recover Password
+								</button>
+							</View>
+						</Col>
+						<Col md={4}>
 							<View width="100%" horizontalAlignment="center">
 								<button className="btn btn-danger" type="button" onClick={reset}>
 									Reset
@@ -62,4 +71,6 @@ const styles = {
     },
 }
 
-export default reduxForm(config)(SignIn)
+const composedSignInForm = reduxForm(config)(SignIn)
+
+export default connect()(composedSignInForm)

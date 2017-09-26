@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/wi
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { normalizePhone } from './lib'
 
 let EditCustomer = props => {
     const {initialValues, properties, handleSubmit, togglePassword, reset, history} = props
@@ -79,6 +80,7 @@ let EditCustomer = props => {
                     <Field
                         name="phone"
                         placeholder="+255626763274"
+                        normalize={normalizePhone}
                         component="input"
                         type="text"
                         className="form-control"
