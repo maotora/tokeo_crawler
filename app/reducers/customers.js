@@ -9,6 +9,7 @@ const initialCustomersState = [
         property: null,
         email: null,
         phone: null,
+        noticePeriod: null,
         status: null,
         startDate: null,
         endDate: null,
@@ -31,6 +32,7 @@ export default function reducer(state=[], {type, payload}) {
                 property: payload.property,
                 email: payload.email,
                 phone: payload.phone,
+                noticePeriod: payload.noticePeriod,
                 status: payload.status,
                 startDate: payload.startDate,
                 endDate: payload.endDate,
@@ -49,7 +51,7 @@ export default function reducer(state=[], {type, payload}) {
         }
 
         case 'REMOVE_CUSTOMER': {
-            return state.filter((customer, index) => customer.id !== payload.id)
+            return state.filter(customer => customer.id !== payload.id)
         }
     }
 

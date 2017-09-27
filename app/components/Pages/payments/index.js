@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { View, NavPaneItem, NavPane } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
+import { formValueSelector } from 'redux-form'
 import * as icons from 'react-icons/lib/fa'
 import Profile from './profile'
 import Contracts from '../contracts'
 import Header from '../Dashboard/header'
 import UpdateCustomer from '../customers/editCustomer'
 import docxTemplating from './lib'
+
+const selector = formValueSelector('customer_renewal')
+const reduxCfg = state => {
+	let minDate = selector(state, 'startDate')
+	return {minDate}
+}
 
 class Payments extends Component {
     constructor(props) {
@@ -111,8 +118,6 @@ class Payments extends Component {
                 payments,
             }
 
-            //-TODO:fix the browser reloading
-
             this.props.dispatch({type: 'TO_EDIT_CUSTOMER', payload: values})
         }
     }
@@ -125,7 +130,6 @@ class Payments extends Component {
     }
 
     endContract() {
-        //- TODO: Fix this hack!
         const { dispatch, id } = this.props
         const contractValues = {
             ...this.props.customer,
@@ -154,4 +158,5 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Payments)
+const connectedState = connect(reduxCfg)(Payments)
+export default connect(mapStateToProps)(connectedState)

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { normalizePhone } from './lib'
 
 let EditCustomer = props => {
-    const {initialValues, properties, handleSubmit, togglePassword, reset, history} = props
+    const {initialValues, properties, handleSubmit, minDate, reset, history} = props
     const { property } = initialValues
     const idType = ['Passport', 'Driving License', 'Voting Card', 'Citizenship Card']
     const propertyObj = properties.filter(propertyVal => propertyVal.id === property)[0]
@@ -86,6 +86,17 @@ let EditCustomer = props => {
                         className="form-control"
                     />
 
+                    <label htmlFor="noticePeriod">Time to start notifications (Months)</label>
+                    <Field
+                        name="noticePeriod"
+                        placeholder="Notify when 3 Months Remain"
+                        component="input"
+                        type="number"
+                        max={12}
+                        min={1}
+                        className="form-control"
+                    />
+
                     <label htmlFor="property">Property</label>
                     <Field
                         name="property"
@@ -117,6 +128,7 @@ let EditCustomer = props => {
                         name="endDate"
                         component="input"
                         type="date"
+                        min={minDate}
                         className="form-control"
                     />
 

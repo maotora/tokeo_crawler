@@ -6,7 +6,7 @@ import { normalizePhone } from './lib'
 import { connect } from 'react-redux'
 
 let AddCustomer = props => {
-    const {properties, handleSubmit, togglePassword, reset, history} = props
+    const {properties, handleSubmit, minDate, reset, history} = props
     const idType = ['Passport', 'Driving License', 'Voting Card', 'Citizenship Card']
 
     return (
@@ -84,6 +84,17 @@ let AddCustomer = props => {
                         className="form-control"
                     />
 
+                    <label htmlFor="noticePeriod">Time to start notifications (Months)</label>
+                    <Field
+                        name="noticePeriod"
+                        placeholder="Notify when 3 Months Remain"
+                        component="input"
+                        type="number"
+                        max={12}
+                        min={1}
+                        className="form-control"
+                    />
+
                     <label htmlFor="property">Property</label>
                     <Field
                         name="property"
@@ -114,6 +125,7 @@ let AddCustomer = props => {
                     <label htmlFor="endDate">End Date</label>
                     <Field
                         name="endDate"
+                        min={minDate}
                         component="input"
                         type="date"
                         className="form-control"
@@ -144,7 +156,10 @@ const config = {
 }
 
 const mapStateToProps = state => ({
-    properties: state.properties
+    properties: state.properties,
+    initialValues: {
+        noticePeriod: 3
+    }
 })
 
 const styles = {

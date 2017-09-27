@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 import { Text, Buttom, TextInput, Label, View } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
+import { formValueSelector } from 'redux-form'
 import AddCustomersForm from '../../Forms/addCustomersForm'
+
+const selector = formValueSelector('add_customer')
+const reduxCfg = state => {
+	let minDate = selector(state, 'startDate')
+	return {minDate}
+}
 
 class AddCustomers extends Component {
     constructor(props) {
@@ -41,4 +48,4 @@ const styles = {
     }
 }
 
-export default connect()(AddCustomers)
+export default connect(reduxCfg)(AddCustomers)

@@ -42,7 +42,7 @@ export function *recoverPassword() {
         const {data} = yield recover(user)
         const logData = logger('RECOVERY_EMAIL_SENT', null, data)
 
-        alert(data)
+        console.log(data)
         yield put({type: 'CREATE_LOG', payload: logData})
 
     } catch(err) {
