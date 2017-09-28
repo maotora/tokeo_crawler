@@ -92,7 +92,7 @@ let EditCustomer = props => {
                         placeholder="Notify when 3 Months Remain"
                         component="input"
                         type="number"
-                        max={12}
+                        max={4}
                         min={1}
                         className="form-control"
                     />
