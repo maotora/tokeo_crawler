@@ -34,9 +34,7 @@ export function *loginSaga({payload}) {
 export function *signUpSaga({payload}) {
 	try {
 
-        //- TODO: LICENSE logic!
-        //- If not licensed don't yield LOGIN babe.
-        //- NO need generating ID it's already in TO_ADD_USER
+        //- TODO: Verification & download data LOGIC!
         const user = yield select(state => state.auth)
         const logData = logger('SIGNUP', user.id, payload)
 

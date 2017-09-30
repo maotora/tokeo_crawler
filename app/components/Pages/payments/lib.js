@@ -31,8 +31,8 @@ export default function(props) {
         ]
 
         const [
-            customer_email, customer_name, customer_phone, startDate
-        ] = [ customer.email, customer.names, customer.phone, customer.startDate ]
+            customer_email, customer_name, customer_phone, startDate, endDate
+        ] = [ customer.email, customer.names, customer.phone, customer.startDate, customer.endDate ]
 
         const options = {
             customer_name, customer_email, customer_phone,
@@ -59,7 +59,7 @@ export default function(props) {
         }
 
         try {
-            const outputName = `${customer_name}_${moment(startDate).format('DD-MM-YY')}'s_contract-for ${property_name}`
+            const outputName = `${customer_name}_${moment(endDate).format('DD-MM-YY')}'s_contract-for ${property_name}`
             const outputPath = path.resolve(dirName, `${outputName}.docx`)
             const buf = doc.getZip().generate({type: 'nodebuffer'})
 

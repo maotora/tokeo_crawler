@@ -26,7 +26,7 @@ class Payments extends Component {
     }
 
     goBack() {
-        this.props.history.goBack()
+        this.props.history.push('/admin')
     }
 
     render() {
@@ -69,16 +69,15 @@ class Payments extends Component {
                                     Generate Contract
                                 </button>
                             </Col>
-                            {/*
-                                <Col md={3}>
-                                    <button className="btn btn-danger"
-                                        onClick={() => this.endContract()}
-                                    > 
-                                        Terminate Contract
-                                    </button>
-                                </Col>
-                                * Not sure about this code to, amma skip it for now.
-                            */}
+                                {this.props.customer.payments &&
+                                    <Col md={3}>
+                                        <button className="btn btn-success"
+                                            onClick={() => this.emailContract()}
+                                        > 
+                                            Email contract
+                                        </button>
+                                    </Col>
+                                }
                         </Row>
                     </Col>
                     <Col md={6}>
@@ -129,14 +128,9 @@ class Payments extends Component {
         })
     }
 
-    endContract() {
-        const { dispatch, id } = this.props
-        const contractValues = {
-            ...this.props.customer,
-            status: 'Contract Terminated',
-        }
-
-        dispatch({type: 'TO_EDIT_CUSTOMER', payload: contractValues})
+    emailContract() {
+        const {customer} = this.props
+        this.props.dispatch({type: 'EMAIL_CONTRACT', payload: customer})
     }
 }
 

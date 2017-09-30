@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
 import { logger, statusGen, genId, contractStatus } from './lib'
+import toastr from 'toastr'
 
 export function *addCustomerSaga({payload}) {
     try {
@@ -34,6 +35,7 @@ export function *addCustomerSaga({payload}) {
         yield put({type: 'ADD_CUSTOMER', payload: customers})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'CREATE_LOG', payload: logData})
+        toastr.success('Congratulations the user was added!')
 
         /* Perform some validations */
     } catch(err) {

@@ -5,11 +5,12 @@ import { editCustomerSaga, addCustomerSaga, removeCustomerSaga } from './custome
 import {editPropertySaga, removePropertySaga, addPropertySaga} from './property'
 
 import { signUpSaga, loginSaga } from './auth'
-import { paymentSaga } from './payments'
+import { emailContract, paymentSaga } from './payments'
 import syncData, {recoverPassword} from './sync'
 
 export default function *() {
     yield all([
+        takeLatest('EMAIL_CONTRACT', emailContract),
         takeLatest('DATA_SYNC', syncData),
         takeLatest('RECOVER_PASSWORD', recoverPassword),
 

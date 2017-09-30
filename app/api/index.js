@@ -1,4 +1,5 @@
 import axios from 'axios'
+import request from 'superagent'
 import { 
     recoverPasswordUrlOffline,
     recoverPasswordUrl,
@@ -6,6 +7,8 @@ import {
     baseUrlOffline,
     syncUrl,
     syncUrlOffline,
+    emailUrl,
+    emailUrlOffline,
 } from './urls'
 
 
@@ -30,7 +33,7 @@ export function syncData(data) {
 }
 
 export function recover(user) {
-    checkConnetion()
+    return checkConnetion()
         .then(() => {
             return axios.post(recoverPasswordUrl, user)
         })
@@ -38,3 +41,30 @@ export function recover(user) {
             return axios.post(recoverPasswordUrlOffline, user)
         })
 }
+
+//- Yeah using superagent for now cause, it works!
+export function sendEmail(contractUrl, {email, names}) {
+    return checkConnetion()
+        .then(() => {
+            return request.post(emailUrl)
+                .attach('contract', contractUrl)
+                .field('email', email)
+                .field('name', names)
+        })
+        .catch(() => {
+            return request.post(emailUrlOffline)
+                .attach('contract', contractUrl)
+                .field('email', email)
+                .field('name', names)
+        })
+}
+
+// export function sendEmail({data, headers}) {
+//     return checkConnetion()
+//         .then(() => {
+//             return axios.post(emailUrl, data, {headers})
+//         })
+//         .catch(() => {
+//             return axios.post(emailUrlOffline, data, {headers})
+//         })
+// }

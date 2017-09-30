@@ -1,5 +1,7 @@
 import _ from 'lodash'
 import moment from 'moment'
+import fs from 'fs'
+import FormData from 'form-data'
 
 const oneMonth = 2678400000
 const [ twoMonths, threeMonths, fourMonths ] = [(oneMonth * 2), (oneMonth * 3), (oneMonth * 4)]
@@ -68,3 +70,15 @@ export const logger = (type, user, data) => ({
     type,
     user,
 })
+
+export function generateContract(url, customer) {
+    const file = fs.createReadStream(url)
+    const data = new FormData()
+
+    data.append('contract', file)
+    data.append('names', customer.names)
+    data.append('email', customer.email)
+
+    const headers = data.getHeaders()
+    return {data, headers}
+}
