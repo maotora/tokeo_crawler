@@ -9,6 +9,8 @@ import {
     syncUrlOffline,
     emailUrl,
     emailUrlOffline,
+    validateUrl,
+    validateUrlOffline,
 } from './urls'
 
 
@@ -68,3 +70,13 @@ export function sendEmail(contractUrl, {email, names}) {
 //             return axios.post(emailUrlOffline, data, {headers})
 //         })
 // }
+
+export function validateLicence({email, macAddress}) {
+    return checkConnetion()
+        .then(() => {
+            return axios.post(validateUrl, {email, macAddress})
+        })
+        .catch(() => {
+            return axios.post(validateUrlOffline, {email, macAddress})
+        })
+}

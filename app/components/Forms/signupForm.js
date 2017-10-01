@@ -64,7 +64,16 @@ const SignUp = props => {
                         component="input"
                         type="email"
                         className="form-control"
-						placeholder="admin@mijengo.com"
+						placeholder="admin@business.com"
+                    />
+
+                    <label htmlFor="licence_email">Licence Email</label>
+                    <Field
+                        name="licence_email"
+                        component="input"
+                        type="email"
+                        className="form-control"
+						placeholder="owner@business.com"
                     />
 
                     <label htmlFor="phone">Phone</label>

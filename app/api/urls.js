@@ -9,3 +9,6 @@ export const recoverPasswordUrlOffline = `${baseUrlOffline}/recover`
 
 export const emailUrlOffline = `${baseUrlOffline}/email`
 export const emailUrl = `${baseUrl}/email`
+
+export const validateUrlOffline = `${baseUrlOffline}/validate_licence`
+export const validateUrl = `${baseUrl}/validate_licence`
