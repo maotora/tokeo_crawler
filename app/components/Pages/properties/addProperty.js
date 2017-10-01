@@ -3,6 +3,7 @@ import { View, Text } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import AddPropertyForm from '../../Forms/addPropertyForm'
+import toastr from 'toastr'
 
 class AddProperty extends Component {
     constructor(props) {
@@ -12,6 +13,16 @@ class AddProperty extends Component {
     submit(values) {
 		this.props.dispatch({type: 'TO_ADD_PROPERTY', payload: values})
 		this.props.history.push('/admin')
+    }
+
+    componentWillMount() {
+        const owners = this.props.users.filter(({role}) => role === 'owner')
+
+        if(owners.length === 0) {
+            toastr.error('To add properties you Need to have User with OWNER role first!')
+            this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: {selection: 'Admin'}})
+            this.props.history.push('/admin')
+        }
     }
 
     render() {
@@ -41,4 +52,7 @@ const styles = {
     }
 }
 
-export default connect()(AddProperty)
+const mapStateToProps = state => ({
+    users: state.users
+})
+export default connect(mapStateToProps)(AddProperty)

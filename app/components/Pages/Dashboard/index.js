@@ -39,7 +39,7 @@ class Dashboard extends Component {
                             {this.renderItems('Dashboard', 'FaTh')}
                             {this.renderItems('Customer', 'FaGroup')}
                             {this.renderItems('Properties', 'FaBuilding')}
-                            {/*this.renderItems('Settings', 'FaCog') Removed Settings for a while until I know what to do with it.*/}
+                            {this.renderItems('Settings', 'FaCog')}
                             {this.renderItems('Admin', 'FaUser')}
                             {this.renderItems('About', 'FaMapSigns')}
                         </NavPane>
