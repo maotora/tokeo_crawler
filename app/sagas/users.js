@@ -1,27 +1,32 @@
 import { select, put, call, take } from 'redux-saga/effects'
 import { Redirect } from 'react-router-dom'
-import { logger, genId } from './lib'
+import { userLog, logger, genId } from './lib'
 import _ from 'lodash'
 
 export function *addUserSaga({payload}) {
     try {
-        /* 
-         * Generate ID
-         * Send to server and expect a 200 OK status
-         * Agree to add user.
-        */
 
-    let user = payload
-    const loggedUser = yield select(state => state.auth)
+        let user = payload
 
-    const logData = logger('ADD_USER', loggedUser.id, payload)
-    user.id = genId()
+        //- Add businessId to every user.
+        if(!user.businessId) {
+            const users = yield select(state => state.users)
+            const {businessId} = users.filter(user => user && user.businessId)[0]
+            user.businessId = businessId
+        }
 
-    yield put({type: 'ADD_USER', payload: user})
-    yield put({type: 'CREATE_LOG', payload: logData})
+        const loggedUser = yield select(state => state.auth)
+
+        const logData = logger('ADD_USER', loggedUser.id, user)
+        user.id = genId()
+        user.createdAt = _.now()
+
+        yield put({type: 'ADD_USER', payload: user})
+        yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('Congratulations, you\'ve added a new user!', 'User added', 'success')
 
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while adding a new user', 'Error', 'error')
     }
 }
 
@@ -31,9 +36,9 @@ export function *removeUserSaga() {
         const logData = logger('REMOVE_USER', loggedUser.id, payload)
 
         yield put({type: 'CREATE_LOG', payload: logData})
-		/** Thinking of something async.. */
+        userLog('Congratulations, you\'ve removed a user!', 'User Removed', 'success')
 	} catch(err) {
-		console.log(err)
+        userLog('Something went wrong while removing a user', 'Error', 'error')
 	}
 }
 
@@ -45,6 +50,7 @@ export function *editUserSaga({payload}) {
         usersData = _.map(usersData, user => {
             if(user.id === payload.id) {
                 user = payload
+                user.updatedAt = _.now()
             }
 
             return user
@@ -54,8 +60,9 @@ export function *editUserSaga({payload}) {
 
         yield put({type: 'EDIT_USER', payload: {data: usersData}})
         yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('Congratulations, you\'ve edited a user!', 'User Edited', 'success')
 
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while editing a user', 'Error', 'error')
     }
 }

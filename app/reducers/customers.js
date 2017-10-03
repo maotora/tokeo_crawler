@@ -1,24 +1,3 @@
-const initialCustomersState = [
-    {
-        id: null,
-        cardId: null,
-        id_type: null,
-        firstName: null,
-        lastName: null,
-        names: null,
-        property: null,
-        email: null,
-        phone: null,
-        noticePeriod: null,
-        status: null,
-        startDate: null,
-        endDate: null,
-        payments: [],
-        createdAt: null,
-        updatedAt: null,
-    }
-]
-
 export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_CUSTOMER': {

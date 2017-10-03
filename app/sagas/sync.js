@@ -1,6 +1,6 @@
 import { select, put, call, take } from 'redux-saga/effects'
-import { logger } from './lib'
-import { syncData, recover } from '../api'
+import { userLog, nameObjects, upsert, assignObjects, logger } from './lib'
+import { download, syncData, recover } from '../api'
 
 
 export default function *synchronize() {
@@ -49,5 +49,38 @@ export function *recoverPassword() {
         const errorlogData = logger('RECOVERY_EMAIL_FAILED', null, err)
         yield put({type: 'CREATE_LOG', payload: errorlogData})
         console.log(err.message)
+    }
+}
+
+/*
+ * Going to import data for users, customers & properties
+ * 1st we need to compare data from state & online db & only save ones with changes.
+ * If we have two colliding data we prioritize updatedAt field.
+*/
+
+export function *downloadData() {
+    try {
+        const sCustomers = yield select(state => state.customers)
+        const sProperties = yield select(state => state.properties)
+        const sUsers = yield select(state => state.users)
+        const loggedInUser = yield select(state => state.auth)
+        const {businessId} = sUsers[0]
+
+        const {data} = yield download(businessId)
+        const {dUsers, dProperties, dCustomers} = assignObjects(data)
+
+        const customers = upsert(sCustomers, dCustomers)
+        const users = upsert(sUsers, dUsers)
+        const properties = upsert(sProperties, dProperties)
+        const namedCustomers = customers.map(nameObjects)
+        const namedUsers = users.map(nameObjects)
+
+        yield put({type: 'EDIT_USER', payload: {data: namedUsers}})
+        yield put({type: 'EDIT_CUSTOMER', payload: {data: namedCustomers}})
+        yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
+        userLog('Congrats, Import complete!', 'Import success', 'success')
+
+    } catch(err) {
+        userLog('Something went wrong while importing data', 'Import error', 'error')
     }
 }

@@ -70,7 +70,7 @@ class Table extends Component {
     }
 
     createdFormat(cell, row) {
-        return `${moment(cell).format('DD MMMM YYYY')}`
+        return `${moment(Number(cell)).format('DD MMMM YYYY')}`
     }
 
     onPropertyRowClick({id}) {

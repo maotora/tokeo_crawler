@@ -8,11 +8,8 @@ const Header = props => {
     return (
         <Col>
             <Row style={{marginBottom: 10}}>
-                <Col md={4}>
-                    <Button onClick={() => props.dispatch({type: 'DATA_SYNC'})} color="#D9EDF7" push >
-                        <Text>Synchronise Data</Text>
-                    </Button>
-                </Col>
+                <Col md={4}></Col>
+
                 <Col md={4}>
                     <Text 
                         style={{fontSize: 20}}

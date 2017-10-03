@@ -2,6 +2,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import fs from 'fs'
 import FormData from 'form-data'
+import toastr from 'toastr'
 
 const oneMonth = 2678400000
 const [ twoMonths, threeMonths, fourMonths ] = [(oneMonth * 2), (oneMonth * 3), (oneMonth * 4)]
@@ -81,4 +82,57 @@ export function generateContract(url, customer) {
 
     const headers = data.getHeaders()
     return {data, headers}
+}
+
+export function userLog(msg, head, condition) {
+    return toastr[condition](msg, head)
+}
+
+export function assignObjects(dataArray) {
+    let [dUsers, dProperties, dCustomers ] = [[], [], []]
+
+    dataArray.forEach(obj => {
+        if(obj.businessId) {
+            dUsers = dUsers.concat(obj)
+        } else if(obj.location) {
+            dProperties = dProperties.concat(obj)
+        } else if(obj.cardId) {
+            dCustomers = dCustomers.concat(obj)
+        }
+    })
+
+    return {
+        dUsers, dCustomers, dProperties
+    }
+}
+
+export function upsert(oldData, newData) {
+    const data = oldData.reduce((acc, oldObj) => {
+        for(let i = 0; i < newData.length; i++) {
+            if(oldObj.id === newData[i]['id']) { //- It's an existing data update it
+                const stateDataLastUpdate = oldObj.updatedAt || 0
+                const downloadDataLastUpdate = newData[i]['updatedAt'] || 0
+
+                if(downloadDataLastUpdate > stateDataLastUpdate) {
+                    acc = acc.concat(newData[i])
+                } else {
+                    acc = acc.concat(oldObj)
+                }
+            } else { //- It's a new data save both
+                acc = acc.concat(newData[i], oldObj)
+            }
+        }
+        return acc
+    }, [])
+
+    return _.uniq(data)
+}
+
+export function nameObjects(obj) {
+    if(obj.names) {
+        return obj
+    }
+
+    obj.names = `${obj.firstName} ${obj.lastName}`
+    return obj
 }

@@ -1,17 +1,3 @@
-const initialUsersState = [
-    {
-        id: null,
-        firstName: null,
-        lastName: null,
-        names: null,
-        username: null,
-        password: null,
-        role: null,
-        phone: null,
-        email: null,
-    }
-]
-
 export default function usersReducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_USER': {
@@ -25,6 +11,9 @@ export default function usersReducer(state=[], {type, payload}) {
 				role: payload.role,
 				phone: payload.phone,
 				email: payload.email,
+				businessId: payload.businessId,
+                createdAt: payload.createdAt,
+                updatedAt: payload.updatedAt,
             })
 
             return state

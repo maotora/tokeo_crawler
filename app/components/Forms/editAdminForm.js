@@ -6,7 +6,7 @@ import { normalizePhone } from './lib'
 import { Field, reduxForm } from 'redux-form'
 
 let EditAdmin = props => {
-    const {handleSubmit, togglePassword, getIndex, reset} = props
+    const {handleSubmit, togglePassword, reset} = props
 
     return (
         <Row style={styles.container}>

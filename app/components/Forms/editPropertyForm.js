@@ -3,6 +3,7 @@ import { View, Text } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { normalizePrice } from './lib'
 
 let EditPropertyForm = props => {
     const {users, initialValues, handleSubmit, reset} = props
@@ -98,6 +99,7 @@ let EditPropertyForm = props => {
                         placeholder="200,000/="
                         component="input"
                         type="text"
+                        normalize={normalizePrice}
                         className="form-control"
                     />
 

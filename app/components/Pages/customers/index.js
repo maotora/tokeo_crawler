@@ -63,9 +63,9 @@ class Customer extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <View horizontalAlignment="center" margin="10">
                         <Text style={styles.title}> Our Customers List </Text>
-                    </Col>
+                    </View>
                 </Row>
                 <Row>
                     <CustomersList {...this.props} data={this.state.customers} />

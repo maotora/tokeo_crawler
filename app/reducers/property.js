@@ -1,18 +1,3 @@
-const initialPropertyState = [
-    {
-        id: null,
-        name: null,
-        owner: null,
-        price: null,
-        description: null,
-        location: null,
-        status: null,
-        propertyType: null,
-        propertyCount: null,
-        totalProperties: null,
-    }
-]
-
 export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_PROPERTY': {
@@ -27,6 +12,8 @@ export default function reducer(state=[], {type, payload}) {
                     propertyType: payload.propertyType,
                     propertyCount: payload.propertyCount,
                     totalProperties: payload.totalProperties,
+                    createdAt: payload.createdAt,
+                    updatedAt: payload.updatedAt,
                 })
 
             return state

@@ -16,21 +16,11 @@ const reduxCfg = state => {
 class EditAdmin extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            index: 0
-        }
     }
 
     submit(values) {
-		values.index = this.state.index
 		this.props.dispatch({type: 'TO_EDIT_USER', payload: values})
         this.props.history.push('/admin')
-    }
-
-    getIndex(index) {
-        if(index !== this.state.index) {
-            this.setState({index})
-        }
     }
 
     render() {
@@ -44,7 +34,7 @@ class EditAdmin extends Component {
 
                 <Row>
                     <View width="100%" horizontalAlignment="center">
-                        <EditAdminForm getIndex={::this.getIndex} {...this.props} onSubmit={::this.submit} />
+                        <EditAdminForm {...this.props} onSubmit={::this.submit} />
                     </View>
                 </Row>
             </Container>

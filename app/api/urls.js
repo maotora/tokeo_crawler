@@ -12,3 +12,6 @@ export const emailUrl = `${baseUrl}/email`
 
 export const validateUrlOffline = `${baseUrlOffline}/validate_licence`
 export const validateUrl = `${baseUrl}/validate_licence`
+
+export const downloadUrlOffline = `${baseUrlOffline}/download`
+export const downloadUrl = `${baseUrl}/download`

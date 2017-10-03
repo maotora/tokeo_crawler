@@ -65,9 +65,9 @@ class Property extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <View marginTop="10" horizontalAlignment="center">
                         <Text style={styles.title}> Our Properties List </Text>
-                    </Col>
+                    </View>
                 </Row>
                 <Row>
                     <PropertiesList data={this.state.properties} {...this.props} />

@@ -9,9 +9,10 @@ export function *addPropertySaga({payload}) {
         let property = payload
         property.totalProperties = Number(payload.propertyCount)
         property.id = genId()
+        property.createdAt = _.now()
 
         if(property.status) {
-            yield put({type: 'ADD_PROPERTY', payload})
+            yield put({type: 'ADD_PROPERTY', payload: property})
         } else {
             property.status = 'Vacant'
             yield put({type: 'ADD_PROPERTY', payload: property})
@@ -46,6 +47,7 @@ export function *editPropertySaga({payload}) {
                     property.propertyCount = count
                     property.totalProperties = totalCount
                     property.status = statusGen(count, payload.values.propertyType, totalCount)
+                    property.updatedAt = _.now()
 
                     return property
                 } else {

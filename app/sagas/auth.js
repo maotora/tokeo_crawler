@@ -1,5 +1,5 @@
 import { select, put, call, take } from 'redux-saga/effects'
-import { logger } from './lib'
+import { userLog, logger } from './lib'
 import { validateLicence } from '../api'
 
 export function *loginSaga({payload}) {
@@ -15,20 +15,20 @@ export function *loginSaga({payload}) {
             if(username === user.username && password === user.password) {
                 logged = true
                 id = user.id
-            } else {
-                console.log(`Username ${username} & Password ${password}
-                have not been identified
-                Please SignUp`)
             }
         })
 
+        //- If user not successfully logged
+        if(!logged) {userLog('Username or password is incorrect please try again', 'Login Failure', 'error')}
+
         const logData = logger('LOGIN', user.id, payload)
         if(logged) {
+            userLog('Welcome to the dashboard!', 'Successful login', 'success')
             yield put({type: 'LOGIN', payload: {username, id}})
             yield put({type: 'CREATE_LOG', payload: logData})
         }
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while login in please try again later', 'System Error', 'error')
     }
 }
 
@@ -41,7 +41,7 @@ export function *signUpSaga({payload}) {
         let { email, licence_email } = payload
 
         if(!email && !licence_email) {
-            console.log('You must enter at least one email')
+            userLog('You must enter at least the owner\'s email to signup', 'Signup Failed', 'error')
         }
 
         licence_email = licence_email || email
@@ -50,15 +50,16 @@ export function *signUpSaga({payload}) {
         //-Validation
         const macAddress = require('os').networkInterfaces()
         const {data} = yield validateLicence({email: licence_email, macAddress})
+        const addedUser = {...payload, businessId: licence_email}
 
         if(data.validation) {
-            yield put({type: 'TO_ADD_USER', payload})
-            yield put({type: 'LOGIN', payload})
+            userLog('Welcome to the dashboard!', 'Successful signup', 'success')
+            yield put({type: 'TO_ADD_USER', payload: addedUser})
             yield put({type: 'CREATE_LOG', payload: logData})
         } else {
-            throw new Error('Validation failed')
+            userLog('The licence email you provided is not validated', 'Validation Failed', 'error')
         }
 	} catch(err) {
-		console.log(err)
+        userLog('Something went wrong please contact the technical team\nError message: ', 'System Error', 'error')
 	}
 }

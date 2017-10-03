@@ -17,17 +17,20 @@ class About extends Component {
             <Col>
                 <Header pageName="About" {...this.props} />
 
-                <Row>
-                    <DeveloperProfile {...this.props} />
-                    <hr />
-                    <CustomerProfile {...this.props} />
-                </Row>
-
-                <View horizontalAlignment="center" width="100%">
+                <Col md={9}>
                     <Row>
-                        <Statements {...this.props} />
+                        <DeveloperProfile {...this.props} />
+                        <hr />
+                        <CustomerProfile {...this.props} />
                     </Row>
-                </View>
+
+                    <View marginTop="20" horizontalAlignment="center" width="100%">
+                        <Row>
+                            <Statements {...this.props} />
+                        </Row>
+                    </View>
+                </Col>
+                <Col md={3}></Col>
 
             </Col>
         )

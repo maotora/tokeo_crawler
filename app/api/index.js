@@ -11,6 +11,8 @@ import {
     emailUrlOffline,
     validateUrl,
     validateUrlOffline,
+    downloadUrl,
+    downloadUrlOffline,
 } from './urls'
 
 
@@ -79,4 +81,10 @@ export function validateLicence({email, macAddress}) {
         .catch(() => {
             return axios.post(validateUrlOffline, {email, macAddress})
         })
+}
+
+export function download(id) {
+    return checkConnetion()
+        .then(() => axios.get(`${downloadUrl}/${id}`))
+        .catch(() => axios.get(`${downloadUrlOffline}/${id}`))
 }
