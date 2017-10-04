@@ -7,20 +7,11 @@ import EditPropertyForm from '../../Forms/editPropertyForm'
 class EditProperty extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            index: 0
-        }
     }
 
     submit(values) {
-		this.props.dispatch({type: 'TO_EDIT_PROPERTY', payload: {values, index: this.state.index}})
-		this.props.history.push('/admin')
-    }
-
-    getIndex(index) {
-        if(index !== this.state.index) {
-            this.setState({index})
-        }
+		this.props.dispatch({type: 'TO_EDIT_PROPERTY', payload: {values}})
+		this.props.history.goBack()
     }
 
     render() {
@@ -34,7 +25,7 @@ class EditProperty extends Component {
 
                 <Row>
                     <View width="100%" horizontalAlignment="center">
-                        <EditPropertyForm getIndex={::this.getIndex} {...this.props} onSubmit={::this.submit} />
+                        <EditPropertyForm {...this.props} onSubmit={::this.submit} />
                     </View>
                 </Row>
             </Container>

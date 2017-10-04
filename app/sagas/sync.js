@@ -65,6 +65,7 @@ export function *downloadData() {
         const sCustomers = yield select(state => state.customers)
         const sProperties = yield select(state => state.properties)
         const sUsers = yield select(state => state.users)
+        const loggedInUser = yield select(state => state.auth)
         const {businessId} = sUsers[0]
 
         const {data} = yield download(businessId)

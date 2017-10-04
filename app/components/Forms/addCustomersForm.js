@@ -13,7 +13,7 @@ let AddCustomer = props => {
         <Row style={styles.container}>
             <Row style={{marginBottom: 20}}>
                 <View width="100%" horizontalAlignment="center">
-                    <button onClick={() => props.history.push('/admin')} className="btn btn-default">
+                    <button onClick={() => props.history.goBack()} type="button" className="btn btn-default">
                         Click to go back
                     </button>
                 </View>

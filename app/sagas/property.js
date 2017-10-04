@@ -42,10 +42,8 @@ export function *editPropertySaga({payload}) {
                 const totalCount = payload.values.propertyCount
                 const diff = Number(totalCount) - Number(property.totalProperties)
 
-                //- TODO: Fucking thing, I'll do it later.
                 if(diff !== 0) {
                     const count = diff + Number(property.propertyCount)
-                    console.log('count is ', count)
 
                     property = payload.values
                     property.propertyCount = count
@@ -53,12 +51,7 @@ export function *editPropertySaga({payload}) {
                     property.status = statusGen(count, payload.values.propertyType, totalCount)
                     property.updatedAt = _.now()
 
-                    return property
-                } else {
-                    console.log('Nothing changed')
-                }
-
-                property = payload.values
+                } 
             }
             return property
         })

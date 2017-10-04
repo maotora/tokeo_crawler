@@ -16,6 +16,12 @@ class Profile extends Component {
         this.props.history.push('/admin')
     }
 
+    goToEdit() {
+        const { property, dispatch, history } = this.props
+        dispatch({type: 'PROPETY_EDITS', payload: property.id})
+        history.push('/edit_property')
+    }
+
     render() {
         return (
             <Container>
@@ -32,6 +38,14 @@ class Profile extends Component {
 
                 <Row>
                     <ProfileListing {...this.props} />
+                </Row>
+
+                <Row>
+                    <View horizontalAlignment="center" margin="40">
+                        <Button color="green" push onClick={() => this.goToEdit()}>
+                            <Text style={{fontSize: 18, fontWeight: 'bold', padding: 15, color: 'white'}}> Edit This Property </Text>
+                        </Button>
+                    </View>
                 </Row>
             </Container>
         )

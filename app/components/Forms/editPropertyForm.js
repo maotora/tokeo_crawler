@@ -6,14 +6,15 @@ import { connect } from 'react-redux'
 import { normalizePrice } from './lib'
 
 let EditPropertyForm = props => {
-    const {users, initialValues, handleSubmit, reset} = props
+    const {pristine, users, initialValues, handleSubmit, reset} = props
     const propertyType = ['Apartment', 'House', 'Room', 'Frame', 'Floor', 'Building', 'Other']
+    const { totalProperties } = initialValues
 
     return (
         <Row style={styles.container}>
             <Row style={{marginBottom: 20}}>
                 <View width="100%" horizontalAlignment="center">
-                    <button onClick={() => props.history.push('/admin')} className="btn btn-default">
+                    <button onClick={() => props.history.goBack()} className="btn btn-default" type="button">
                         Click to go back
                     </button>
                 </View>
@@ -29,7 +30,7 @@ let EditPropertyForm = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="type">Property Type & Count</label>
+                    <label htmlFor="type" style={{margin: 5}}>Property Type & Count (Total Properties: {totalProperties})</label>
                     <View width="100%" horizontalAlignment="center">
                         <Field
                             name="propertyType"
@@ -106,14 +107,14 @@ let EditPropertyForm = props => {
                     <Row style={{marginTop: 10}}>
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-primary" type="submit">
+								<button disabled={pristine} className="btn btn-primary" type="submit">
 									Submit
 								</button>
 							</View>
 						</Col>
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-danger" type="button" onClick={reset}>
+								<button disabled={pristine} className="btn btn-danger" type="button" onClick={reset}>
 									Reset
 								</button>
 							</View>
@@ -133,10 +134,10 @@ const reduxConfig = state => {
     const {id} = state.propertyTempEdits
     const properties = state.properties
     const users = state.users
-    const property = properties.filter(property => property.id === id)[0]
+    const propertyState = properties.filter(property => property.id === id)[0]
 
     return {
-        initialValues: property,
+        initialValues: propertyState,
         users
     }
 }
