@@ -18,7 +18,7 @@ class Settings extends Component {
                     <Row>
                         <Col md={6}>
                             <Row>
-                                <Text style={{lineHeight: 2, fontSize: 16}}> Download from server &nbsp;&nbsp; {icons.FaUpload()} </Text>
+                                <Text style={{lineHeight: 2, fontSize: 16}}> Download from server &nbsp;&nbsp; {icons.FaDownload()} </Text>
                             </Row>
 
                             <Row>
@@ -31,7 +31,7 @@ class Settings extends Component {
 
                         <Col md={6}>
                             <Row>
-                                <Text style={{lineHeight: 2, fontSize: 16}}> Upload to server &nbsp;&nbsp; {icons.FaDownload()} </Text>
+                                <Text style={{lineHeight: 2, fontSize: 16}}> Upload to server &nbsp;&nbsp; {icons.FaUpload()} </Text>
                             </Row>
 
                             <Row>
@@ -40,6 +40,18 @@ class Settings extends Component {
                                 </Button>
                             </Row>
                         </Col>
+                    </Row>
+
+                    <Row style={{marginTop: 20}}>
+                        <Col md={3}></Col>
+                        <Col md={6}>
+                            <Row>
+                                <Button onClick={() => this.props.dispatch({type: 'CLEAR_ALL_DATA'})} color="#D9EDF7" push >
+                                    <Text>Clear All Data</Text>
+                                </Button>
+                            </Row>
+                        </Col>
+                        <Col md={4}></Col>
                     </Row>
                 </Container>
             </Col>

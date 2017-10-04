@@ -3,6 +3,7 @@ import moment from 'moment'
 import fs from 'fs'
 import FormData from 'form-data'
 import toastr from 'toastr'
+import { normalizePhone, normalizePrice } from '../components/Forms/lib'
 
 const oneMonth = 2678400000
 const [ twoMonths, threeMonths, fourMonths ] = [(oneMonth * 2), (oneMonth * 3), (oneMonth * 4)]
@@ -107,25 +108,30 @@ export function assignObjects(dataArray) {
 }
 
 export function upsert(oldData, newData) {
-    const data = oldData.reduce((acc, oldObj) => {
-        for(let i = 0; i < newData.length; i++) {
-            if(oldObj.id === newData[i]['id']) { //- It's an existing data update it
-                const stateDataLastUpdate = oldObj.updatedAt || 0
-                const downloadDataLastUpdate = newData[i]['updatedAt'] || 0
+    if(oldData.length <= 0) {
+        return newData
+    } else {
+        const data = oldData.reduce((acc, oldObj) => {
+            for(let i = 0; i < newData.length; i++) {
+                if(oldObj.id === newData[i]['id']) { //- It's an existing data update it
+                    const stateDataLastUpdate = oldObj.updatedAt || 0
+                    const downloadDataLastUpdate = newData[i]['updatedAt'] || 0
 
-                if(downloadDataLastUpdate > stateDataLastUpdate) {
-                    acc = acc.concat(newData[i])
-                } else {
-                    acc = acc.concat(oldObj)
+                    if(downloadDataLastUpdate > stateDataLastUpdate) {
+                        acc = _.uniqBy(acc.concat(newData[i]), 'id')
+                    } else {
+                        console.log('Noped!')
+                        // acc = acc.concat(oldObj)
+                    }
+                } else { //- It's a new data save both
+                    acc = _.uniqBy(acc.concat(newData[i], oldObj),'id')
                 }
-            } else { //- It's a new data save both
-                acc = acc.concat(newData[i], oldObj)
             }
-        }
-        return acc
-    }, [])
+            return acc
+        }, [])
 
-    return _.uniq(data)
+        return _.uniqBy(data, 'id')
+    }
 }
 
 export function nameObjects(obj) {
@@ -135,4 +141,16 @@ export function nameObjects(obj) {
 
     obj.names = `${obj.firstName} ${obj.lastName}`
     return obj
+}
+
+export function normalizeData(arr) {
+    return arr.map(obj => {
+        if(obj.price) {
+            obj.price = normalizePrice(obj.price)
+        } else if(obj.phone) {
+            obj.phone = normalizePhone(obj.phone)
+        }
+
+        return obj
+    })
 }

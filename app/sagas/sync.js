@@ -1,5 +1,5 @@
 import { select, put, call, take } from 'redux-saga/effects'
-import { userLog, nameObjects, upsert, assignObjects, logger } from './lib'
+import { normalizeData, userLog, nameObjects, upsert, assignObjects, logger } from './lib'
 import { download, syncData, recover } from '../api'
 
 
@@ -71,9 +71,9 @@ export function *downloadData() {
 
         const customers = upsert(sCustomers, dCustomers)
         const users = upsert(sUsers, dUsers)
-        const properties = upsert(sProperties, dProperties)
-        const namedCustomers = customers.map(nameObjects)
-        const namedUsers = users.map(nameObjects)
+        const properties = normalizeData(upsert(sProperties, dProperties))
+        const namedCustomers = normalizeData(customers.map(nameObjects))
+        const namedUsers = normalizeData(users.map(nameObjects))
 
         yield put({type: 'EDIT_USER', payload: {data: namedUsers}})
         yield put({type: 'EDIT_CUSTOMER', payload: {data: namedCustomers}})
@@ -81,6 +81,7 @@ export function *downloadData() {
         userLog('Congrats, Import complete!', 'Import success', 'success')
 
     } catch(err) {
+        console.log(err)
         userLog('Something went wrong while importing data', 'Import error', 'error')
     }
 }

@@ -17,6 +17,10 @@ export default function reducer(state=[], {type, payload}) {
 
             return state
         }
+
+        case 'CLEAR_LOGS': {
+            return []
+        }
     }
 
     return state
