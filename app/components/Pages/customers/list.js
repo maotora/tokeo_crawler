@@ -93,7 +93,7 @@ class CustomerList extends Component {
                         <Col style={{marginTop: 10}}>
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-primary'
+                                    <button className='btn btn-success'
                                         onClick={() => this.toEditCustomer(id)}
                                     >
                                         <p style={styles.btn_text}> Edit Customer </p>

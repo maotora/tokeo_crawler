@@ -4,6 +4,7 @@ import JsZip from 'jszip'
 import path from 'path'
 import { remote } from 'electron'
 import moment from 'moment'
+import { userLog } from '../../../sagas/lib'
 const { dialog } = remote
 
 export default function(props) {
@@ -54,8 +55,7 @@ export default function(props) {
         try {
             doc.render()
         } catch(err) {
-            console.log(err)
-            dialog.showErrorBox('Error rendering document', err.message)
+            userLog('Something went wrong while rendering, please try again', 'Error Rendering', 'error')
         }
 
         try {
@@ -65,21 +65,15 @@ export default function(props) {
 
             fs.writeFileSync(outputPath, buf)
 
-            dialog.showMessageBox({
-                type: 'info',
-                title: 'Contract Created',
-                message: `Congratulations, the contract has been created.`,
-                detail: `Located at ${outputPath}`
-            })
+            userLog(`Contract created at: ${outputPath}`, 'Contract created', 'info')
 
             return outputPath
 
         } catch (err) {
-            console.log(err)
-            dialog.showErrorBox('Error writing to file', err.message)
+            userLog('Something went wrong while writing document, please try again', 'Error Writing', 'error')
         }
 
     } else {
-        console.log('File failed/didn\'t open')
+            userLog('Something went wrong while creating contract, please try again', 'System Error', 'error')
     }
 }

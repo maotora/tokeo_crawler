@@ -4,10 +4,16 @@ import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { connect } from 'react-redux'
 import Header from '../Dashboard/header'
 import * as icons from 'react-icons/lib/fa'
+import smalltalk from 'smalltalk'
 
 class Settings extends Component {
     constructor(props) {
         super(props)
+    }
+
+    resetState() {
+        smalltalk.confirm('Confirm reset', 'Are you sure you want to reset app?')
+            .then(() => this.props.dispatch({type: 'CLEAR_ALL_DATA'}), () => console.log('Did\'nt reset data'))
     }
 
     render() {
@@ -42,12 +48,12 @@ class Settings extends Component {
                         </Col>
                     </Row>
 
-                    <Row style={{marginTop: 20}}>
+                    <Row style={{marginTop: 100}}>
                         <Col md={3}></Col>
                         <Col md={6}>
                             <Row>
-                                <Button onClick={() => this.props.dispatch({type: 'CLEAR_ALL_DATA'})} color="red" push >
-                                    <Text style={{color: '#908877', fontSize: 14, lineHeight: 2}}>Reset All Data</Text>
+                                <Button onClick={() => this.resetState()} color="red" push >
+                                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, lineHeight: 2, padding: 14}}>Reset All Data</Text>
                                 </Button>
                             </Row>
                         </Col>
