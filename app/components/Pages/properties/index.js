@@ -31,6 +31,8 @@ class Property extends Component {
                     return property
                 } else if(property.description.toLowerCase().includes(searchVal)) {
                     return property
+                } else if(property.name.toLowerCase().includes(searchVal)) {
+                    return property
                 } else if(property.location.toLowerCase().includes(searchVal)) {
                     return property
                 }

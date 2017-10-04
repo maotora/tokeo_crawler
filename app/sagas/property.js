@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
-import { logger, statusGen, genId } from './lib'
+import { userLog, logger, statusGen, genId } from './lib'
 
 export function *addPropertySaga({payload}) {
     try {
@@ -20,10 +20,14 @@ export function *addPropertySaga({payload}) {
 
         const logData = logger('ADD_PROPERTY', user.id, payload)
         yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('Property successful added', 'Property Added', 'success')
 
         /* Perform some validations */
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while adding a property', 'Property Add Error', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('ADD_PROPERTY_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }
 
@@ -63,10 +67,14 @@ export function *editPropertySaga({payload}) {
 
         yield put({type: 'EDIT_PROPERTY', payload: {data: newerProperties}})
         yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('Property successful edited', 'Property Edit', 'success')
 
         /* Perform some validations */
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while editing a property', 'Property Edit Error', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('EDIT_PROPERTY_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }
 
@@ -78,9 +86,13 @@ export function *removePropertySaga({payload}) {
 
         yield put({type: 'REMOVE_PROPERTY', payload})
         yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('Property successful removed', 'Property Remove', 'success')
 
         /* Perform some validations */
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while removing a property', 'Property Remove Error', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('REMOVE_PROPERTY_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }

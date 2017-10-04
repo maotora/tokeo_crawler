@@ -79,10 +79,8 @@ const styles = {
     title: {
         fontSize: 36,
         lineHeight: 2,
-        color: 'green',
         borderBottomStyle: 'solid',
         borderBottomWidth: 1,
-        borderBottomColor: 'green',
         marginBottom: 20,
     }
 }

@@ -3,6 +3,7 @@ import { View, TextInput, Button, NavPaneItem, NavPane, Text } from 'react-deskt
 import { Row, Container, Col } from 'react-grid-system'
 import * as icons from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
+const imgSource = './assets/img/empty.png'
 
 class List extends Component {
     constructor(props) {
@@ -95,10 +96,11 @@ class List extends Component {
             })
         } else {
             return (
-                <Row>
-                    <Text> No admins for now </Text>
-                    <Text> Care to add one? </Text>
-                </Row>
+                <View horizontalAlignment="center">
+                    <Col md={12}>
+                        <img src={imgSource} />
+                    </Col>
+                </View>
             )
         }
     }

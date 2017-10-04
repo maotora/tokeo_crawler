@@ -1,6 +1,6 @@
 const initialState = {
     selection: 'Dashboard',
-    showStartup: 'true',
+    checked: 'on',
 }
 
 export default function reducer(state=initialState, {type, payload}) {
@@ -14,10 +14,10 @@ export default function reducer(state=initialState, {type, payload}) {
             return state
         }
 
-        case 'STARTUP_TOGGLE': {
+        case 'CHECKED_TOGGLE': {
             state = {
                 ...state,
-                showStartup: payload.startup
+                checked: payload.checked
             }
 
             return state

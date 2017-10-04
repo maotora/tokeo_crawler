@@ -1,4 +1,4 @@
-export const baseUrl = 'https://mijengo.hackeac.com'
+export const baseUrl = 'https://mijengo.hackeac.com/api'
 export const baseUrlOffline = 'http://localhost:1337'
 
 export const syncUrlOffline = `${baseUrlOffline}/content`

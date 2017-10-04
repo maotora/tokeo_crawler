@@ -85,49 +85,7 @@ const SignUp = props => {
                         normalize={normalizePhone}
                         className="form-control"
                     />
-
-					<View 
-						width="100%"
-						horizontalAlignment="center"
-						style={{marginTop: 10, marginBottom: 20}}
-					>
-						<label htmlFor="admin" className="radio-inline">
-							<Field
-								name="role"
-								id="admin"
-								value="Administrator"
-								component="input"
-								type="radio"
-								className="radio"
-							/>
-							Administrator
-						</label>
-
-						<label htmlFor="moderator" className="radio-inline">
-							<Field
-								name="role"
-								id="moderator"
-								value="moderator"
-								component="input"
-								type="radio"
-								className="radio"
-							/>
-							Moderator
-						</label>
-
-						<label htmlFor="owner" className="radio-inline">
-							<Field
-								name="role"
-								id="owner"
-								value="owner"
-								component="input"
-								type="radio"
-								className="radio"
-							/>
-							Owner
-						</label>
-					</View>
-                    <Row>
+                    <Row style={{marginTop: 20}}>
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
 								<button className="btn btn-default" type="submit">

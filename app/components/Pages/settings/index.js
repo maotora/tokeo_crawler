@@ -46,8 +46,8 @@ class Settings extends Component {
                         <Col md={3}></Col>
                         <Col md={6}>
                             <Row>
-                                <Button onClick={() => this.props.dispatch({type: 'CLEAR_ALL_DATA'})} color="#D9EDF7" push >
-                                    <Text>Clear All Data</Text>
+                                <Button onClick={() => this.props.dispatch({type: 'CLEAR_ALL_DATA'})} color="red" push >
+                                    <Text style={{color: '#908877', fontSize: 14, lineHeight: 2}}>Reset All Data</Text>
                                 </Button>
                             </Row>
                         </Col>

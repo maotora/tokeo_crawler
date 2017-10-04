@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { userLog } from '../sagas/lib'
 import request from 'superagent'
 import { 
     recoverPasswordUrlOffline,
@@ -30,7 +31,8 @@ export function syncData(data) {
             axiosArray = createPosts(data, syncUrl)
         })
         .catch(() => {
-            axiosArray = createPosts(data, syncUrlOffline)
+            // axiosArray = createPosts(data, syncUrlOffline)
+            userLog('Cannot connect to server, check your internet settings or call us!', 'Connection Errors', 'error')
         })
 
     return axios.all(axiosArray)
@@ -42,7 +44,8 @@ export function recover(user) {
             return axios.post(recoverPasswordUrl, user)
         })
         .catch(() => {
-            return axios.post(recoverPasswordUrlOffline, user)
+            // return axios.post(recoverPasswordUrlOffline, user)
+            userLog('Cannot connect to server, check your internet settings or call us!', 'Connection Errors', 'error')
         })
 }
 
@@ -56,10 +59,11 @@ export function sendEmail(contractUrl, {email, names}) {
                 .field('name', names)
         })
         .catch(() => {
-            return request.post(emailUrlOffline)
-                .attach('contract', contractUrl)
-                .field('email', email)
-                .field('name', names)
+            // return request.post(emailUrlOffline)
+            //     .attach('contract', contractUrl)
+            //     .field('email', email)
+            //     .field('name', names)
+            userLog('Cannot connect to server, check your internet settings or call us!', 'Connection Errors', 'error')
         })
 }
 
@@ -79,12 +83,16 @@ export function validateLicence({email, macAddress}) {
             return axios.post(validateUrl, {email, macAddress})
         })
         .catch(() => {
-            return axios.post(validateUrlOffline, {email, macAddress})
+            // return axios.post(validateUrlOffline, {email, macAddress})
+            userLog('Cannot connect to server, check your internet settings or call us!', 'Connection Errors', 'error')
         })
 }
 
 export function download(id) {
     return checkConnetion()
         .then(() => axios.get(`${downloadUrl}/${id}`))
-        .catch(() => axios.get(`${downloadUrlOffline}/${id}`))
+        .catch(() => {
+            // return axios.get(`${downloadUrlOffline}/${id}`)
+            userLog('Cannot connect to server, check your internet settings or call us!', 'Connection Errors', 'error')
+        })
 }

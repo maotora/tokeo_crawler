@@ -20,6 +20,7 @@ export function *addUserSaga({payload}) {
         const logData = logger('ADD_USER', loggedUser.id, user)
         user.id = genId()
         user.createdAt = _.now()
+        user.role = user.role || 'owner'
 
         yield put({type: 'ADD_USER', payload: user})
         yield put({type: 'CREATE_LOG', payload: logData})
@@ -27,6 +28,9 @@ export function *addUserSaga({payload}) {
 
     } catch(err) {
         userLog('Something went wrong while adding a new user', 'Error', 'error')
+        const loggedUser = yield select(state => state.auth)
+        const logData = logger('ADD_USER_ERROR', loggedUser.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }
 
@@ -39,6 +43,9 @@ export function *removeUserSaga() {
         userLog('Congratulations, you\'ve removed a user!', 'User Removed', 'success')
 	} catch(err) {
         userLog('Something went wrong while removing a user', 'Error', 'error')
+        const loggedUser = yield select(state => state.auth)
+        const logData = logger('REMOVE_USER_ERROR', loggedUser.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
 	}
 }
 
@@ -64,5 +71,8 @@ export function *editUserSaga({payload}) {
 
     } catch(err) {
         userLog('Something went wrong while editing a user', 'Error', 'error')
+        const loggedUser = yield select(state => state.auth)
+        const logData = logger('EDIT_USER_ERROR', loggedUser.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }

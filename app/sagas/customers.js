@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
-import { logger, statusGen, genId, contractStatus } from './lib'
-import toastr from 'toastr'
+import { userLog, logger, statusGen, genId, contractStatus } from './lib'
 
 export function *addCustomerSaga({payload}) {
     try {
@@ -35,11 +34,14 @@ export function *addCustomerSaga({payload}) {
         yield put({type: 'ADD_CUSTOMER', payload: customers})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'CREATE_LOG', payload: logData})
-        toastr.success('Congratulations the user was added!')
+        userLog('User successfully added!', 'User Added', 'success')
 
         /* Perform some validations */
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while adding user', 'User Added Failure', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('ADD_CUSTOMER_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }
 
@@ -66,8 +68,12 @@ export function *removeCustomerSaga({payload}) {
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'REMOVE_CUSTOMER', payload: {id}})
         yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('User successfully removed!', 'User Removed', 'success')
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while removing user', 'User Remove Failure', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('REMOVE_CUSTOMER_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }
 
@@ -118,8 +124,12 @@ export function *editCustomerSaga({payload}) {
         yield put({type: 'EDIT_CUSTOMER', payload: {data: customerData}})
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('User successfully edited!', 'User Edit', 'success')
 
     } catch(err) {
-        console.log(err)
+        userLog('Something went wrong while editing user', 'User Edit Failure', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('EDIT_CUSTOMER_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
     }
 }

@@ -3,6 +3,7 @@ import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
+const imgSource = './assets/img/empty.png'
 
 class CustomerList extends Component {
     constructor(props) {
@@ -115,7 +116,13 @@ class CustomerList extends Component {
                 )
             })
         } else {
-            return <Text> No customer yet! </Text>
+            return (
+                <View horizontalAlignment="center">
+                    <Col md={12}>
+                        <img src={imgSource} />
+                    </Col>
+                </View>
+            )
         }
     }
 

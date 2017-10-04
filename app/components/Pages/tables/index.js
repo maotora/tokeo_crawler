@@ -58,7 +58,7 @@ class Table extends Component {
     }
 
     expiryDateFormat(cell, row) {
-        return `${moment(cell).format('Do MMMM YYYY')}`
+        return `${moment(cell).format('DD MMMM YYYY')}`
     }
 
     priceFormat(cell, row) {

@@ -9,7 +9,7 @@ import customersReducer from './customers'
 import PropertyReducer from './property'
 import HistoryReducer from './history'
 
-export default combineReducers({
+const appReducer = combineReducers({
 	users: usersReducer,
 	customers: customersReducer,
     properties: PropertyReducer,
@@ -22,3 +22,11 @@ export default combineReducers({
     propertyTempEdits: propertyReducer,
     logs: HistoryReducer,
 })
+
+export default function rootReducer(state, action) {
+    if(action.type === 'CLEAR_ALL_DATA') {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+}

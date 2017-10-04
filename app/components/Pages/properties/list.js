@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
 import * as icons from 'react-icons/lib/fa'
+const imgSource = './assets/img/empty.png'
 
 class PropertiesList extends Component {
     constructor(props) {
@@ -101,7 +102,13 @@ class PropertiesList extends Component {
                 )
             })
         } else {
-            return <Text> No Properties yet! </Text>
+            return (
+                <View horizontalAlignment="center">
+                    <Col md={12}>
+                        <img src={imgSource} />
+                    </Col>
+                </View>
+            )
         }
     }
 
