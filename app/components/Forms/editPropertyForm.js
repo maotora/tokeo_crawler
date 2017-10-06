@@ -30,7 +30,7 @@ let EditPropertyForm = props => {
                         className="form-control"
                     />
 
-                    <label htmlFor="type" style={{margin: 5}}>Property Type & Count (Total Properties: {totalProperties})</label>
+                    <label htmlFor="type">Property Type & Count </label>
                     <View width="100%" horizontalAlignment="center">
                         <Field
                             name="propertyType"
@@ -49,7 +49,7 @@ let EditPropertyForm = props => {
                         </Field>
 
                         <Field
-                            name="propertyCount"
+                            name="totalProperties"
                             component="input"
                             type="number"
                             placeholder="How many?"

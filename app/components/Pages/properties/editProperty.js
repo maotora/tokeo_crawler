@@ -11,7 +11,12 @@ class EditProperty extends Component {
 
     submit(values) {
 		this.props.dispatch({type: 'TO_EDIT_PROPERTY', payload: {values}})
-		this.props.history.goBack()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.properties !== this.props.properties) {
+            this.props.history.goBack()
+        } 
     }
 
     render() {
@@ -41,4 +46,8 @@ const styles = {
     }
 }
 
-export default connect()(EditProperty)
+const mapStateToProps = state => ({
+    properties: state.properties
+})
+
+export default connect(mapStateToProps)(EditProperty)

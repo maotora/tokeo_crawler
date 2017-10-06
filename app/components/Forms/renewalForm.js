@@ -68,9 +68,9 @@ let CustomerRenewal = props => {
                         component="select"
                         className="form-control"
                     >
-                        <option value={propertyObj['name']}>{propertyObj['name']}</option>
+                        <option value={propertyObj['name']}> {propertyObj['name']} </option>
                         {properties.map((property, index) => {
-                            if(property.status === 'Vacant') {
+                            if(property.status !== 'Occupied' && property.id !== propertyObj['id']) {
                                 return (
                                     <option value={property.id} key={index}>
                                         {property.name}

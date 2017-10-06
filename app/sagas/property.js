@@ -36,14 +36,16 @@ export function *editPropertySaga({payload}) {
 
         const properties = yield select(state => state.properties)
         const user = yield select(state => state.auth)
+        const customers = yield select(state => state.customers)
 
         let newerProperties = _.map(properties, property => {
             if(property.id === payload.values.id) {
-                const totalCount = payload.values.propertyCount
+                const totalCount = Number(payload.values.totalProperties)
                 const diff = Number(totalCount) - Number(property.totalProperties)
+                const numberOfCustomers = customers.filter(customer => customer && customer.property === property.id).length
 
                 if(diff !== 0) {
-                    const count = diff + Number(property.propertyCount)
+                    const count = totalCount - numberOfCustomers
 
                     property = payload.values
                     property.propertyCount = count

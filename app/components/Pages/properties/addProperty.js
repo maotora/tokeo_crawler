@@ -12,7 +12,15 @@ class AddProperty extends Component {
 
     submit(values) {
 		this.props.dispatch({type: 'TO_ADD_PROPERTY', payload: values})
-		this.props.history.push('/admin')
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { properties } = nextProps
+        const oldProperties = this.props.properties
+
+        if(oldProperties.length < properties.length) {
+            this.props.history.push('/admin')
+        }
     }
 
     componentWillMount() {
@@ -53,6 +61,7 @@ const styles = {
 }
 
 const mapStateToProps = state => ({
-    users: state.users
+    users: state.users,
+    properties: state.properties,
 })
 export default connect(mapStateToProps)(AddProperty)
