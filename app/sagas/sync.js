@@ -20,8 +20,8 @@ export default function *synchronize() {
 
         const {data} = yield syncData(dataArray)
         const logData = logger('SYNC_COMPLETE', user.id, data)
-        yield put({type: 'CREATE_LOG', payload: logData})
         yield put({type: 'CLEAR_LOGS'})
+        yield put({type: 'CREATE_LOG', payload: logData})
         userLog('Uploading data successfuly completed.', 'Upload Complete', 'success')
 
     } catch(err) {

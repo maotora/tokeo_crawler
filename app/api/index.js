@@ -24,18 +24,14 @@ function createPosts(posts, url) {
 }
 
 export function syncData(data) {
-    let axiosArray = []
-
-    checkConnetion()
+    return checkConnetion()
         .then(() => {
-            axiosArray = createPosts(data, syncUrl)
+            return axios.all(createPosts(data, syncUrl))
         })
         .catch(() => {
             // axiosArray = createPosts(data, syncUrlOffline)
             userLog('Cannot connect to server, check your internet settings or call us!', 'Connection Errors', 'error')
         })
-
-    return axios.all(axiosArray)
 }
 
 export function recover(user) {
