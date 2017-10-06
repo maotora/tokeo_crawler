@@ -27,7 +27,7 @@ const Developer = props => {
 
                 <Col md={4}>
                     <p style={{...styles.form_text, ...styles.value}}>
-                        {npm_package_author_name}
+                        HackEAC
                     </p>
                 </Col>
             </Row>
@@ -41,7 +41,7 @@ const Developer = props => {
 
                 <Col md={4}>
                     <p style={{...styles.form_text, ...styles.value}}>
-                        {npm_package_author_email}
+                        mijengo@hackeac.com
                     </p>
                 </Col>
             </Row>
@@ -56,6 +56,20 @@ const Developer = props => {
                 <Col md={4}>
                     <p style={{...styles.form_text, ...styles.value}}>
                         +255-626-7632-74
+                    </p>
+                </Col>
+            </Row>
+
+            <Row>
+                <Col md={8}>
+                    <p style={{...styles.form_text, ...styles.property}}>
+                        Project Website:
+                    </p>
+                </Col>
+
+                <Col md={4}>
+                    <p style={{...styles.form_text, ...styles.value}}>
+                        https://mijengo.hackeac.com
                     </p>
                 </Col>
             </Row>
