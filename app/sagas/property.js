@@ -46,14 +46,17 @@ export function *editPropertySaga({payload}) {
 
                 if(diff !== 0) {
                     const count = totalCount - numberOfCustomers
-
                     property = payload.values
                     property.propertyCount = count
                     property.totalProperties = totalCount
                     property.status = statusGen(count, payload.values.propertyType, totalCount)
                     property.updatedAt = _.now()
 
-                } 
+                } else {
+                    property = payload.values
+                    property.updatedAt = _.now()
+                }
+
             }
             return property
         })
