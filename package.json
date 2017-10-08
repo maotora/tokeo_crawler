@@ -4,8 +4,8 @@
   "description": "Mijengo landlord desktop application",
   "main": "init.js",
   "author": {
-    "name": "Maotora Makweba",
-    "email": "maotoramakweba@live.com"
+    "name": "HackEAC",
+    "email": "maotora@hackeac.com"
   },
   "repository": "https://github.com/maotora/mijengo.git",
   "license": "MIT",
@@ -56,7 +56,7 @@
     "browser-sync": "^2.9.3",
     "chai": "^3.4.1",
     "electron": "^1.7.8",
-    "electron-builder": "^13.11.1",
+    "electron-builder": "^19.34.2",
     "electron-devtools-installer": "^2.1.0",
     "electron-download-tf": "^4.3.1",
     "eslint": "^3.14.1",

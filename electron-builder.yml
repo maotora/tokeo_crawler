@@ -1,5 +1,5 @@
 appId: com.mijengo.app
-copyright: Mijengo co
+copyright: Mijengo
 productName: Mijengo
 
 asar: true
@@ -29,9 +29,11 @@ mac:
   category: public.app-category.tools
 
 win:
-  target: nsis
   icon: build/icon.ico
-  arch:
+  legalTrademarks: hackEAC
+  target:
+  - target: nsis
+    arch:
     - x64
     - ia32
 
