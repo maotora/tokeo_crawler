@@ -30,8 +30,10 @@ mac:
 
 win:
   target: nsis
+  icon: build/icon.ico
   arch:
-    - all
+    - x64
+    - ia32
 
 linux:
   target:
