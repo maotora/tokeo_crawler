@@ -61,7 +61,7 @@ export function *signUpSaga({payload}) {
             throw new Error(data.msg)
         }
 	} catch(err) {
-        userLog(`${err.message}`, 'Signup Failed', 'error')
+        userLog(`You've either entered wrong licene email / maximum licence count has exceeded.`, 'Signup Failed', 'error')
         const logData = logger('SIGNUP_FAIL', null, err)
         yield put({type: 'CREATE_LOG', payload: logData})
 	}

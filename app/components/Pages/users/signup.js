@@ -19,7 +19,7 @@ class Signup extends Component {
 
     submit(values) {
 		this.props.dispatch({type: 'SIGNUP', payload: values})
-		this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: {selection: 'Settings'}})
+		this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: {selection: 'Dashboard'}})
     }
 
     render() {

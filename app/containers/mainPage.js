@@ -27,31 +27,17 @@ class Main extends Component {
     render() {
         return (
             <Col style={styles.bg}>
-                <Row style={styles.bottom}>
-                    <Col>
-                        <Button
-                            onClick={::this.handleClick}
-                            color="blue"
-                            push={true}
-                        >
-                            Get Started
-                        </Button>
-                    </Col>
+                <View horizontalAlignment="center" style={styles.bottom} >
+                    <Button
+                        onClick={::this.handleClick}
+                        color="#E6E6E6"
+                        push={true}
+                        style={{padding: 28}}
+                    >
+                        <Text color="black" style={{fontSize: 18, fontWeight: 'bold'}}> Get Started </Text>
+                    </Button>
+                </View>
 
-                    {/* TODO: I will get back to this sometime later...
-                        <Col>
-                            <View horizontalAlignment="center">
-                                <Col>
-                                    <p> Don't show this page again? </p>
-                                </Col>
-
-                                <Col>
-                                    <Checkbox onChange={(e) => this.toggleStartup(e)} defaultChecked={true}/>
-                                </Col>
-                            </View>
-                        </Col>
-                    */}
-                </Row>
             </Col>
         )
     }
@@ -71,11 +57,12 @@ const styles = {
         backgroundPosition: 'center top',
         backgroundRepeat: 'no-repeat',
         backgroundColor: 'rgba(33, 182, 182, 255)',
+        position: 'relative',
 
     },
     bottom: {
         position: 'absolute',
-        bottom: 50,
-        left: '50%'
+        bottom: 30,
+        left: '42%'
     }
 }
