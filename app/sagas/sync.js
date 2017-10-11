@@ -25,7 +25,7 @@ export default function *synchronize() {
         userLog('Uploading data successfuly completed.', 'Upload Complete', 'success')
 
     } catch(err) {
-        userLog('Something went wrong while Uploading data.', 'Sync Error', 'error')
+        userLog(`Something went wrong while Uploading data.\n{err.message}`, 'Sync Error', 'error')
         const user = yield select(state => state.auth)
         const errorlogData = logger('SYNC_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: errorlogData})

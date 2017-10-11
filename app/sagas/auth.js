@@ -28,7 +28,7 @@ export function *loginSaga({payload}) {
             yield put({type: 'CREATE_LOG', payload: logData})
         }
     } catch(err) {
-        userLog('Something went wrong while login in please try again later', 'System Error', 'error')
+        userLog('Something went wrong while login in please try again.', 'System Error', 'error')
     }
 }
 
@@ -37,7 +37,6 @@ export function *signUpSaga({payload}) {
 
         //- TODO: Verification & download data LOGIC!
         const user = yield select(state => state.auth)
-        const logData = logger('SIGNUP', user.id, payload)
         let { email, licence_email } = payload
 
         if(!email && !licence_email) {
@@ -54,12 +53,16 @@ export function *signUpSaga({payload}) {
 
         if(data.validation) {
             userLog('Welcome to the dashboard!', 'Successful signup', 'success')
+            const logData = logger('SIGNUP_SUCCESS', null, data)
             yield put({type: 'TO_ADD_USER', payload: addedUser})
             yield put({type: 'CREATE_LOG', payload: logData})
         } else {
-            userLog('The licence email you provided is not validated', 'Validation Failed', 'error')
+            console.log(data)
+            throw new Error(data.msg)
         }
 	} catch(err) {
-        userLog('Something went wrong please contact the technical team\nError message: ', 'System Error', 'error')
+        userLog(`${err.message}`, 'Signup Failed', 'error')
+        const logData = logger('SIGNUP_FAIL', null, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
 	}
 }
