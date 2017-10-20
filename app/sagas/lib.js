@@ -58,6 +58,7 @@ function experimental(customer={}) {
 export const statusGen = (count, property, all) => {
     if(Number(count) === Number(all)) {
         return 'Vacant'
+    }
     else if(Number(count) === 0) {
         return 'Occupied'
     } else {
