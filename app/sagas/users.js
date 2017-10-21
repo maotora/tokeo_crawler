@@ -34,7 +34,7 @@ export function *addUserSaga({payload}) {
     }
 }
 
-export function *removeUserSaga() {
+export function *removeUserSaga({payload}) {
 	try {
         const loggedUser = yield select(state => state.auth)
         const logData = logger('REMOVE_USER', loggedUser.id, payload)

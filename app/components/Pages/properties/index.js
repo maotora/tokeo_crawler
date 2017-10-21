@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 import PropertiesList from './list'
 import Header from '../Dashboard/header'
+import _ from 'lodash'
 
 class Property extends Component {
     constructor(props) {
@@ -43,6 +44,14 @@ class Property extends Component {
             })
         } else {
             this.setState({properties})
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(!_.isEqual(this.props.properties, nextProps.properties)) {
+            this.setState({
+                properties: nextProps.properties
+            })
         }
     }
 

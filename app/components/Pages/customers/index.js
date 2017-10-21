@@ -4,6 +4,7 @@ import { Row, Container, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 import Header from '../Dashboard/header'
 import CustomersList from './list'
+import _ from 'lodash'
 
 class Customer extends Component {
     constructor(props) {
@@ -39,6 +40,14 @@ class Customer extends Component {
             })
         } else {
             this.setState({customers})
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(!_.isEqual(this.props.customers, nextProps.customers)) {
+            this.setState({
+                customers: nextProps.customers
+            })
         }
     }
 

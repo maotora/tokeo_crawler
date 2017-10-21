@@ -4,6 +4,7 @@ import { Row, Container, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 import Header from '../Dashboard/header'
 import AdminsList from './list'
+import _ from 'lodash'
 
 class Admin extends Component {
     constructor(props) {
@@ -34,6 +35,14 @@ class Admin extends Component {
             })
         } else {
             this.setState({users})
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(!_.isEqual(this.props.users, nextProps.users)) {
+            this.setState({
+                users: nextProps.users
+            })
         }
     }
 
