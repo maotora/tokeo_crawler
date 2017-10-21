@@ -67,7 +67,6 @@ export function *editPropertySaga({payload}) {
         yield put({type: 'CREATE_LOG', payload: logData})
         userLog('Property successful edited', 'Property Edit', 'success')
 
-        /* Perform some validations */
     } catch(err) {
         userLog('Something went wrong while editing a property', 'Property Edit Error', 'error')
         const user = yield select(state => state.auth)
@@ -86,7 +85,6 @@ export function *removePropertySaga({payload}) {
         yield put({type: 'CREATE_LOG', payload: logData})
         userLog('Property successful removed', 'Property Remove', 'success')
 
-        /* Perform some validations */
     } catch(err) {
         userLog('Something went wrong while removing a property', 'Property Remove Error', 'error')
         const user = yield select(state => state.auth)

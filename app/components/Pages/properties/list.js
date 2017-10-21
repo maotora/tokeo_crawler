@@ -15,7 +15,7 @@ class PropertiesList extends Component {
     }
 
     toRemoveProperty(id) {
-        this.props.dispatch({type: 'REMOVE_PROPERTY', payload: {id}})
+        this.props.dispatch({type: 'TO_REMOVE_PROPERTY', payload: {id}})
     }
 
     list(data) {
