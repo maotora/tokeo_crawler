@@ -57,8 +57,8 @@ class Table extends Component {
         return `${user['names']}`
     }
 
-    expiryDateFormat(cell, row) {
-        return `${moment(cell).format('DD MMMM YYYY')}`
+    dateFormat(cell, row) {
+        return `${moment(cell).format('Do MMMM YYYY')}`
     }
 
     priceFormat(cell, row) {
@@ -67,10 +67,6 @@ class Table extends Component {
 
     phoneFormat(cell) {
         return `+${cell}`
-    }
-
-    createdFormat(cell, row) {
-        return `${moment(Number(cell)).format('DD MMMM YYYY')}`
     }
 
     onPropertyRowClick({id}) {
@@ -148,8 +144,8 @@ class Table extends Component {
                             <TableHeaderColumn dataFormat={::this.phoneFormat} dataField="phone">Phone Number</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyNameFormat} dataField="property">Property Name</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' columnClassName={ this.tableColors } dataField="status">Contract Status</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataFormat={::this.createdFormat} dataField="createdAt">Created At</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign='center' dataFormat={::this.expiryDateFormat} dataField="endDate">End Date</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.dateFormat} dataField="startDate">Start Date</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign='center' dataFormat={::this.dateFormat} dataField="endDate">End Date</TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                 </Row>
