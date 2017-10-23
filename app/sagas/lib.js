@@ -157,3 +157,46 @@ export function normalizeData(arr) {
         return obj
     })
 }
+
+function checkResponseError(dataObj) {
+    if(dataObj['errno']) {
+        return false
+    } else {
+        return true
+    }
+}
+
+export function checkResponse(response) {
+    //- Response can be an array.
+    //- Data can be an array.
+    
+    if(_.isArray(response)) {
+
+        return response.reduce((acc, {data}) => {
+            if(_.isArray(data)) {
+                return data.reduce((acc, dataObj) => {
+                    return checkResponseError(dataObj)
+                }, false) //- End data reducer
+            } else {
+                return checkResponseError(data)
+            }
+        }, false) //- End response reducer 
+
+    } else {
+        if(_.isArray(response.data)) {
+            return response.data.reduce((acc, data) => {
+                return checkResponseError(data)
+            }, false) //- End data reducer
+        } else {
+            return checkResponseError(response.data)
+        }
+    }
+}
+
+export function clearDeletedData(data) {
+    return data.filter(dataObj => {
+        if(!dataObj.deleted) {
+            return dataObj
+        }
+    })
+}

@@ -97,7 +97,7 @@ const styles = {
 }
 
 const mapStateToProps = state => ({
-	customers: state.customers
+    customers: state.customers.filter(customer => customer && !customer.deleted)
 })
 
 export default connect(mapStateToProps)(Customer)

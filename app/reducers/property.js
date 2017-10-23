@@ -26,7 +26,13 @@ export default function reducer(state=[], {type, payload}) {
         }
 
         case 'REMOVE_PROPERTY': {
-            return state.filter(property => property.id !== payload.id)
+            return state.map(property => {
+                if(property.id === payload.id) {
+                    property.deleted = true
+                }
+
+                return property
+            })
         }
     }
 

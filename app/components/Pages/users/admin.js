@@ -75,8 +75,8 @@ class Admin extends Component {
 }
 
 const mapStateToProps = state => ({
-	auth: state.auth,
-	users: state.users,
+    auth: state.auth,
+    users: state.users.filter(user => user && !user.deleted),
 })
 
 export default connect(mapStateToProps)(Admin)

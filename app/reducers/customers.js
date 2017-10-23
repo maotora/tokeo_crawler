@@ -30,7 +30,13 @@ export default function reducer(state=[], {type, payload}) {
         }
 
         case 'REMOVE_CUSTOMER': {
-            return state.filter(customer => customer.id !== payload.id)
+            return state.map(customer => {
+                if(customer.id === payload.id) {
+                    customer.deleted = true
+                }
+
+                return customer
+            })
         }
     }
 

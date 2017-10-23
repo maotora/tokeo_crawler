@@ -45,38 +45,6 @@ export function *addCustomerSaga({payload}) {
     }
 }
 
-export function *removeCustomerSaga({payload}) {
-    try {
-        /* do some async stuff babe.. */
-
-        const { id, propertyId } = payload
-        let properties = yield select(state => state.properties)
-        const user = yield select(state => state.auth)
-
-        //- Increase properties when customer removed.
-        properties = _.map(properties, (property, index) => {
-            if(property.id === propertyId) {
-                property.propertyCount = ++property.propertyCount
-                property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
-            }
-
-            return property
-        })
-
-        const logData = logger('REMOVE_CUSTOMER', user.id, payload)
-
-        yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
-        yield put({type: 'REMOVE_CUSTOMER', payload: {id}})
-        yield put({type: 'CREATE_LOG', payload: logData})
-        userLog('User successfully removed!', 'User Removed', 'success')
-    } catch(err) {
-        userLog('Something went wrong while removing user', 'User Remove Failure', 'error')
-        const user = yield select(state => state.auth)
-        const logData = logger('REMOVE_CUSTOMER_ERROR', user.id, err)
-        yield put({type: 'CREATE_LOG', payload: logData})
-    }
-}
-
 export function *editCustomerSaga({payload}) {
     try {
         let customerData = yield select(state => state.customers)
@@ -130,6 +98,38 @@ export function *editCustomerSaga({payload}) {
         userLog('Something went wrong while editing user', 'User Edit Failure', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('EDIT_CUSTOMER_ERROR', user.id, err)
+        yield put({type: 'CREATE_LOG', payload: logData})
+    }
+}
+
+export function *removeCustomerSaga({payload}) {
+    try {
+        /* do some async stuff babe.. */
+
+        const { id, propertyId } = payload
+        let properties = yield select(state => state.properties)
+        const user = yield select(state => state.auth)
+
+        //- Increase properties when customer removed.
+        properties = _.map(properties, (property, index) => {
+            if(property.id === propertyId) {
+                property.propertyCount = ++property.propertyCount
+                property.status = statusGen(property.propertyCount, property.propertyType, property.totalProperties)
+            }
+
+            return property
+        })
+
+        const logData = logger('REMOVE_CUSTOMER', user.id, payload)
+
+        yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
+        yield put({type: 'REMOVE_CUSTOMER', payload: {id}})
+        yield put({type: 'CREATE_LOG', payload: logData})
+        userLog('User successfully removed!', 'User Removed', 'success')
+    } catch(err) {
+        userLog('Something went wrong while removing user', 'User Remove Failure', 'error')
+        const user = yield select(state => state.auth)
+        const logData = logger('REMOVE_CUSTOMER_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
     }
 }

@@ -13,7 +13,13 @@ export default function reducer(state=[], {type, payload}) {
         }
 
         case 'DELETE_LOG': {
-            state = state.filter(history => history.id === payload.id)
+            state = state.map(log => {
+                if(log.id === payload.id) {
+                    log.deleted = true
+                }
+
+                return log
+            })
 
             return state
         }

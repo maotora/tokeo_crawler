@@ -89,8 +89,8 @@ class Property extends Component {
 }
 
 const mapStateToProps = state => ({
-    properties: state.properties,
-    users: state.users
+        users: state.users,
+        properties: state.properties.filter(property => property && !property.deleted),
 })
 
 const styles = {
