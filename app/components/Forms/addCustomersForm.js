@@ -155,8 +155,10 @@ const config = {
     form: 'add_customer'
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const mapStateToProps = state => ({
-    properties: state.properties,
+    properties: state.properties.filter(filterFuction),
     initialValues: {
         noticePeriod: 3
     }

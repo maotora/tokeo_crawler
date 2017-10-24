@@ -177,10 +177,12 @@ class Table extends Component {
     }
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const mapStateToProps = state => ({
-    customers: state.customers,
-    properties: state.properties,
-    users: state.users,
+    customers: state.customers.filter(filterFuction),
+    properties: state.properties.filter(filterFuction),
+    users: state.users.filter(filterFuction),
 })
 
 export default connect(mapStateToProps)(Table)

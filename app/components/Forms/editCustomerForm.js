@@ -103,9 +103,9 @@ let EditCustomer = props => {
                         component="select"
                         className="form-control"
                     >
-                        <option value={propertyObj['name']}>{propertyObj['name']}</option>
+                        <option value={propertyObj['name']}> {propertyObj['name']} </option>
                         {properties.map((property, index) => {
-                            if(property.status !== 'Occupied') {
+                            if(property.status !== 'Occupied' && property.id !== propertyObj['id']) {
                                 return (
                                     <option value={property.id} key={index}>
                                         {property.name}
@@ -158,10 +158,12 @@ const formConfig = {
     form: 'edit_customer'
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const reduxConfig = state => {
     const {id} = state.customerTempEdits
-    const customers = state.customers
-    const properties = state.properties
+    const customers = state.customers.filter(filterFuction)
+    const properties = state.properties.filter(filterFuction)
 
     return {
         initialValues: customers.filter(customer => customer.id === id)[0],

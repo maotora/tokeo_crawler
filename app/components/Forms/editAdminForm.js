@@ -155,9 +155,11 @@ const formConfig = {
     form: 'edit_admin',
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const reduxConfig = state => {
     const {id} = state.userTempEdits
-    const users = state.users
+    const users = state.users.filter(filterFuction)
     const user = users.filter(user => user.id === id)[0]
 
     return {

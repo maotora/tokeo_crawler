@@ -123,10 +123,12 @@ const formConfig = {
     form: 'customer_renewal'
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const reduxConfig = state => {
     const {id} = state.customerTempEdits
-    const customers = state.customers
-    const properties = state.properties
+    const customers = state.customers.filter(filterFuction)
+    const properties = state.properties.filter(filterFuction)
 
     return {
         initialValues: customers.filter(customer => customer.id === id)[0],

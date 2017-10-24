@@ -130,10 +130,12 @@ const formConfig = {
     form: 'edit_property'
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const reduxConfig = state => {
     const {id} = state.propertyTempEdits
-    const properties = state.properties
-    const users = state.users
+    const properties = state.properties.filter(filterFuction)
+    const users = state.users.filter(filterFuction)
     const propertyState = properties.filter(property => property.id === id)[0]
 
     return {

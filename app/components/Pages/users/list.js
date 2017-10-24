@@ -143,9 +143,12 @@ const styles = {
         color: 'black',
     }
 }
+
+const filterFuction = obj => obj && !obj.deleted
+
 const mapStateToProps = state => ({
-    properties: state.properties,
-    users: state.users,
+    properties: state.properties.filter(filterFuction),
+    users: state.users.filter(filterFuction),
 })
 
 export default connect(mapStateToProps)(List)

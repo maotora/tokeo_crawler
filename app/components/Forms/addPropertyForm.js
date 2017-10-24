@@ -138,8 +138,10 @@ const styles = {
     }
 }
 
+const filterFuction = obj => obj && !obj['deleted']
+
 const mapStateToProps = state => ({
-    users: state.users
+    users: state.users.filter(filterFuction),
 })
 
 AddPropertyForm = reduxForm(formConfig)(AddPropertyForm)
