@@ -3,7 +3,7 @@ import { Text, Buttom, TextInput, Label, View } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import EditAdminForm from '../../Forms/editAdminForm'
+import EditAdminForm from '../../Forms/Admin/editAdminForm'
 
 const selector = formValueSelector('edit_admin')
 const reduxCfg = state => {

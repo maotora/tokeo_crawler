@@ -3,9 +3,9 @@ import { Text, Buttom, TextInput, Label, View } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import EditCustomersForm from '../../Forms/editCustomerForm'
-import Paymentsform from '../../Forms/paymentsForm'
-import RenewalForm from '../../Forms/renewalForm'
+import EditCustomersForm from '../../Forms/Customers/editCustomerForm'
+import Paymentsform from '../../Forms/Payments/paymentsForm'
+import RenewalForm from '../../Forms/Payments/renewalForm'
 
 const selector = formValueSelector('edit_customer')
 const reduxCfg = state => {

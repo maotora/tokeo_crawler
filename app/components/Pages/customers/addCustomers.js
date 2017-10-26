@@ -3,7 +3,7 @@ import { Text, Buttom, TextInput, Label, View } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import AddCustomersForm from '../../Forms/addCustomersForm'
+import AddCustomersForm from '../../Forms/Customers/addCustomersForm'
 import toastr from 'toastr'
 
 const selector = formValueSelector('add_customer')

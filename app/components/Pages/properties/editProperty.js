@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
-import EditPropertyForm from '../../Forms/editPropertyForm'
+import EditPropertyForm from '../../Forms/Properties/editPropertyForm'
 
 class EditProperty extends Component {
     constructor(props) {

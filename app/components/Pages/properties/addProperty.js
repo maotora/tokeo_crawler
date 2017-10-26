@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
-import AddPropertyForm from '../../Forms/addPropertyForm'
+import AddPropertyForm from '../../Forms/Properties/addPropertyForm'
 import toastr from 'toastr'
 
 class AddProperty extends Component {
