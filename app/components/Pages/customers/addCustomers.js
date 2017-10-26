@@ -26,7 +26,7 @@ class AddCustomers extends Component {
         const { properties } = this.props
 
         if(properties.length === 0) {
-            toastr.error('To add customers you need to have Properties first!')
+            toastr.error('You need more properties first!', 'Cannot add customer')
             this.props.dispatch({type: 'DASHBOARD_SELECTION', payload: {selection: 'Properties'}})
             this.props.history.push('/admin')
         }
@@ -59,9 +59,15 @@ const styles = {
     }
 }
 
-const mapStateToProps = state => ({
-    properties: state.properties
-})
+const mapStateToProps = state => {
+    const properties = state.properties.filter(property => {
+        if(!property.deleted && property.status !== 'Occupied') {
+            return property
+        }
+    })
+
+    return {properties}
+}
 
 const connectedComponent = connect(reduxCfg)(AddCustomers)
 export default connect(mapStateToProps)(connectedComponent)
