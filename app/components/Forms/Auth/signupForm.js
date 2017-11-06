@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, TextInput, Checkbox, Radio } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
-import { normalizePhone } from './lib'
+import { normalizePhone } from '../commons/lib'
 import { Field, reduxForm } from 'redux-form'
 
 const SignUp = props => {
@@ -85,6 +85,47 @@ const SignUp = props => {
                         normalize={normalizePhone}
                         className="form-control"
                     />
+					<View 
+						width="100%"
+						horizontalAlignment="center"
+						style={{margin: 10}}
+					>
+						<label htmlFor="admin" className="radio-inline">
+							<Field
+								name="role"
+								id="admin"
+								value="Administrator"
+								component="input"
+								type="radio"
+								className="radio"
+							/>
+							Administrator
+						</label>
+
+						<label htmlFor="viewer" className="radio-inline">
+							<Field
+								name="role"
+								id="viewer"
+								value="Viewer"
+								component="input"
+								type="radio"
+								className="radio"
+							/>
+							Viewer
+						</label>
+
+						<label htmlFor="owner" className="radio-inline">
+							<Field
+								name="role"
+								id="owner"
+								value="owner"
+								component="input"
+								type="radio"
+								className="radio"
+							/>
+							Owner
+						</label>
+					</View>
                     <Row style={{marginTop: 20}}>
 						<Col md={6}>
 							<View width="100%" horizontalAlignment="center">
