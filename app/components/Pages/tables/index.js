@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import { TextInput, View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table'
 import moment from 'moment'
+import smalltalk from 'smalltalk'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import Header from '../Dashboard/header'
 
@@ -10,7 +13,21 @@ class Table extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            order: 'desc'
+            order: 'desc',
+            selected: [],
+            customers: [],
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(!_.isEqual(nextProps.customers, this.props.customers)) {
+            this.setState({customers: nextProps.customers})
+        }
+    }
+
+    componentDidMount() {
+        if(!_.isEqual(this.state.customers, this.props.customers)) {
+            this.setState({customers: this.props.customers.filter(filterFuction)})
         }
     }
 
@@ -58,7 +75,7 @@ class Table extends Component {
     }
 
     dateFormat(cell, row) {
-        return `${moment(cell).format('Do MMMM YYYY')}`
+        return `${moment(cell).format('Do MMMM \'YY')}`
     }
 
     priceFormat(cell, row) {
@@ -94,8 +111,82 @@ class Table extends Component {
         return <p>From customer { start } to { to }, total is { total } customers.</p>
     }
 
+    customMultiSelect(props) {
+        const { type, checked, disabled, onChange, rowIndex } = props;
+        /*
+        * If rowIndex is 'Header', means this rendering is for header selection column.
+        */
+        if (rowIndex === 'Header') {
+            return (
+            <div className='checkbox-personalized'>
+                <Checkbox {...props}/>
+                <label htmlFor={ 'checkbox' + rowIndex }>
+                <div className='check'></div>
+                </label>
+            </div>);
+        } else {
+            return (
+            <div className='checkbox-personalized'>
+                <input
+                type={ type }
+                name={ 'checkbox' + rowIndex }
+                id={ 'checkbox' + rowIndex }
+                checked={ checked }
+                disabled={ disabled }
+                onChange={ e=> onChange(e, rowIndex) }
+                ref={ input => {
+                    if (input) {
+                    input.indeterminate = props.indeterminate;
+                    }
+                } }/>
+                <label htmlFor={ 'checkbox' + rowIndex }>
+                <div className='check'></div>
+                </label>
+            </div>);
+        }
+    }
+
+    removeCustomers() {
+        this.state.selected.forEach(({id, property}) => this.props.dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {id, propertyId: property}}))
+    }
+
+    handleDeleteButtonClick() {
+        smalltalk.confirm('Confirm Delete', 'Are you sure you want to delete customers')
+            .then(() => this.removeCustomers(), () => console.log('Not really'))
+    }
+
+    createDeleteButton(onClick) {
+        return (
+            <DeleteButton
+                btnText='Delete Selected Customers'
+                btnContextual='btn-danger'
+                btnGlyphicon='glyphicon-trash'
+                onClick={ () => this.handleDeleteButtonClick(onClick) }
+            />
+        );
+    }
+
+    onRowSelect(rowObject, isSelected) {
+        if(isSelected && this.state.selected.findIndex(it => it.id === rowObject.id) < 0) {
+            this.setState({selected: [...this.state.selected, rowObject]})
+        } else {
+            this.setState({
+                selected: this.state.selected.filter(it => it.id !== rowObject.id)
+            })
+        }
+    }
+
+    onSelectAll(isSelected, rows) {
+        if(!isSelected) {
+            return this.setState({selected: []})
+        } else {
+            return this.setState({selected: rows})
+        }
+    }
+
 	render() {
-        const { properties, history, customers } = this.props
+        const { properties, history } = this.props
+        const customers = this.state.customers
 
         const options = {
             customer: {
@@ -114,6 +205,14 @@ class Table extends Component {
                 firstPage: 'First',
                 lastPage: 'Last',
                 paginationShowsTotal: this.renderShowsTotal,
+                deleteBtn: ::this.createDeleteButton,
+            },
+            checkboxSettings: {
+                mode: 'checkbox',
+                customComponent: ::this.customMultiSelect,
+                bgColor: 'rgba(0, 0, 0, .1)',
+                onSelect: ::this.onRowSelect,
+                onSelectAll: ::this.onSelectAll,
             },
             property: {
                 onRowClick: ::this.onPropertyRowClick,
@@ -139,7 +238,11 @@ class Table extends Component {
 
                 <Row style={{marginBottom: 100, marginTop: 10}}>
                     <Col md={11}>
-                        <BootstrapTable ref='customerTable' options={options.customer} data={customers} hover striped pagination={true} >
+                        <BootstrapTable ref='customerTable' 
+                            options={options.customer} data={customers} hover striped pagination={true}
+                            selectRow={options.checkboxSettings} deleteRow
+                            tableHeaderClass='custom-select-header-class' tableBodyClass='custom-select-body-class'
+                        >
                             <TableHeaderColumn isKey={true} dataField="names">Customer Names</TableHeaderColumn>
                             <TableHeaderColumn dataFormat={::this.phoneFormat} dataField="phone">Phone Number</TableHeaderColumn>
                             <TableHeaderColumn dataAlign='center' dataFormat={::this.propertyNameFormat} dataField="property">Property Name</TableHeaderColumn>
@@ -175,6 +278,25 @@ class Table extends Component {
             </Container>
         )
     }
+}
+
+
+class Checkbox extends Component {
+  componentDidMount() { this.update(this.props.checked); }
+  componentWillReceiveProps(props) { this.update(props.checked); }
+  update(checked) {
+    ReactDOM.findDOMNode(this).indeterminate = checked === 'indeterminate';
+  }
+  render() {
+    return (
+      <input className='react-bs-select-all'
+        type='checkbox'
+        name={ 'checkbox' + this.props.rowIndex }
+        id={ 'checkbox' + this.props.rowIndex }
+        checked={ this.props.checked }
+        onChange={ this.props.onChange } />
+    );
+  }
 }
 
 const filterFuction = obj => obj && !obj['deleted']
