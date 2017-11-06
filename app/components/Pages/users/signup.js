@@ -3,7 +3,7 @@ import { Text, Buttom, TextInput, Label, View } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import SignUp from '../../Forms/signupForm'
+import SignUp from '../../Forms/Auth/signupForm'
 
 const selector = formValueSelector('sign_up')
 const reduxCfg = state => {

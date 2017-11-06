@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { View, Text } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
-import SignInForm from '../../Forms/signinForm'
+import SignInForm from '../../Forms/Auth/signinForm'
 
 class SignIn extends Component {
     constructor(props) {

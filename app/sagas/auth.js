@@ -35,7 +35,6 @@ export function *loginSaga({payload}) {
 export function *signUpSaga({payload}) {
 	try {
 
-        //- TODO: Verification & download data LOGIC!
         const user = yield select(state => state.auth)
         let { email, licence_email } = payload
 
