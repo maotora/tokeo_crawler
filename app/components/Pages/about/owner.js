@@ -58,6 +58,20 @@ const Owner = props => {
     )
 }
 
+export const NoCustomerProfile = props => {
+    return (
+        <Container>
+            <Row>
+                <Col md={12}>
+                    <p style={{...styles.header}}>
+                        No Owner Information Added.
+                    </p>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
+
 export default Owner
 
 const styles = {
