@@ -19,14 +19,10 @@ import {
 
 const checkConnetion = () => axios.get(baseUrl)
 
-function createPosts(posts, url) {
-    return posts.map(dataObj => axios.post(url, dataObj))
-}
-
 export function syncData(data) {
     return checkConnetion()
         .then(() => {
-            return axios.all(createPosts(data, syncUrl))
+            return axios.post(syncUrl, data)
         })
         .catch(() => {
             // axiosArray = createPosts(data, syncUrlOffline)
