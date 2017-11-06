@@ -6,13 +6,14 @@ import {editPropertySaga, removePropertySaga, addPropertySaga} from './property'
 
 import { signUpSaga, loginSaga } from './auth'
 import { emailContract, paymentSaga } from './payments'
-import syncData, {downloadData, recoverPassword} from './sync'
+import { synchronize, uploadData, downloadData, recoverPassword } from './sync'
 
 export default function *() {
     try {
         yield all([
             takeLatest('EMAIL_CONTRACT', emailContract),
-            takeLatest('DATA_SYNC', syncData),
+            takeLatest('DATA_SYNC', synchronize),
+            takeLatest('DATA_UPLOAD', uploadData),
             takeLatest('DATA_DOWNLOAD', downloadData),
             takeLatest('RECOVER_PASSWORD', recoverPassword),
 

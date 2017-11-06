@@ -3,7 +3,7 @@ import moment from 'moment'
 import fs from 'fs'
 import FormData from 'form-data'
 import toastr from 'toastr'
-import { normalizePhone, normalizePrice } from '../components/Forms/lib'
+import { normalizePhone, normalizePrice } from '../components/Forms/commons/lib'
 
 const oneMonth = 2678400000
 const [ twoMonths, threeMonths, fourMonths ] = [(oneMonth * 2), (oneMonth * 3), (oneMonth * 4)]
@@ -113,6 +113,9 @@ export function assignObjects(dataArray) {
 export function upsert(oldData, newData) {
     if(oldData.length <= 0) {
         return newData
+    }
+    else if(newData.length <= 0) {
+        return oldData
     } else {
         const data = oldData.reduce((acc, oldObj) => {
             for(let i = 0; i < newData.length; i++) {
@@ -123,8 +126,7 @@ export function upsert(oldData, newData) {
                     if(downloadDataLastUpdate > stateDataLastUpdate) {
                         acc = _.uniqBy(acc.concat(newData[i]), 'id')
                     } else {
-                        console.log('Noped!')
-                        // acc = acc.concat(oldObj)
+                        return 
                     }
                 } else { //- It's a new data save both
                     acc = _.uniqBy(acc.concat(newData[i], oldObj),'id')

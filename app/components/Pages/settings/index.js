@@ -16,6 +16,10 @@ class Settings extends Component {
             .then(() => this.props.dispatch({type: 'CLEAR_ALL_DATA'}), () => console.log('Did\'nt reset data'))
     }
 
+    synchronize() {
+        this.props.dispatch({type: 'DATA_SYNC'})
+    }
+
     render() {
         return (
             <Col md={12}>
@@ -24,40 +28,83 @@ class Settings extends Component {
                     <Row>
                         <Col md={6}>
                             <Row>
-                                <Text style={{lineHeight: 2, fontSize: 16}}> Download from server &nbsp;&nbsp; {icons.FaDownload()} </Text>
+                                <Text style={{lineHeight: 2, fontSize: 24}}>
+                                    Synchronize Data
+                                </Text>
                             </Row>
-
-                            <Row>
-                                <Button onClick={() => this.props.dispatch({type: 'DATA_DOWNLOAD'})} color="#D9EDF7" push >
-                                    <Text>Download Data</Text>
-                                </Button>
-                            </Row>
-
                         </Col>
 
                         <Col md={6}>
                             <Row>
-                                <Text style={{lineHeight: 2, fontSize: 16}}> Upload to server &nbsp;&nbsp; {icons.FaUpload()} </Text>
+                                <Text style={{lineHeight: 2, fontSize: 24}}>
+                                    Reset Data
+                                </Text>
                             </Row>
+                        </Col>
+                    </Row>
 
+                    <Row>
+                        <Col md={6}>
                             <Row>
-                                <Button onClick={() => this.props.dispatch({type: 'DATA_SYNC'})} color="#D9EDF7" push >
-                                    <Text>Upload Data</Text>
+                                <Button onClick={() => this.synchronize()} color="blue" push >
+                                    <Text style={{padding: 10}}>
+                                        <Text style={{color: 'white', fontSize: 16}}>Sync Data &nbsp; </Text>
+                                        <Text style={{fontSize: 24, color: 'white'}}>{icons.FaMixcloud()}</Text>
+                                    </Text>
+                                </Button>
+                            </Row>
+                        </Col>
+
+                        <Col md={6}>
+                            <Row>
+                                <Button onClick={() => this.resetState()} color="red" push >
+                                    <Text style={{padding: 10}}>
+                                        <Text style={{color: 'white', fontSize: 16}}>Reset Data &nbsp; </Text>
+                                        <Text style={{fontSize: 24, color: 'white'}}>{icons.FaTrash()}</Text>
+                                    </Text>
                                 </Button>
                             </Row>
                         </Col>
                     </Row>
 
-                    <Row style={{marginTop: 100}}>
-                        <Col md={3}></Col>
-                        <Col md={6}>
-                            <Row>
-                                <Button onClick={() => this.resetState()} color="red" push >
-                                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, lineHeight: 2, padding: 14}}>Reset All Data</Text>
-                                </Button>
-                            </Row>
+                    <Row>
+                        <Col md={8}>
+                            <View horizontalAlignment="center">
+                                <Text style={{lineHeight: 2, fontSize: 24, borderBottom: '2px solid black'}}> Information </Text>
+                            </View>
                         </Col>
-                        <Col md={4}></Col>
+                    </Row>
+
+                    <Row>
+                        <Col md={6}>
+                            <Text style={{fontSize: 18, margin: 10, marginLeft: 0,}}> Synchronize Data &nbsp; <span> {icons.FaMixcloud()}</span></Text>
+                            <Text style={{fontSize: 16, marginBottom: 5}}>
+                                <Text> * Use &nbsp; <em style={{fontWeight: 'bold'}}>Sync Data</em> &nbsp; to upload & download data from server. </Text>
+                            </Text>
+
+                            <Text style={{fontSize: 16, marginBottom: 5}}>
+                                By uploading you'll give your latest information to the server to let it send better messages with lower cost.
+                            </Text>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md={6}></Col>
+                        <Col md={6}>
+                            <p style={{fontSize: 18, margin: 10, textAlign: 'center'}}> <span> {icons.FaTrash()}</span> &nbsp; Reset Data </p>
+                            <Text style={{fontSize: 16, marginBottom: 5}}>
+                                <Text> * Use &nbsp; <em style={{fontWeight: 'bold'}}>Reset Data</em> &nbsp; to remove everything on your application state. </Text>
+                            </Text>
+
+                            <Text style={{fontSize: 16, marginBottom: 5}}>
+                                Sometimes the program is slow and you want a fresh start, Resetting will give you that and you can sync data to get your information from server after.
+                            </Text>
+
+                            <Text style={{fontSize: 16, marginBottom: 5}}>
+                                <em style={{fontWeight: 'bold', fontSize: 16}}>*&nbsp;*&nbsp;</em> 
+                                It's a good habit to sync everything before reseting so you won't lose your offline data.
+                            </Text>
+                        </Col>
                     </Row>
                 </Container>
             </Col>

@@ -3,7 +3,7 @@ import { clearDeletedData, normalizeData, userLog, nameObjects, upsert, assignOb
 import { download, syncData, recover } from '../api'
 
 
-export default function *synchronize() {
+export function *uploadData() {
     try {
         const customers = yield select(state => state.customers)
         const properties = yield select(state => state.properties)
@@ -12,10 +12,10 @@ export default function *synchronize() {
         const user = yield select(state => state.auth)
 
         const dataArray = [
-            {type: 'user', data: users},
-            {type: 'property', data: properties},
-            {type: 'customer', data: customers},
-            {type: 'logs', data: logs},
+            {tbl: 'users', data: users},
+            {tbl: 'properties', data: properties},
+            {tbl: 'customers', data: customers},
+            {tbl: 'logs', data: logs},
         ]
 
         const response = yield syncData(dataArray)
@@ -33,17 +33,25 @@ export default function *synchronize() {
             const logData = logger('SYNC_COMPLETE', user.id, {})
             yield put({type: 'CLEAR_LOGS'})
             yield put({type: 'CREATE_LOG', payload: logData})
-            userLog('Uploading data successfuly completed.', 'Upload Complete', 'success')
 
         } else {
             throw new Error(response)
         }
 
     } catch(err) {
-        userLog('Something went wrong while Uploading data.', 'Sync Error', 'error')
         const user = yield select(state => state.auth)
         const errorlogData = logger('SYNC_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: errorlogData})
+    }
+}
+
+export function *synchronize() {
+    try {
+        yield call(downloadData)
+        yield call(uploadData)
+        userLog('Sync completed successfully', 'Sync Complete', 'success')
+    } catch(err) {
+        userLog('Something went wrong while syncing data.', 'Sync Error', 'error')
     }
 }
 
@@ -97,10 +105,8 @@ export function *downloadData() {
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'EDIT_CUSTOMER', payload: {data: namedCustomers}})
         yield put({type: 'CREATE_LOG', payload: logData})
-        userLog('Congrats, Import complete!', 'Import success', 'success')
 
     } catch(err) {
-        userLog('Something went wrong while importing data', 'Import error', 'error')
         const loggedInUser = yield select(state => state.auth)
         const logData = logger('DOWNLOAD_DATA_FAIL', loggedInUser.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
