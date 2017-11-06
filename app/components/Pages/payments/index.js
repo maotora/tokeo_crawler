@@ -26,7 +26,7 @@ class Payments extends Component {
     }
 
     goBack() {
-        this.props.history.push('/admin')
+        this.props.history.goBack()
     }
 
     render() {
