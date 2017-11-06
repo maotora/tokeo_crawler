@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_PROPERTY': {
@@ -29,6 +31,7 @@ export default function reducer(state=[], {type, payload}) {
             return state.map(property => {
                 if(property.id === payload.id) {
                     property.deleted = true
+                    property.updatedAt = _.now()
                 }
 
                 return property

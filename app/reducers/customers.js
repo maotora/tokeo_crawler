@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default function reducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_CUSTOMER': {
@@ -33,6 +35,7 @@ export default function reducer(state=[], {type, payload}) {
             return state.map(customer => {
                 if(customer.id === payload.id) {
                     customer.deleted = true
+                    customer.updatedAt = _.now()
                 }
 
                 return customer

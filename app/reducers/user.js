@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default function usersReducer(state=[], {type, payload}) {
     switch(type) {
         case 'ADD_USER': {
@@ -30,6 +32,7 @@ export default function usersReducer(state=[], {type, payload}) {
             return state.map(user => { 
                 if(user.id === payload.id) {
                     user.deleted = true
+                    user.updatedAt = _.now()
                 }
 
                 return user
