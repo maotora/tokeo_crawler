@@ -26,56 +26,13 @@ class Settings extends Component {
                 <Container>
                     <Header pageName="Settings" {...this.props} />
                     <Row>
-                        <Col md={6}>
-                            <Row>
-                                <Text style={{lineHeight: 2, fontSize: 24}}>
-                                    Synchronize Data
-                                </Text>
-                            </Row>
-                        </Col>
-
-                        <Col md={6}>
-                            <Row>
-                                <Text style={{lineHeight: 2, fontSize: 24}}>
-                                    Reset Data
-                                </Text>
-                            </Row>
-                        </Col>
-                    </Row>
-
-                    <Row>
-                        <Col md={6}>
-                            <Row>
-                                <Button onClick={() => this.synchronize()} color="blue" push >
-                                    <Text style={{padding: 10}}>
-                                        <Text style={{color: 'white', fontSize: 16}}>Sync Data &nbsp; </Text>
-                                        <Text style={{fontSize: 24, color: 'white'}}>{icons.FaMixcloud()}</Text>
-                                    </Text>
-                                </Button>
-                            </Row>
-                        </Col>
-
-                        <Col md={6}>
-                            <Row>
-                                <Button onClick={() => this.resetState()} color="red" push >
-                                    <Text style={{padding: 10}}>
-                                        <Text style={{color: 'white', fontSize: 16}}>Reset Data &nbsp; </Text>
-                                        <Text style={{fontSize: 24, color: 'white'}}>{icons.FaTrash()}</Text>
-                                    </Text>
-                                </Button>
-                            </Row>
-                        </Col>
-                    </Row>
-
-                    <Row>
                         <Col md={8}>
                             <View horizontalAlignment="center">
-                                <Text style={{lineHeight: 2, fontSize: 24, borderBottom: '2px solid black'}}> Information </Text>
+                                <Text style={{lineHeight: 2, fontSize: 24, borderBottom: '2px solid black'}}>Data Settings</Text>
                             </View>
                         </Col>
                     </Row>
-
-                    <Row>
+                    <Row style={{marginTop: 20}}>
                         <Col md={6}>
                             <Text style={{fontSize: 18, margin: 10, marginLeft: 0,}}> Synchronize Data &nbsp; <span> {icons.FaMixcloud()}</span></Text>
                             <Text style={{fontSize: 16, marginBottom: 5}}>
@@ -86,10 +43,31 @@ class Settings extends Component {
                                 By uploading you'll give your latest information to the server to let it send better messages with lower cost.
                             </Text>
                         </Col>
+
+                        <Col md={6} style={{position: 'relative'}}>
+                            <Row style={{position: 'absolute', top: 50, left: 200}}>
+                                <Button onClick={() => this.synchronize()} color="#5555ff" push >
+                                    <Text style={{padding: 10}}>
+                                        <Text style={{color: 'white', fontSize: 16}}>Sync Data &nbsp; </Text>
+                                        <Text style={{fontSize: 24, color: 'white'}}>{icons.FaMixcloud()}</Text>
+                                    </Text>
+                                </Button>
+                            </Row>
+                        </Col>
                     </Row>
 
-                    <Row>
-                        <Col md={6}></Col>
+                    <Row style={{marginTop: 10}}>
+                        <Col md={6} style={{position: 'relative'}}>
+                            <Row style={{position: 'absolute', top: 100, left: 150}}>
+                                <Button onClick={() => this.resetState()} color="#aa0000" push >
+                                    <Text style={{padding: 10}}>
+                                        <Text style={{color: 'white', fontSize: 16}}>Reset Data &nbsp; </Text>
+                                        <Text style={{fontSize: 24, color: 'white'}}>{icons.FaTrash()}</Text>
+                                    </Text>
+                                </Button>
+                            </Row>
+                        </Col>
+
                         <Col md={6}>
                             <p style={{fontSize: 18, margin: 10, textAlign: 'center'}}> <span> {icons.FaTrash()}</span> &nbsp; Reset Data </p>
                             <Text style={{fontSize: 16, marginBottom: 5}}>
@@ -102,7 +80,9 @@ class Settings extends Component {
 
                             <Text style={{fontSize: 16, marginBottom: 5}}>
                                 <em style={{fontWeight: 'bold', fontSize: 16}}>*&nbsp;*&nbsp;</em> 
-                                It's a good habit to sync everything before reseting so you won't lose your offline data.
+                                <Text>
+                                    It's a good habit to sync everything before reseting so you won't lose your offline (unsynced) data.
+                                </Text>
                             </Text>
                         </Col>
                     </Row>
