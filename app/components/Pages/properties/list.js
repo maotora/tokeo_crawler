@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Button, NavPaneItem, NavPane, Text } from 'react-desktop/windows'
 import { Row, Container, Col } from 'react-grid-system'
+import { connect } from 'react-redux'
 import * as icons from 'react-icons/lib/fa'
 const imgSource = './assets/img/empty.png'
 
@@ -12,6 +13,18 @@ class PropertiesList extends Component {
     toEditProperty(id) {
         this.props.dispatch({type: 'PROPERTY_EDITS', payload: {id}})
         this.props.history.push('/edit_property')
+    }
+
+    disableDeletion() {
+        const {users} = this.props
+        const authId = this.props.auth.id
+        const isModerator = users.find(user => user.role === 'moderator' && user.id === authId)
+
+        if(!isModerator) {
+            return false
+        }
+
+        return true
     }
 
     toRemoveProperty(id) {
@@ -150,4 +163,9 @@ const styles = {
         color: 'black',
     }
 }
-export default PropertiesList
+
+const mapStateToProps = state => ({
+    users: state.users.filter(user => user && !user.deleted),
+    auth: state.auth,
+})
+export default connect(mapStateToProps)(PropertiesList)

@@ -21,6 +21,18 @@ class CustomerList extends Component {
 		dispatch({type: 'TO_REMOVE_CUSTOMER', payload: {id, propertyId}})
 	}
 
+    disableDelete() {
+        const {users} = this.props
+        const authId = this.props.auth.id
+        const isModerator = users.find(user => user.role === 'moderator' && user.id === authId)
+
+        if(!isModerator) {
+            return false
+        }
+
+        return true
+    }
+
     payments(id) {
         const { history, dispatch } = this.props
         dispatch({type: 'CUSTOMER_EDITS', payload: {id}})
@@ -93,9 +105,7 @@ class CustomerList extends Component {
                         <Col style={{marginTop: 10}}>
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-success'
-                                        onClick={() => this.toEditCustomer(id)}
-                                    >
+                                    <button className='btn btn-success' onClick={() => this.toEditCustomer(id)}>
                                         <p style={styles.btn_text}> Edit Customer </p>
                                     </button>
                                 </div>
@@ -105,7 +115,10 @@ class CustomerList extends Component {
                                     </button>
                                 </div>
                                 <div className="btn-group" role="group">
-                                    <button className='btn btn-danger' onClick={() => this.removeCustomer(id, property)}>
+                                    <button className='btn btn-danger'
+                                        onClick={() => this.removeCustomer(id, property)}
+                                        disabled={this.disableDelete()}
+                                    >
                                         <p style={styles.btn_text}> Delete Customer </p>
                                     </button>
                                 </div>
@@ -139,8 +152,12 @@ class CustomerList extends Component {
     }
 }
 
+const filterFunction = obj => obj && !obj.deleted
+
 const mapStateToProps = state => ({
-    properties: state.properties
+    properties: state.properties.filter(filterFunction),
+    users: state.users.filter(filterFunction),
+    auth: state.auth,
 })
 
 export default connect(mapStateToProps)(CustomerList)

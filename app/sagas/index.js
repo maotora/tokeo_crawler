@@ -1,8 +1,9 @@
-import { fork, takeLatest, all } from 'redux-saga/effects'
+import { takeLatest, all, select } from 'redux-saga/effects'
 
 import {addUserSaga, editUserSaga, removeUserSaga} from './users'
 import { editCustomerSaga, addCustomerSaga, removeCustomerSaga } from './customers'
 import {editPropertySaga, removePropertySaga, addPropertySaga} from './property'
+import { contractStatus } from './lib'
 
 import { signUpSaga, loginSaga } from './auth'
 import { emailContract, paymentSaga } from './payments'
@@ -16,6 +17,16 @@ export default function *() {
             takeLatest('DATA_UPLOAD', uploadData),
             takeLatest('DATA_DOWNLOAD', downloadData),
             takeLatest('RECOVER_PASSWORD', recoverPassword),
+
+            takeLatest('UPDATE_CUSTOMER_EXPIRY', function *() {
+                try{
+                    const { customers } = yield select(state => state)
+                    const updatedCustomers = customers.map(contractStatus)
+                    console.log('customers ', updatedCustomers)
+                } catch(err) {
+                    console.log('something went wrong')
+                }
+            }),
 
             takeLatest('TO_LOGIN', loginSaga),
             takeLatest('SIGNUP', signUpSaga),

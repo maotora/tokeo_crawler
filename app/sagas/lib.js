@@ -126,7 +126,8 @@ export function upsert(oldData, newData) {
                     if(downloadDataLastUpdate > stateDataLastUpdate) {
                         acc = _.uniqBy(acc.concat(newData[i]), 'id')
                     } else {
-                        return 
+                        //- No changes upstream return accumulator.
+                        acc = _.uniqBy(acc.concat(oldObj), 'id')
                     }
                 } else { //- It's a new data save both
                     acc = _.uniqBy(acc.concat(newData[i], oldObj),'id')

@@ -24,6 +24,11 @@ class Main extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log('here we go!')
+        this.props.dispatch({type: 'UPDATE_CUSTOMER_EXPIRY'})
+    }
+
     render() {
         return (
             <Col style={styles.bg}>

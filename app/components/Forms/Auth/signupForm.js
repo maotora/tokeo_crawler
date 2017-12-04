@@ -5,7 +5,12 @@ import { normalizePhone } from '../commons/lib'
 import { Field, reduxForm } from 'redux-form'
 
 const SignUp = props => {
-    const {handleSubmit, togglePassword, reset} = props
+    const {dispatch, history, handleSubmit, togglePassword, reset} = props
+
+    function goToLogin() {
+        dispatch({type: 'TOGGLE_REG'})
+        history.push('/login_registered')
+    }
 
     return (
         <Row style={styles.container}>
@@ -127,14 +132,21 @@ const SignUp = props => {
 						</label>
 					</View>
                     <Row style={{marginTop: 20}}>
-						<Col md={6}>
+						<Col md={4}>
 							<View width="100%" horizontalAlignment="center">
-								<button className="btn btn-default" type="submit">
+								<button className="btn btn-primary" type="submit">
                                     Sign Up
 								</button>
 							</View>
 						</Col>
-						<Col md={6}>
+						<Col md={4}>
+							<View width="100%" horizontalAlignment="center">
+                                <button onClick={() => goToLogin()} className="btn btn-default" type="button">
+                                    Already registered
+								</button>
+							</View>
+						</Col>
+						<Col md={4}>
 							<View width="100%" horizontalAlignment="center">
 								<button className="btn btn-danger" type="button" onClick={reset}>
 									Reset

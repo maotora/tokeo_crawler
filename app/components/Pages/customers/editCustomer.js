@@ -6,6 +6,7 @@ import { formValueSelector } from 'redux-form'
 import EditCustomersForm from '../../Forms/Customers/editCustomerForm'
 import Paymentsform from '../../Forms/Payments/paymentsForm'
 import RenewalForm from '../../Forms/Payments/renewalForm'
+import toastr from 'toastr'
 
 const selector = formValueSelector('edit_customer')
 const reduxCfg = state => {
@@ -25,6 +26,19 @@ class EditCustomers extends Component {
 
     submitPayments(values) {
         this.props.dispatch({type: 'TO_EDIT_CUSTOMER', payload: values})
+    }
+
+    componentWillMount() {
+        const {users} = this.props
+        const authId = this.props.auth.id
+        const isModerator = users.find(user => user.role === 'moderator' && user.id === authId)
+
+        if(isModerator) {
+            toastr.error('Moderator cannot edit anything!', 'Roles restrictions')
+            this.props.history.goBack()
+        } else {
+            return
+        }
     }
 
     renderForm() {
@@ -93,4 +107,9 @@ const styles = {
     }
 }
 
-export default connect(reduxCfg)(EditCustomers)
+const mapStateToProps = state => ({
+    users: state.users.filter(user => user && !user.deleted),
+    auth: state.auth,
+})
+
+export default connect(mapStateToProps)(connect(reduxCfg)(EditCustomers))

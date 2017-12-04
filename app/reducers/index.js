@@ -21,6 +21,12 @@ const appReducer = combineReducers({
     customerTempEdits: customerReducer,
     propertyTempEdits: propertyReducer,
     logs: HistoryReducer,
+    registered: (state, {type}) => {
+        if(type === 'TOGGLE_REG') {
+            state = !state
+        }
+        return !!state
+    },
 })
 
 export default function rootReducer(state, action) {

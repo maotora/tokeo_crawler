@@ -7,21 +7,19 @@ export function *loginSaga({payload}) {
         const { username, password } = payload
         /* Client Validation & Logging */
         const users = yield select(state => state.users)
-        const user = yield select(state => state.auth)
 
-        var logged, id = false
+        let [logged, id] = [false, null]
 
-        users.forEach(user => {
-            if(username === user.username && password === user.password) {
-                logged = true
-                id = user.id
-            }
-        })
+        const loggedUser = users.filter(user => user.username === username && user.password === password)
 
-        //- If user not successfully logged
-        if(!logged) {userLog('Username or password is incorrect please try again', 'Login Failure', 'error')}
+        if(loggedUser.length > 0) {
+            logged = true
+            id = loggedUser[0].id
+        } else {
+            userLog('Username or password is incorrect please try again', 'Login Failure', 'error')
+        }
 
-        const logData = logger('LOGIN', user.id, payload)
+        const logData = logger('LOGIN', id, payload)
         if(logged) {
             userLog('Welcome to the dashboard!', 'Successful login', 'success')
             yield put({type: 'LOGIN', payload: {username, id}})

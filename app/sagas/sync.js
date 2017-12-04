@@ -83,20 +83,22 @@ export function *recoverPassword() {
  * If we have two colliding data we prioritize updatedAt field.
 */
 
-export function *downloadData() {
+export function *downloadData(obj) {
     try {
         const sCustomers = yield select(state => state.customers)
         const sProperties = yield select(state => state.properties)
         const sUsers = yield select(state => state.users)
         const loggedInUser = yield select(state => state.auth)
-        const {businessId} = sUsers[0]
+        const {businessId} = sUsers[0] || obj.payload
 
         const {data} = yield download(businessId)
         const {dUsers, dProperties, dCustomers} = assignObjects(data)
 
         const customers = upsert(sCustomers, dCustomers)
         const users = upsert(sUsers, dUsers)
-        const properties = normalizeData(upsert(sProperties, dProperties))
+        const properties = upsert(sProperties, dProperties)
+
+        const namedProperties = normalizeData(properties)
         const namedCustomers = normalizeData(customers.map(nameObjects))
         const namedUsers = normalizeData(users.map(nameObjects))
         const logData = logger('DOWNLOAD_DATA_SUCCESS', loggedInUser.id, {namedUsers, namedCustomers, properties})

@@ -3,6 +3,7 @@ import { View, Text } from 'react-desktop/windows'
 import { Col, Container, Row } from 'react-grid-system'
 import { connect } from 'react-redux'
 import EditPropertyForm from '../../Forms/Properties/editPropertyForm'
+import toastr from 'toastr'
 
 class EditProperty extends Component {
     constructor(props) {
@@ -17,6 +18,20 @@ class EditProperty extends Component {
         if(nextProps.properties !== this.props.properties) {
             this.props.history.goBack()
         } 
+    }
+
+    componentWillMount() {
+        const {users} = this.props
+        const authId = this.props.auth.id
+        const isModerator = users.find(user => user.role === 'moderator' && user.id === authId)
+
+        if(isModerator) {
+            toastr.error('Moderator cannot edit anything!', 'Roles restrictions')
+            this.props.history.goBack()
+            return false
+        } else {
+            return true
+        }
     }
 
     render() {
@@ -47,7 +62,9 @@ const styles = {
 }
 
 const mapStateToProps = state => ({
-    properties: state.properties
+    properties: state.properties,
+    users: state.users.filter(user => user && !user.deleted),
+    auth: state.auth,
 })
 
 export default connect(mapStateToProps)(EditProperty)

@@ -23,6 +23,16 @@ class Login extends Component {
                     <Col style={styles.bgLogin} md={4}></Col>
                 </Row>
             )
+        } else if(this.props.registered) {
+            return (
+                <Row>
+                    <Col md={8}>
+                        <SignIn {...this.props} />
+                    </Col>
+
+                    <Col style={styles.bgLogin} md={4}></Col>
+                </Row>
+            )
         } else {
             return (
                 <Row>
@@ -45,7 +55,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-    users: state.users
+    users: state.users,
+    registered: state.registered,
 })
 
 export default connect(mapStateToProps)(Login)

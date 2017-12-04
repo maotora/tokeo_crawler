@@ -21,11 +21,28 @@ class List extends Component {
 		history.push('edit_admin')
     }
 
-    deletionStatus(id) {
-        const hasProperty = this.props.properties.find(property => property.owner === id)
-        const isLoggedIn = this.props.auth.id === id
+    enableEdit(contentId) {
+        const {users} = this.props
+        const authId = this.props.auth.id
+        const isModerator = users.find(user => user.role === 'moderator' && user.id === authId)
+        const isOwner = users.find(user => user.role === 'owner' && user.id === authId)
+        const isLoggedIn = authId === contentId && !isModerator
 
-        if(hasProperty || isLoggedIn) {
+        if(isLoggedIn || isOwner) {
+            return false
+        } else {
+            return true
+        }
+    }
+
+    deletionStatus(id) {
+        const {users} = this.props
+        const authId = this.props.auth.id
+        const hasProperty = this.props.properties.find(property => property.owner === id)
+        const isModerator = users.find(user => user.role === 'moderator' && user.id === authId)
+        const isLoggedIn = authId === id
+
+        if(hasProperty || isLoggedIn || isModerator) {
             return true
         }
         return false
@@ -77,6 +94,7 @@ class List extends Component {
                             <div className="btn-group btn-group-justified" aria-label="Justified" role="group">
                                 <div className="btn-group" role="group">
                                     <button className='btn btn-default'
+                                        disabled={this.enableEdit(id)}
                                         onClick={() => this.toEdit(id)}
                                     >
                                         <p style={styles.btn_text}> Edit User </p>
