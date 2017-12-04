@@ -1,10 +1,12 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
 import { userLog, logger, statusGen, genId } from './lib'
+import { privilegedAccess } from './utils'
 
 export function *addPropertySaga({payload}) {
     try {
 
+        yield call(privilegedAccess)
         const user = yield select(state => state.auth)
         let property = payload
         property.totalProperties = Number(payload.propertyCount)
@@ -24,7 +26,7 @@ export function *addPropertySaga({payload}) {
 
         /* Perform some validations */
     } catch(err) {
-        userLog('Something went wrong while adding a property', 'Property Add Error', 'error')
+        userLog(err.message, 'Property Add Error', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('ADD_PROPERTY_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
@@ -34,6 +36,7 @@ export function *addPropertySaga({payload}) {
 export function *editPropertySaga({payload}) {
     try {
 
+        yield call(privilegedAccess)
         const properties = yield select(state => state.properties)
         const user = yield select(state => state.auth)
         const customers = yield select(state => state.customers)
@@ -68,7 +71,7 @@ export function *editPropertySaga({payload}) {
         userLog('Property successful edited', 'Property Edit', 'success')
 
     } catch(err) {
-        userLog('Something went wrong while editing a property', 'Property Edit Error', 'error')
+        userLog(err.message, 'Property Edit Error', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('EDIT_PROPERTY_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
@@ -78,6 +81,7 @@ export function *editPropertySaga({payload}) {
 export function *removePropertySaga({payload}) {
     try {
 
+        yield call(privilegedAccess)
         const user = yield select(state => state.auth)
         const logData = logger('REMOVE_PROPERTY', user.id, payload)
 
@@ -86,7 +90,7 @@ export function *removePropertySaga({payload}) {
         userLog('Property successful removed', 'Property Remove', 'success')
 
     } catch(err) {
-        userLog('Something went wrong while removing a property', 'Property Remove Error', 'error')
+        userLog(err.message, 'Property Remove Error', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('REMOVE_PROPERTY_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})

@@ -1,10 +1,12 @@
 import _ from 'lodash'
 import { select, put, call, take } from 'redux-saga/effects'
 import { userLog, logger, statusGen, genId, contractStatus } from './lib'
+import { privilegedAccess } from './utils'
 
 export function *addCustomerSaga({payload}) {
     try {
 
+        yield call(privilegedAccess)
         let properties = yield select(state => state.properties)
         const user = yield select(state => state.auth)
         properties = _.map(properties, (property, index) => {
@@ -38,7 +40,7 @@ export function *addCustomerSaga({payload}) {
 
         /* Perform some validations */
     } catch(err) {
-        userLog('Something went wrong while adding user', 'User Added Failure', 'error')
+        userLog(err.message, 'User Added Failure', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('ADD_CUSTOMER_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
@@ -47,6 +49,8 @@ export function *addCustomerSaga({payload}) {
 
 export function *editCustomerSaga({payload}) {
     try {
+
+        yield call(privilegedAccess)
         let customerData = yield select(state => state.customers)
         let properties = yield select(state => state.properties)
         const user = yield select(state => state.auth)
@@ -95,29 +99,18 @@ export function *editCustomerSaga({payload}) {
         userLog('User successfully edited!', 'User Edit', 'success')
 
     } catch(err) {
-        userLog('Something went wrong while editing user', 'User Edit Failure', 'error')
+        userLog(err.message, 'User Edit Failure', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('EDIT_CUSTOMER_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
     }
 }
 
-export function *privilegeRemoval() {
-    const authdUser = yield select(state => state.auth)
-    const users = yield select(state => state.users)
-    const user = users.find(obj => obj.id === authdUser.id)
-
-    if(user.role === 'moderator') {
-        throw new Error('Moderators cannot perform this action')
-    }
-
-}
-
 export function *removeCustomerSaga({payload}) {
     try {
         /* do some async stuff babe.. */
 
-        yield call(privilegeRemoval)
+        yield call(privilegedAccess)
 
         const { id, propertyId } = payload
         let properties = yield select(state => state.properties)
