@@ -102,9 +102,22 @@ export function *editCustomerSaga({payload}) {
     }
 }
 
+export function *privilegeRemoval() {
+    const authdUser = yield select(state => state.auth)
+    const users = yield select(state => state.users)
+    const user = users.find(obj => obj.id === authdUser.id)
+
+    if(user.role === 'moderator') {
+        throw new Error('Moderators cannot perform this action')
+    }
+
+}
+
 export function *removeCustomerSaga({payload}) {
     try {
         /* do some async stuff babe.. */
+
+        yield call(privilegeRemoval)
 
         const { id, propertyId } = payload
         let properties = yield select(state => state.properties)
@@ -127,7 +140,7 @@ export function *removeCustomerSaga({payload}) {
         yield put({type: 'CREATE_LOG', payload: logData})
         userLog('User successfully removed!', 'User Removed', 'success')
     } catch(err) {
-        userLog('Something went wrong while removing user', 'User Remove Failure', 'error')
+        userLog(err.message, 'User Remove Failure', 'error')
         const user = yield select(state => state.auth)
         const logData = logger('REMOVE_CUSTOMER_ERROR', user.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
