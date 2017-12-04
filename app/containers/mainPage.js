@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Checkbox, Text, Button } from 'react-desktop/windows'
+import { ProgressCircle, View, Checkbox, Text, Button } from 'react-desktop/windows'
 import { Container, Row, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 const imgSource = './assets/img/product.png'
@@ -7,6 +7,10 @@ const imgSource = './assets/img/product.png'
 class Main extends Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            updateComplete: false
+        }
     }
 
     handleClick() {
@@ -24,8 +28,30 @@ class Main extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.customerUpdate) {
+            this.setState({updateComplete: nextProps.customerUpdate})
+        }
+    }
+
+    renderButton() {
+        if(this.state.updateComplete) {
+            return (
+                <Button
+                onClick={::this.handleClick}
+                color="#E6E6E6"
+                push={true}
+                style={{padding: 28}}
+                >
+                        <Text color="black" style={{fontSize: 18, fontWeight: 'bold'}}> Get Started </Text>
+                </Button>
+            )
+        } else {
+            return <ProgressCircle color="white" />
+        }
+    }
+
     componentDidMount() {
-        console.log('here we go!')
         this.props.dispatch({type: 'UPDATE_CUSTOMER_EXPIRY'})
     }
 
@@ -33,14 +59,7 @@ class Main extends Component {
         return (
             <Col style={styles.bg}>
                 <View horizontalAlignment="center" style={styles.bottom} >
-                    <Button
-                        onClick={::this.handleClick}
-                        color="#E6E6E6"
-                        push={true}
-                        style={{padding: 28}}
-                    >
-                        <Text color="black" style={{fontSize: 18, fontWeight: 'bold'}}> Get Started </Text>
-                    </Button>
+                    {this.renderButton()}
                 </View>
 
             </Col>
@@ -49,7 +68,8 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-    ui: state.ui
+    ui: state.ui,
+    customerUpdate: state.expiryUpdate,
 })
 
 export default connect(mapStateToProps)(Main)

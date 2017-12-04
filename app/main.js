@@ -90,7 +90,7 @@ app.on('ready', async () => {
     }
   });
 
-  if (true) {
+  if (isDevelopment) {
     // auto-open dev tools
     mainWindow.webContents.openDevTools();
 

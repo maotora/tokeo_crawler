@@ -1,9 +1,9 @@
-import { takeLatest, all, select } from 'redux-saga/effects'
+import { takeLatest, all, select, put } from 'redux-saga/effects'
 
 import {addUserSaga, editUserSaga, removeUserSaga} from './users'
 import { editCustomerSaga, addCustomerSaga, removeCustomerSaga } from './customers'
 import {editPropertySaga, removePropertySaga, addPropertySaga} from './property'
-import { contractStatus } from './lib'
+import { contractStatus, userLog } from './lib'
 
 import { signUpSaga, loginSaga } from './auth'
 import { emailContract, paymentSaga } from './payments'
@@ -22,9 +22,11 @@ export default function *() {
                 try{
                     const { customers } = yield select(state => state)
                     const updatedCustomers = customers.map(contractStatus)
-                    console.log('customers ', updatedCustomers)
+
+                    yield put({type: 'EDIT_CUSTOMER', payload: {data: updatedCustomers}})
+                    yield put({type: 'EXPIRY_UPDATE_COMPLETE'})
                 } catch(err) {
-                    console.log('something went wrong')
+                    userLog(err.message, 'Error, Updating Expiry', 'error')
                 }
             }),
 
@@ -45,6 +47,6 @@ export default function *() {
             takeLatest('TO_REMOVE_CUSTOMER', removeCustomerSaga),
         ])
     } catch (err) {
-        console.log(err)
+        userLog(err.message, 'Fatal error in state', 'error')
     }
 }

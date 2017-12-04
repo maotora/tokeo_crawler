@@ -27,6 +27,13 @@ const appReducer = combineReducers({
         }
         return !!state
     },
+    expiryUpdate: (state, {type}) => {
+        if(type === 'EXPIRY_UPDATE_COMPLETE') {
+            state = true
+        }
+
+        return !!state
+    },
 })
 
 export default function rootReducer(state, action) {
