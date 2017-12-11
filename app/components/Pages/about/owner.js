@@ -50,7 +50,7 @@ const Owner = props => {
 
                 <Col md={4}>
                     <p style={{...styles.form_text, ...styles.value}}>
-                        {phone}
+                        +{phone}
                     </p>
                 </Col>
             </Row>
