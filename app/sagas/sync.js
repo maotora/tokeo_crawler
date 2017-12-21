@@ -49,6 +49,8 @@ export function *synchronize() {
     try {
         yield call(downloadData)
         yield call(uploadData)
+        yield put({type: 'UPDATE_CUSTOMER_EXPIRY'})
+
         userLog('Sync completed successfully', 'Sync Complete', 'success')
     } catch(err) {
         userLog('Something went wrong while syncing data.', 'Sync Error', 'error')
@@ -107,6 +109,7 @@ export function *downloadData(obj) {
         yield put({type: 'EDIT_PROPERTY', payload: {data: properties}})
         yield put({type: 'EDIT_CUSTOMER', payload: {data: namedCustomers}})
         yield put({type: 'CREATE_LOG', payload: logData})
+        yield put({type: 'UPDATE_CUSTOMER_EXPIRY'})
 
     } catch(err) {
         const loggedInUser = yield select(state => state.auth)

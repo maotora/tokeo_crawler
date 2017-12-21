@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'react-grid-system'
 import { connect } from 'react-redux'
 import SignInForm from '../../Forms/Auth/signinForm'
 import RegisteredForm from '../../Forms/Auth/signinRegisteredForm'
+import { userLog } from '../../../sagas/lib'
 
 class SignIn extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class SignIn extends Component {
         const { license, username, password } = values
         this.props.dispatch({type: 'DATA_DOWNLOAD', payload: {businessId: license}})
         this.setState({username, password})
-        this.props.dispatch({type: 'TOGGLE_REG'})
+        // this.props.dispatch({type: 'TOGGLE_REG'}) --> This flickers signup screen until the data gets downloaded which is useless.
     }
 
     componentWillMount() {
@@ -48,6 +49,10 @@ class SignIn extends Component {
                 }
             })
         } 
+
+        if(nextProps.users.length === 0 && this.props.registered) {
+            userLog('You may have entered wrong address', 'No data downloaded', 'error')
+        }
 
         if(nextProps.users.length > 0 && nextProps.auth.logged) {
             this.props.history.push('/admin')

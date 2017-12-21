@@ -7,7 +7,7 @@ import { privilegedAccess } from './utils'
 export function *addUserSaga({payload}) {
     try {
 
-        yield call(privilegedAccess)
+        // yield call(privilegedAccess) --> Can be helpful but comment for now as it blocks signups.
         let user = payload
 
         //- Add businessId to every user.
@@ -29,7 +29,7 @@ export function *addUserSaga({payload}) {
         userLog('Congratulations, you\'ve added a new user!', 'User added', 'success')
 
     } catch(err) {
-        userLog(err.message, 'Error', 'error')
+        userLog(err.message, 'User Add Error', 'error')
         const loggedUser = yield select(state => state.auth)
         const logData = logger('ADD_USER_ERROR', loggedUser.id, err)
         yield put({type: 'CREATE_LOG', payload: logData})
