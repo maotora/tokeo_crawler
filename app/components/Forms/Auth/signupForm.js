@@ -8,7 +8,7 @@ const SignUp = props => {
     const {dispatch, history, handleSubmit, togglePassword, reset} = props
 
     function goToLogin() {
-        dispatch({type: 'TOGGLE_REG'})
+        dispatch({type: 'TOGGLE_REG', payload: true})
         history.push('/login_registered')
     }
 

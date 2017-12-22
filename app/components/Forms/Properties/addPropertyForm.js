@@ -53,6 +53,7 @@ let AddPropertyForm = props => {
                             type="number"
                             placeholder="How many?"
                             className="form-control"
+                            min={1}
                         />
                     </View>
 

@@ -23,7 +23,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch({type: 'TOGGLE_REG'})
+        this.props.dispatch({type: 'TOGGLE_REG', payload: false})
     }
 
     logout() {

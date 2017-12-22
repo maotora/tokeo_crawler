@@ -21,9 +21,10 @@ const appReducer = combineReducers({
     customerTempEdits: customerReducer,
     propertyTempEdits: propertyReducer,
     logs: HistoryReducer,
-    registered: (state, {type}) => {
+    registered: (state, {type, payload}) => {
         if(type === 'TOGGLE_REG') {
-            state = !state
+            console.log('payload ', payload)
+            state = !!payload
         }
         return !!state
     },
