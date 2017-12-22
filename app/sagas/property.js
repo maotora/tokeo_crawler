@@ -44,15 +44,16 @@ export function *editPropertySaga({payload}) {
         let newerProperties = _.map(properties, property => {
             if(property.id === payload.values.id) {
                 const totalCount = Number(payload.values.totalProperties)
-                const diff = Number(totalCount) - Number(property.totalProperties)
-                const numberOfCustomers = customers.filter(customer => customer && customer.property === property.id).length
+                const prevTotalCount = Number(property.totalProperties)
+                const diff = totalCount - prevTotalCount
+                const numberOfCustomers = customers.filter(customer => customer.property === property.id && !customer.deleted).length
 
                 if(diff !== 0) {
-                    const count = totalCount - numberOfCustomers
+                    const availableProperties = totalCount - numberOfCustomers
                     property = payload.values
-                    property.propertyCount = count
+                    property.propertyCount = availableProperties
                     property.totalProperties = totalCount
-                    property.status = statusGen(count, payload.values.propertyType, totalCount)
+                    property.status = statusGen(availableProperties, payload.values.propertyType, totalCount)
                     property.updatedAt = _.now()
 
                 } else {

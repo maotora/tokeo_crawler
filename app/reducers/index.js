@@ -23,7 +23,6 @@ const appReducer = combineReducers({
     logs: HistoryReducer,
     registered: (state, {type, payload}) => {
         if(type === 'TOGGLE_REG') {
-            console.log('payload ', payload)
             state = !!payload
         }
         return !!state
