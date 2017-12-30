@@ -1,13 +1,18 @@
 {
   "name": "Mijengo",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "description": "Mijengo landlord desktop application",
   "main": "init.js",
   "author": {
     "name": "HackEAC",
     "email": "maotora@hackeac.com"
   },
-  "repository": "https://code.hackeac.com:443/Mijengo/Mijengo_desktop.git",
+  "publish": [
+      {
+        "provider": "generic",
+        "url": "https://code.hackeac.com:443/Mijengo/Mijengo_desktop"
+      }
+  ],
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
